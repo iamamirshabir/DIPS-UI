@@ -4,13 +4,15 @@
   
   .sidenav {
     width: 200px;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(136, 136, 136, 0.4);
   }
+  /*Not part of the theme, need to be changed  */
   .innerToolbar {
-    color: gray;
+    color: blue;
   }
   
   .sidenav a  {
-    color: gray; 
+    color: blue; 
   }
   
   .sidenav::before{
@@ -35,7 +37,7 @@
   
   .mat-toolbar.mat-primary {
     position: sticky;
-    box-shadow: 2px 4px 8px inherit;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(48, 39, 176, 0.4);
     top: 0;
     z-index: 1;
   }
