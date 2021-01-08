@@ -3,19 +3,19 @@
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
-      <mat-toolbar >DIPS</mat-toolbar>
-      <mat-nav-list>
-        <a mat-list-item routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">home</mat-icon></span>Dashboard</a>        
-        <a mat-list-item routerLink="patientdetails">Symptoms Diagnosis</a>
-        <a mat-list-item routerLink="physicians">Physicians</a>
-        <a mat-list-item routerLink="appointments">Appointments</a>
-        <a mat-list-item routerLink="prescription">Write Prescription</a>
-        <a mat-list-item href="#">Contact Us</a>
-        <a mat-list-item href="#">About</a>
+      <mat-toolbar class="innerToolbar">DIPS</mat-toolbar>
+      <mat-nav-list class="mat-nav-list"  >
+        <a mat-list-item class="mat-primary" routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">home</mat-icon></span>Dashboard</a>        
+        <a mat-list-item routerLink="patientdetails"><span><mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon></span>Symptoms Diagnosis</a>
+        <a mat-list-item routerLink="physicians"><span><mat-icon aria-hidden="false" aria-label="No">person_pin</mat-icon></span>Physicians</a>
+        <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span> Appointments</a> 
+        <a mat-list-item routerLink="prescription"><span><mat-icon aria-hidden="false" aria-label="No">pages</mat-icon></span>Write Prescription</a>
+        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
+        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
+      <mat-toolbar color="primary" class="d-flec justify-content-between">
         <button
           type="button"
           aria-label="Toggle sidenav"
@@ -25,9 +25,18 @@
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
         <span class="color-white">Diagnostic Intiution & Prescription System</span>
+        
+        <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
+          <mat-label>Moeez Faheem</mat-label>
+          <mat-icon>account_circle</mat-icon>
+        </button>
       </mat-toolbar>
       <router-outlet></router-outlet>
       <app-footer></app-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
   
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item><mat-icon>account_box</mat-icon>View Profile</button>
+    <button mat-menu-item><mat-icon>logout</mat-icon>Log Out</button>
+  </mat-menu>

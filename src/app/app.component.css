@@ -5,6 +5,14 @@
   .sidenav {
     width: 200px;
   }
+  .innerToolbar {
+    color: gray;
+  }
+  
+  .sidenav a  {
+    color: gray; 
+  }
+  
   .sidenav::before{
     content: ' ';
     display: block;
@@ -21,10 +29,6 @@
     background-size: cover;
   }
 
-  .sidenav a {
-    color: var(--colordb);
-  }
-  
   .sidenav .mat-toolbar {
     background: inherit;
   }
@@ -35,6 +39,14 @@
     top: 0;
     z-index: 1;
   }
+
+  .sidenav span {
+    margin-right: 10px;
+  }
+  .toolbar-icon {
+    margin-right: 10px;
+  }
   
 
+  
   

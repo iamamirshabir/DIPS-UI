@@ -88,6 +88,9 @@ export class PrescriptionComponent implements OnInit {
       medicine.frequency = +frequency;
       medicine.weight = weight;
       this.ELEMENT_DATA.push(medicine);
+      this.medNameControl.reset();
+      this.medWeightControl.reset();
+      document.getElementById('medName')?.focus();
     }
     this.table.renderRows();
   }

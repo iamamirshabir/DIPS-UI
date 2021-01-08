@@ -2,6 +2,15 @@
   width: 60%;
 }
 
+@media only screen and (min-width: 600px) {
+.heading {
+  font-size: 72px;
+  font-weight: bolder;
+  color: lightgray;
+  z-index: 0;
+}
+}
+
 .login-bg::before{
   content: ' ';
   display: block;

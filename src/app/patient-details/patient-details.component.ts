@@ -33,6 +33,12 @@ export class PatientDetailsComponent implements OnInit {
     {name: 'Headache'},
     {name: 'Fever'},
     {name: 'Sneezing'},
+    {name: 'Itching'},
+    {name: 'Red Skin'},
+    {name: 'Watery Eyes'},
+    {name: 'Cough'},
+    {name: 'Joint Pain'},
+    {name: 'Muscular Pain'}
   ];
   selectedSymptoms: Symptom[]=[];
 
