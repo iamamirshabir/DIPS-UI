@@ -57,6 +57,7 @@ import { PhysiciansComponent } from './physicians/physicians.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     PatientDetailsComponent,
     PhysiciansComponent,
     AppointmentsComponent,
-    PrescriptionComponent
+    PrescriptionComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
