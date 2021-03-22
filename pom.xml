@@ -14,7 +14,8 @@
 	<name>DIPS-RS-v1</name>
 	<description>Diagnostic Intuition and Prescription System. With Medium integration</description>
 	<properties>
-		<java.version>11</java.version>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
