@@ -8,5 +8,5 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://dips-as.herokuapp.com/auth/realms/dips/
-          jwk-set-uri: https://dips-as.herokuapp.com/auth/realms/dips/protocol/openid-connect/certs
+          issuer-uri: https://dips-as.herokuapp.com/auth/realms/DIPS/
+          jwk-set-uri: https://dips-as.herokuapp.com/auth/realms/DIPS/protocol/openid-connect/certs
