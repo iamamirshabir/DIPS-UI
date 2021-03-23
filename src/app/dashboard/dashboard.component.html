@@ -1,78 +1,41 @@
-        <div class="row mx-0">             
-            <div class="col-lg-11 mt-5 mx-auto">
-                <h1 class="h1 mt-2 heading">Log In</h1>   
-            <div class="col-md-12 col-lg-6 mt-5 mx-auto ">
-                <div matRipple class="my-card">
-                    <mat-tab-group>
-                        <mat-tab label="User">
-                            <mat-card>
-                                <mat-card-title>Log In as USER</mat-card-title>
-                                <mat-card-subtitle>Enter your e-mail and password</mat-card-subtitle>
-                                <mat-card-content>
-                                        <mat-form-field appearance='fill' class="example-full-width">
-                                            <mat-label>Email</mat-label>
-                                            <input matInput placeholder="someone@example.com" [formControl]="email" required>
-                                            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-                                        </mat-form-field>
-                                        <br>
-                                        <mat-form-field appearance="fill" class="example-full-width">
-                                            <mat-label>Enter your password</mat-label>
-                                            <input matInput [type]="hide ? 'password' : 'text'">
-                                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                            </button>
-                                          </mat-form-field>
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-raised-button color="primary">Log In</button>
-                                    <button mat-raised-button color="accent">Register</button>
-                                </mat-card-actions>
-                                <mat-card-footer>
-                            
-                                </mat-card-footer>
-                            </mat-card>
-            
-                        </mat-tab>
-                        <mat-tab label="Physician">
-                            <mat-card>
-                                <mat-card-title>Log In as<span> PHYSICIAN</span> </mat-card-title>
-                                <mat-card-subtitle>Enter your e-mail and password</mat-card-subtitle>
-                                <mat-card-content>
-                                    <mat-form-field appearance='fill' class="example-full-width">
-                                        <mat-label>Email</mat-label>
-                                        <input matInput placeholder="someone@example.com" [formControl]="email" required>
-                                        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-                                    
-                                    </mat-form-field>
-                                    <br>
-                                    <mat-form-field appearance="fill" class="example-full-width">
-                                        <mat-label>Enter your password</mat-label>
-                                        <input matInput [type]="hide ? 'password' : 'text'">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                        </button>
-                                      </mat-form-field>
-                                    
-                                </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-raised-button color="primary">Log In</button>
-                                    <button mat-raised-button color="accent">Register</button>
-                                </mat-card-actions>
-                                <mat-card-footer>
-                            
-                                </mat-card-footer>
-                            </mat-card>
-            
-                        </mat-tab>
-                    </mat-tab-group>
-
-                </div>
-                
-        
-
-            </div> 
-            
-        </div>
-        </div>
-        
-
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav my-sidenav" fixedInViewport 
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
+      <mat-toolbar class="innerToolbar">D. I. P. S.</mat-toolbar>
+      <mat-nav-list class="mat-nav-list"  >
+        <a mat-list-item class="mat-primary" routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">home</mat-icon></span>Dashboard</a>        
+        <a mat-list-item routerLink="patientdetails"><span><mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon></span>Symptoms Diagnosis</a>
+        <a mat-list-item routerLink="physicians"><span><mat-icon aria-hidden="false" aria-label="No">person_pin</mat-icon></span>Physicians</a>
+        <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span> Appointments</a> 
+        <a mat-list-item routerLink="prescription"><span><mat-icon aria-hidden="false" aria-label="No">pages</mat-icon></span>Write Prescription</a>
+        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
+        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <mat-toolbar color="primary" class="d-flex justify-content-between outer-toolbar">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>Diagnosis Intuition and Prescription</span>        
+        <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
+          <mat-label>Moeez Faheem</mat-label>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </mat-toolbar>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item><mat-icon>account_box</mat-icon>View Profile</button>
+    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Log Out</button>
+  </mat-menu>

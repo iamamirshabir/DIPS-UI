@@ -25,6 +25,7 @@
     "@types/pdfmake": "^0.1.16",
     "bootstrap": "^4.6.0",
     "jspdf": "^2.2.0",
+    "ng2-cookies": "^1.0.12",
     "pdfmake": "^0.1.68",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
