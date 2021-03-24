@@ -1,0 +1,27 @@
+<div class="row mx-0">
+    <div class="col-lg-11 mt-5 mx-auto">
+      <h1 class="h1">Doctors Available</h1>
+      <div class="my-card">
+        <div class="my-card-header my-card-header-primary">
+          <h1 class="my-card-title">Physicians</h1>
+        </div> 
+        <mat-card matRipple *ngFor="let doctor of doctors; last as last">
+          <mat-card-header>
+            <img mat-card-avatar src="/assets/images/doc.jpeg" alt="Avatar"/>
+            <mat-card-title>{{doctor.name}}</mat-card-title>
+            <mat-card-subtitle>{{doctor.spec}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+              {{doctor.description}}
+          </mat-card-content>
+          <mat-card-actions>
+              <button mat-flat-button color="primary">Book Appointment</button>
+              <button mat-stroked-button color="accent">View Contact Info</button>
+          </mat-card-actions>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+      </mat-card>
+
+      </div>
+      
+    </div>
+</div>

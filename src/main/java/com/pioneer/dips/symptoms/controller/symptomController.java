@@ -67,12 +67,12 @@ public class symptomController {
 	  ResponseEntity<?> replaceSymptom(@RequestBody Symptom newSymptom, @PathVariable Long id) {
 		  Symptom updatedSymptom = repository.findById(id)
 				  .map(symptom ->{
-					  symptom.setSYMPTOM_NAME(newSymptom.getSYMPTOM_NAME());
-					  symptom.setSYMPTOM_CATEGORY_ID(newSymptom.getSYMPTOM_CATEGORY_ID());
+					  symptom.setsymptom_text(newSymptom.getsymptom_text());
+					  symptom.setsymptom_category_id(newSymptom.getsymptom_category_id());
 					  return repository.save(symptom);
 				  })
 				  .orElseGet(() ->{
-					  newSymptom.setSYMPTOM_ID(id);
+					  newSymptom.setsymptom_id(id);
 					  return repository.save(newSymptom);
 				  });
 		  EntityModel<Symptom> symptoms = assembler.toModel(updatedSymptom);

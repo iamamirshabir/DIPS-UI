@@ -1,0 +1,21 @@
+<div class="row mx-0">
+    <div class="col-lg-11 mt-5 mx-auto">
+      <h1 class="h1">Your Appointments</h1>
+        <div class="my-card">
+            <div class="my-card-header my-card-header-info">
+                <h1 class="my-card-title">Appointments</h1>
+            </div>
+            <mat-card matRipple *ngFor="let appointment of appointments; last as last" style="border-bottom: 1px solid lightgrey">
+                <mat-card-content >
+                    <div class="d-flex justify-content-around ">
+                        <h3 class="text-primary">{{appointment.id}}</h3>
+                        <h2 class="h2">{{appointment.by}}</h2>
+                        <h3><span class="text-success">{{appointment.age}}</span> years old</h3>             
+                        <button mat-flat-button color="primary" >Write Prescription</button>
+                        <button mat-stroked-button color="accent">View Previous Record</button>
+                    </div>
+                   </mat-card-content> 
+            </mat-card>
+        </div>
+    </div>
+</div>

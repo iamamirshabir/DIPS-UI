@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.pioneer.dips.symptoms.model.Symptom;
 import com.pioneer.dips.symptoms.repository.symptomRepository;
 
 @Configuration

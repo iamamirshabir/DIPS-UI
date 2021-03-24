@@ -1,0 +1,69 @@
+
+<div class="row mx-0">
+    <div class="col-lg-11 mt-5 mx-auto">
+      <h1 class="h1">Your Details</h1>
+         <div class="row">
+            <div class="col-lg-6 row mx-auto">
+                <div class="col-lg-12 my-card">
+                  <div class="my-card-header my-card-header-success">
+                    <h2 class="my-card-title">Choose Your Gender</h2>
+                    </div>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Gender</mat-label>
+                          <mat-select [disabled]="disableSelect.value">
+                          <mat-option value="male">Male</mat-option>
+                          <mat-option value="female" >Female</mat-option>
+                          <mat-option value="null">Prefer not to say</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                     <h4>Your Age</h4>
+                    <mat-slider class="slider" thumbLabel min="10" max="120" step="1" value="55"></mat-slider>
+                </div>
+            </div>
+            <div class="col-lg-6 row mx-auto">
+              <div class="col-lg-12 my-card">
+                <div class="my-card-header my-card-header-rose">
+                  <h2 class="my-card-title">Select Your Symptoms & Conditions</h2>
+                </div>
+                  <mat-slide-toggle >Recently Injured</mat-slide-toggle><hr/>
+                  <mat-slide-toggle>Diabetic</mat-slide-toggle><hr/>
+                  <mat-slide-toggle>Hypertensive</mat-slide-toggle><hr/>    
+              </div>
+            </div>
+          </div>         
+          <hr/>
+          <div class="row">
+            <div class="col-lg-9 row mx-auto">
+              <div class="my-card col-lg-12"> 
+                <div class="my-card-header my-card-header-info">
+                  <h2 class="my-card-title">Enter Your Symptoms</h2>
+                </div>
+                <mat-form-field class="example-full-width">
+                  <input type="text"
+                         placeholder="Pick one"
+                         aria-label="Number"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option #InputSymptoms *ngFor="let option of filteredOptions | async" [value]="option.name">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+                <button mat-fab color="accent" aria-label="Add the Selected Symptom" (click)="onAddition()" >
+                  <mat-icon>add</mat-icon>
+                </button>
+                <mat-chip-list #chipList aria-label="Symptoms selection">
+                  <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable"
+                           [removable]="removable" (removed)="remove(symptom)">
+                    {{symptom.name}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+       </div>
+</div>
+ 
