@@ -1,0 +1,137 @@
+<div class="row mx-0">
+  <div class="col-lg-11 mt-5 mx-auto">
+    <h1 class="h1 my-title">Your Details</h1>
+    <div class="my-card">
+      <div class="my-card-header my-card-header-success">
+        <h1 class="my-card-title">Symptom Checker</h1>
+      </div>
+    <mat-vertical-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <ng-template >
+          
+        </ng-template>
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel >Declaration</ng-template>
+          <mat-card class="col-lg-8 mx-auto">
+            <mat-card-title [style.color]="primaryColor">Hey there!</mat-card-title>
+            <mat-card-subtitle>Declaration</mat-card-subtitle>
+            <mat-card-content>
+              <p>1. Nothing can replace medical diagnosis at medical complex</p>
+            </mat-card-content>
+            <mat-card-actions>
+                      </mat-card-actions>
+            <mat-card-footer >
+              <mat-checkbox class="example-margin " >I undertand and agree!</mat-checkbox>
+              
+            </mat-card-footer>
+          </mat-card>
+          <br>    
+          <button mat-stroked-button color="primary" matStepperNext>Next</button>
+
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Add Personal Info">
+        <form [formGroup]="secondFormGroup">
+            <mat-form-field appearance="fill">
+              <mat-label>Gender</mat-label>
+                <mat-select [disabled]="disableSelect.value">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female" >Female</mat-option>
+                <mat-option value="na">Prefer not to say</mat-option>
+                </mat-select>
+            </mat-form-field>
+           <h4>Your Age</h4>
+          <mat-slider class="slider" thumbLabel min="10" max="120" step="1" value="55"></mat-slider>
+          <div>
+            <button mat-button color="warn"   matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Select Medical Conditions">
+        <form [formGroup]="secondFormGroup">
+          <h2 class="my-card-title">Select Your Symptoms & Conditions</h2>
+                
+          <mat-slide-toggle >Recently Injured</mat-slide-toggle><hr/>
+          <mat-slide-toggle>Diabetic</mat-slide-toggle><hr/>
+          <mat-slide-toggle>Hypertensive</mat-slide-toggle><hr/>    
+          <div>
+            <button mat-button color="warn"  matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Add Symptoms">
+        <form [formGroup]="secondFormGroup"><h2 class="my-card-title">Enter Your Symptoms</h2>
+          <mat-form-field class="example-full-width">
+            <input type="text"
+                   placeholder="Pick one"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="myControl"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete   #auto="matAutocomplete">
+              <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.name">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+          <button mat-fab color="accent" aria-label="Add the Selected Symptom" (click)="onAddition()"  >
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-chip-list #chipList aria-label="Symptoms selection">
+            <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable"
+                     [removable]="removable" (removed)="remove(symptom)">
+              {{symptom.name}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <br>
+          <br>
+          <div>
+            <button mat-button color="warn"  matStepperPrevious>Back</button>
+            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Result</ng-template>
+        <mat-card class="col-lg-6 mx-auto">
+          <mat-card-title [style.color]="accentColor">
+            Result
+          </mat-card-title>
+          <mat-card-subtitle>Preliminary Diagnosis</mat-card-subtitle>
+          <mat-card-content>
+            <mat-chip-list #chipList  aria-label="Symptoms selection">
+              <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable" [style.color]="infoColor"  >
+                {{symptom.name}}
+                
+              </mat-chip>
+            </mat-chip-list>
+            <hr>
+            <h2 [style.color]="primaryColor">Rabies</h2>
+            <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+            <br>
+            <mat-card-subtitle>Probability</mat-card-subtitle>
+            <p>
+              Rabies is a fatal but preventable viral disease. It can spread to people and pets if they are bitten or scratched by a rabid animal. In the United States, rabies is mostly found in wild animals like bats, raccoons, skunks, and foxes. However, in many other countries dogs still carry rabies, and most rabies deaths in people around the world are caused by dog bites.
+            </p>
+            
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-raised-button color="accent" routerLink="../physicians">See Physicians</a>
+          </mat-card-actions>
+          <mat-card-footer>
+
+          </mat-card-footer>
+        </mat-card>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+     
+  </div>
+  </div>
+</div>

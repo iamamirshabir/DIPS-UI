@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-lg-10 mx-auto mt-5">
+        <mat-card>
+            <mat-card-title>{{user.name}}</mat-card-title>
+            <mat-card-subtitle>{{user.type}}</mat-card-subtitle>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-10 col-lg-4 profile-image">
+                      <img class="mx-auto dp-image " src="/assets/images/user.png">
+                    </div>
+                    <div class="col-md-12 col-lg-8 mx-auto ">
+                        Here his data
+                    </div>
+                </div>
+    
+            </mat-card-content>
+            <mat-card-actions>
+    
+            </mat-card-actions>
+            <mat-card-footer>
+                
+            </mat-card-footer>
+        </mat-card>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="col-lg-10 mx-auto mt-5 row">
+        <div class="col-lg-8">
+            <div class="col-lg-12 my-card">
+                <div class="my-card-header my-card-header-rose">
+                <h2 class="my-card-title">Prescriptions</h2>
+              </div>
+              <mat-list>
+                <div mat-subheader>Recent</div>
+                <mat-list-item *ngFor="let folder of folders">
+                  <mat-icon mat-list-icon>assignment</mat-icon>
+                  <div mat-line>{{folder.name}}</div>
+                  <div mat-line> {{folder.updated | date}} </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <div mat-subheader>Notes</div>
+                <mat-list-item *ngFor="let note of notes">
+                  <mat-icon mat-list-icon>note</mat-icon>
+                  <div mat-line>{{note.name}}</div>
+                  <div mat-line> {{note.updated | date}} </div>
+                </mat-list-item>
+              </mat-list>
+              
+              </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="col-lg-12 my-card">
+                <div class="my-card-header my-card-header-warning">
+                <h2 class="my-card-title">Additional Info</h2>
+              </div>
+              </div>
+        </div>
+    </div>
+</div>
