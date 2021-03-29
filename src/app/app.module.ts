@@ -6,10 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { PatientDetailsComponent } from './patient-details/patient-details.component';
+import { PatientDetailsComponent } from './user/patient-details/patient-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -54,20 +53,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { PhysiciansComponent } from './physicians/physicians.component';
-import { AppointmentsComponent } from './appointments/appointments.component';
-import { PrescriptionComponent } from './prescription/prescription.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './login/login.component';
-import { PhysicianDialogComponent } from './physicians/physician-dialog/physician-dialog.component';
-import { ProfileComponent } from './dashboard/profile/profile.component';
+import { PhysicianComponent } from './physician/physician.component';
+import { UserComponent } from './user/user.component';
+import { PhysicianDialogComponent } from './user/patient-details/physicians/physician-dialog/physician-dialog.component';
+import { AppointmentsComponent } from './physician/appointments/appointments.component';
+import { PhysiciansComponent } from './user/patient-details/physicians/physicians.component';
+import { PrescriptionComponent } from './physician/appointments/prescription/prescription.component';
+import { UserProfileComponent } from './physician/user-profile/user-profile.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    DashboardComponent,
     PatientDetailsComponent,
     PhysiciansComponent,
     AppointmentsComponent,
@@ -75,6 +76,9 @@ import { ProfileComponent } from './dashboard/profile/profile.component';
     LoginComponent,
     PhysicianDialogComponent,
     ProfileComponent,
+    PhysicianComponent,
+    UserComponent,
+    UserProfileComponent,
     
   ],
   imports: [

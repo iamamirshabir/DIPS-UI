@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 export class User{
   name:string;
   type: string;
+  age: number;
+  mobile: number;
+
 }
 export interface Section {
   name: string;
@@ -40,7 +43,7 @@ export class ProfileComponent implements OnInit {
       updated: new Date('1/18/16'),
     }
   ];
-  user ={name:'Moeez Faheem',type:'User'}
+  user ={name:'Moeez Faheem',type:'User', age: 35, mobile: 923127856786};
   constructor() { }
 
   ngOnInit(): void {

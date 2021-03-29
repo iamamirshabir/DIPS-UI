@@ -1,20 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from "@angular/forms";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Cookie } from 'ng2-cookies';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
-export class DashboardComponent implements OnInit {
-
-  email = new FormControl('', [Validators.required, Validators.email]);
-
-  hide = true;
+export class UserComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver) { }
 
@@ -29,14 +24,6 @@ export class DashboardComponent implements OnInit {
   );
 
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return this.email.hasError('email') ? 'Not a valid email' : '';
-  }
-  
   logout() {
     Cookie.delete('access_token');
     window.location.href = 'http://localhost:8089';
