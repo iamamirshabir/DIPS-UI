@@ -9,14 +9,30 @@
     color: lightgray;
     z-index: 0;
   }
+
   
   .outer-toolbar span{
     font-size: 1.8rem;
   }
   }
   
+  .outer-toolbar {
+    border-bottom: 0px solid #192841;
+  }
   .outer-toolbar span{
     text-size-adjust: auto;
+  }
+  
+  .mat-nav-list a {
+
+    color: #fff;
+    font-size: 1.125rem;
+    margin-left: 0px;
+    margin-right: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+   /*  background: linear-gradient(60deg, #666ebb, #5143a0); */
+   
   }
   
   .mat-nav-list a span{
@@ -43,6 +59,10 @@
   }
   
   .sidenav {
+    padding: 0.35rem;     
+    width: 250px;
+    background-color: azure;
+    border-right: 2px solid  #3f51b5;
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(136, 136, 136, 0.4);
   }
   /*Not part of the theme, need to be changed  */
@@ -56,7 +76,7 @@
   
   */
   .innerToolbar {
-    color: azure;
+    color: #ffffff;
   }
   .sidenav a  {
     color: azure; 
@@ -71,7 +91,7 @@
     height: 100%;
     z-index: -1;
     opacity: 0.9;
-    background: linear-gradient(60deg, #333333, #252525);;
+    background: linear-gradient(60deg, #192841, #152238);
     /*background: linear-gradient(60deg, #3f51b5, #3f51b5);*/
   }
   
@@ -92,3 +112,14 @@
   .toolbar-icon {
     margin-right: 10px;
   }
+
+.dp-image{
+  border-radius: 50%;
+  display:block;
+  margin:auto;
+  max-width: 150px;
+opacity: 0.8;  }
+
+.profile-card{
+  background-color: inherit;
+}

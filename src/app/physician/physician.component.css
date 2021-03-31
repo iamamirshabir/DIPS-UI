@@ -19,6 +19,18 @@
   text-size-adjust: auto;
 }
 
+.mat-nav-list a {
+
+  color: #fff;
+  font-size: 1.125rem;
+  margin-left: 0px;
+  margin-right: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+ /*  background: linear-gradient(60deg, #666ebb, #5143a0); */
+ 
+}
+
 .mat-nav-list a span{
   padding-right: 1.2rem;
 }
@@ -43,6 +55,10 @@
 }
 
 .sidenav {
+  padding: 0.35rem;     
+  width: 250px;
+  background-color: azure;
+  border-right: 2px solid  #3f51b5;
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(136, 136, 136, 0.4);
 }
 /*Not part of the theme, need to be changed  */
@@ -56,7 +72,7 @@ background-image: url('/assets/images/sidebar-bg.jpg');
 
 */
 .innerToolbar {
-  color: azure;
+  color: #ffffff;
 }
 .sidenav a  {
   color: azure; 
@@ -71,7 +87,7 @@ background-image: url('/assets/images/sidebar-bg.jpg');
   height: 100%;
   z-index: -1;
   opacity: 0.9;
-  background: linear-gradient(60deg, #333333, #252525);;
+  background: linear-gradient(60deg, #380000 , #2a0000 );
   /*background: linear-gradient(60deg, #3f51b5, #3f51b5);*/
 }
 
@@ -91,4 +107,14 @@ background-image: url('/assets/images/sidebar-bg.jpg');
 }
 .toolbar-icon {
   margin-right: 10px;
+}
+.dp-image{
+  border-radius: 50%;
+  display:block;
+  margin:auto;
+  max-width: 150px;
+opacity: 0.8;  }
+
+.profile-card{
+  background-color: inherit;
 }

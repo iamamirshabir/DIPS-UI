@@ -4,8 +4,9 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
       <mat-toolbar class="innerToolbar ">D. I. P. S.</mat-toolbar>
+      <img class="mx-auto dp-image " src="/assets/images/doc.jpeg">
+
       <mat-nav-list class="mat-nav-list"  >
-        <a mat-list-item class="mat-primary" routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">home</mat-icon></span>Dashboard</a>        
         <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span> Appointments</a> 
         <a mat-list-item routerLink="prescription"><span><mat-icon aria-hidden="false" aria-label="No">pages</mat-icon></span>Write Prescription</a>
         <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
@@ -13,7 +14,7 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary" class="d-flex justify-content-between outer-toolbar">
+      <mat-toolbar color="warn" class="d-flex justify-content-between outer-toolbar">
         <button
           type="button"
           aria-label="Toggle sidenav"
