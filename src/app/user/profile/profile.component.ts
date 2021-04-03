@@ -1,50 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-
-export class User{
-  name:string;
-  type: string;
-  age: number;
-  mobile: number;
-
-}
-export interface Section {
-  name: string;
-  updated: Date;
-}
+import { PrescriptionService } from 'src/app/physician/appointments/prescription/prescription.service';
+import { Prescription, User } from 'src/app/shared/classes';
 
 @Component({
   selector: 'app-profile',
+  providers: [PrescriptionService],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 
-  folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    }
-  ];
-  notes: Section[] = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    }
-  ];
-  user ={name:'Moeez Faheem',type:'User', age: 35, mobile: 923127856786};
-  constructor() { }
+  folders: Prescription[] ;
+  user : User;
+  
+  constructor(private prescriptionService: PrescriptionService) { 
+    this.folders = prescriptionService.prescriptions;
+    this.user = new User()
+  }
 
   ngOnInit(): void {
   }

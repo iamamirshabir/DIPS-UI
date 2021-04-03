@@ -6,6 +6,7 @@ export interface DialogData {
   available: string;
   name: string;
 }
+
 @Component({
   selector: 'app-physician-dialog',
   templateUrl: './physician-dialog.component.html',

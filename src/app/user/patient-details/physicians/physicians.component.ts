@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
+import { Physician } from 'src/app/shared/classes';
 import { PhysicianDialogComponent } from './physician-dialog/physician-dialog.component';
-
-export interface Doctor{
-  name: string;
-  spec: string;
-  description: string;
-}
+import { PhysiciansService } from './physicians.service';
 
 
 @Component({
@@ -19,14 +15,7 @@ export class PhysiciansComponent implements OnInit {
 
   specControl = new FormControl();
 
-  doctors: Doctor[]=[{name: 'Aftab Ahmed', spec: 'Pediatrician', description:'Five years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'},
-  {name: 'Minhas Rasheed', spec: 'Primary Care', description:'Ten years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'},
-  {name: 'Moeez Ali', spec: 'General Practitioner', description:'Five years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'},
-  {name: 'Aftab Ahmed', spec: 'Pediatrician', description:'Five years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'},
-  {name: 'Minhas Rasheed', spec: 'Primary Care', description:'Ten years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'},
-  {name: 'Moeez Ali', spec: 'General Practitioner', description:'Five years working experinence. Ex-Medical Officer Tehsil Headquarter Hospital, Sangarh.'}
-
-]
+  physicians: Physician[];
   selectedSpec: string = 'Primary Care'
 
   specs :string[] =[]
@@ -34,11 +23,12 @@ export class PhysiciansComponent implements OnInit {
   available: string;
   name: string;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private physicianService: PhysiciansService) {
+    this.physicians = physicianService.physicians;
+   }
 
   ngOnInit(): void {
-    this.doctors.forEach(obj => {if(!this.specs.includes(obj.spec)) {this.specs.push(obj.spec)}});
-    ;
+    this.physicians.forEach(obj => {if(!this.specs.includes(obj.spec)) {this.specs.push(obj.spec)}});
   }
 
   openDialog( drName:string): void {

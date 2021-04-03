@@ -14,18 +14,18 @@
            </mat-select>
         </mat-form-field>
         <button mat-button class="filter-button" (click)="filterPhysicians()" color="primary">Apply</button>
-        <div *ngFor="let doctor of doctors; last as last" >
-          <mat-card matRipple *ngIf="(doctor.spec == selectedSpec)">
+        <div *ngFor="let physician of physicians; last as last" >
+          <mat-card matRipple *ngIf="(physician.spec == selectedSpec)">
             <mat-card-header>
               <img mat-card-avatar src="/assets/images/doc.jpeg" alt="Avatar"/>
-              <mat-card-title>{{doctor.name}}</mat-card-title>
-              <mat-card-subtitle>{{doctor.spec}}</mat-card-subtitle>
+              <mat-card-title>{{physician.name}}</mat-card-title>
+              <mat-card-subtitle>{{physician.spec}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                {{doctor.description}}
+                {{physician.description}}
             </mat-card-content>
             <mat-card-actions>
-                <button mat-flat-button color="primary"  (click)="openDialog(doctor.name)">Book Appointment</button>
+                <button mat-flat-button color="primary"  (click)="openDialog(physician.name)">Book Appointment</button>
                 <button mat-stroked-button color="accent">View Contact Info</button>
             </mat-card-actions>
             <mat-divider [inset]="true" *ngIf="!last"></mat-divider>

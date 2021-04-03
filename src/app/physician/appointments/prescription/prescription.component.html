@@ -1,20 +1,24 @@
 <div class="row mx-0">
   <div class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
+    <p mat-line>ID: {{prescription.id}}</p>
+    <h3>Physician: {{prescription.physician.name}}</h3>
+    <p>{{prescription.physician.spec}}</p>
+    <button mat-button (click)="generatePdf()">Generate PDF</button>
       <div class=" p-3">                 
           <table class="table w-25">
             <thead>
                 <th>Patient Name: </th>
-                <th class="text-success" > {{patient.name}}</th>
+                <th class="text-success" > {{prescription.user.name}}</th>
             </thead>
             <tbody>
               <tr>
                 <td>Age:</td>
-                <td>{{patient.age}}</td>
+                <td>{{prescription.user.age}}</td>
               </tr>
               <tr>
                 <td>Mobile:</td>
-                <td>{{patient.mobile}}</td>
+                <td>{{prescription.user.mobile}}</td>
               </tr>
             </tbody>
           </table>
@@ -34,8 +38,8 @@
                        [formControl]="myControl"
                        [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option #InputSymptoms *ngFor="let option of filteredOptions | async" [value]="option.name">
-                    {{option.name}}
+                  <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.text">
+                    {{option.text}}
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
@@ -43,16 +47,16 @@
                 <mat-icon>add</mat-icon>
               </button>
               <mat-chip-list #chipList aria-label="Symptoms selection">
-                <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable"
+                <mat-chip *ngFor="let symptom of prescription.symptoms" [selectable]="selectable"
                          [removable]="removable" (removed)="remove(symptom)">
-                  {{symptom.name}}
+                  {{symptom.text}}
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
               </mat-chip-list>
             <hr>
               <form class="example-form">                
                 <mat-form-field class="example-full-width w-75">
-                  <input matInput placeholder="Enter additional symptoms..." type="text">
+                  <input matInput   placeholder="Enter additional symptoms..." type="text">
                 </mat-form-field>
               </form>
               </div>
@@ -64,7 +68,7 @@
                 </div>
                 <mat-form-field class="example-full-width w-100">
                   <mat-label>Enter Notes or Directions</mat-label>
-                  <textarea matInput placeholder="Notes/Directions"></textarea>
+                  <textarea matInput [(ngModel)]="prescription.notes" placeholder="Notes/Directions"></textarea>
                 </mat-form-field>
               </div>  
           </div>

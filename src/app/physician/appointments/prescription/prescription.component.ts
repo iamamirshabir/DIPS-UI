@@ -1,48 +1,46 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from "@angular/forms";
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import { MatTable } from "@angular/material/table";
 
-export interface Medicine {
-  title: string;
-  brand: string;
-  weight: number;
-  frequency: number;
-}
+import { Medicine, Physician, Prescription, Symptom } from 'src/app/shared/classes';
 
-export interface Patient{
-  name: string;
-  age: number;
-  mobile: number;
-}
+import { SymptomsService } from 'src/app/symptoms.service';
+import { PrescriptionService } from './prescription.service';
 
-export interface Symptom {
-  name: string;
-}
 
 @Component({
   selector: 'app-prescription',
+  providers: [PrescriptionService, SymptomsService],
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.css']
 })
 
 export class PrescriptionComponent implements OnInit {
 
+  //Table for Medicine Display writing prescription
   @ViewChild(MatTable) table!: MatTable<any>;
   ELEMENT_DATA: Medicine[] = [];
 
+  //Object of prescription for saving data
+  prescription: Prescription;
+  symptoms: Symptom[];
+
+  //Table descripiton of Medicine Data display
   displayedColumns: string[] = ['title', 'brand', 'weight', 'frequency'];
-  dataSource = this.ELEMENT_DATA;
-
-  patient: Patient = {name: 'Faisal Saleh', age: 45, mobile : 923032424141} 
-
+  dataSource = this.ELEMENT_DATA;  
   frequencies: number[]=[6,12,24]
+
+
+    //Markup controls
   medNameControl = new FormControl();
   medWeightControl = new FormControl();
   medFrequencyControl = new FormControl();
   myControl = new FormControl();
+
+  //Auto-complete of symptom search
   filteredOptions!: Observable<Symptom[]> ;
   frequency!: number ;
 
@@ -50,23 +48,26 @@ export class PrescriptionComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
-  symptoms: Symptom[] = [
-    {name: 'Headache'},
-    {name: 'Fever'},
-    {name: 'Sneezing'},
-    {name: 'Itching'},
-    {name: 'Red Skin'},
-    {name: 'Watery Eyes'},
-    {name: 'Cough'},
-    {name: 'Joint Pain'},
-    {name: 'Muscular Pain'}
+  
+  constructor(private prescriptionService: PrescriptionService,
+    private symptomService: SymptomsService) {
     
-  ];
-  selectedSymptoms: Symptom[]=[];
+    //Initializations
+    this.prescription = prescriptionService.prescriptions[0];
+    this.prescription.symptoms = [];
+    this.prescription.medicines = [];
 
-  constructor() { }
+    //Symptoms fetched using service
+    this.symptoms = symptomService.symptoms;
+  }
+  
+  //Makes call to PDF service
+  generatePdf(){
+    this.prescriptionService.generatePdf(this.prescription);  
+  }
 
   ngOnInit(){
+    //For value change in auto-complete
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -74,6 +75,8 @@ export class PrescriptionComponent implements OnInit {
       );
   }
 
+
+  //Medicine Added to Page and Prescription Object
   addMedicine(){
     let medicine: Medicine = {title: '',brand:'',weight:0,frequency:0};
     let name,formula,frequency: string;
@@ -88,6 +91,7 @@ export class PrescriptionComponent implements OnInit {
       medicine.frequency = +frequency;
       medicine.weight = weight;
       this.ELEMENT_DATA.push(medicine);
+      this.prescription.medicines.push(medicine);
       this.medNameControl.reset();
       this.medWeightControl.reset();
       document.getElementById('medName')?.focus();
@@ -95,40 +99,36 @@ export class PrescriptionComponent implements OnInit {
     this.table.renderRows();
   }
 
+  //Any Symptom is added
   onAddition(){
     let symptom: Symptom;
     let temp: string;
     let index: number; 
     temp = this.myControl.value;
-    symptom = this.symptoms.filter(s => s.name == temp)[0];
-    index = this.symptoms.findIndex(s => s.name == temp);
+    symptom = this.symptoms.filter(s => s.text == temp)[0];
+    index = this.symptoms.findIndex(s => s.text == temp);
     if(index >= 0){
       symptom = this.symptoms[index];
       this.symptoms.splice(index,1);
-      this.selectedSymptoms.push(symptom);
+      this.prescription.symptoms.push(symptom);
       this.myControl.reset();
       this.ngOnInit();
     }
-    
-//    let temp = this.myControl.value;
-//    symptom.name = temp;   
-//    if(this.symptoms.indexOf(symptom) < 0){
-//      this.symptoms.push(symptom);
-//    }
-    //this.options.splice(this.options.indexOf(temp),1);
     }
 
+  //Function used by AutoComplete  
   private _filter(value: string): Symptom[] {
     const filterValue = value.toLowerCase();
-    return this.symptoms.filter(symptom=> symptom.name.toLowerCase().includes(filterValue));
+    return this.symptoms.filter(symptom=> symptom.text.toLowerCase().includes(filterValue));
   }
 
+  //If removed from chips
   remove(symptom: Symptom): void {
-    const index = this.selectedSymptoms.indexOf(symptom);
+    const index = this.prescription.symptoms.indexOf(symptom);
 
     if (index >= 0) {
       this.symptoms.push(symptom);
-      this.selectedSymptoms.splice(index, 1);
+      this.prescription.symptoms.splice(index, 1);
     }
   }
 

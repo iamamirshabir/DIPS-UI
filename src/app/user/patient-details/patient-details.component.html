@@ -34,7 +34,7 @@
         <form [formGroup]="secondFormGroup">
             <mat-form-field appearance="fill">
               <mat-label>Gender</mat-label>
-                <mat-select [disabled]="disableSelect.value">
+                <mat-select >
                 <mat-option value="male">Male</mat-option>
                 <mat-option value="female" >Female</mat-option>
                 <mat-option value="na">Prefer not to say</mat-option>
@@ -71,8 +71,8 @@
                    [formControl]="myControl"
                    [matAutocomplete]="auto">
             <mat-autocomplete   #auto="matAutocomplete">
-              <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.name">
-                {{option.name}}
+              <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.text">
+                {{option.text}}
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>
@@ -82,7 +82,7 @@
           <mat-chip-list #chipList aria-label="Symptoms selection">
             <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable"
                      [removable]="removable" (removed)="remove(symptom)">
-              {{symptom.name}}
+              {{symptom.text}}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
           </mat-chip-list>
@@ -104,7 +104,7 @@
           <mat-card-content>
             <mat-chip-list #chipList  aria-label="Symptoms selection">
               <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable" [style.color]="infoColor"  >
-                {{symptom.name}}
+                {{symptom.text}}
               </mat-chip>
             </mat-chip-list>
             <hr>
