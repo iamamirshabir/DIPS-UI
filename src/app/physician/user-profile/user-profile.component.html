@@ -1,8 +1,8 @@
 <div class="row mx-0">
   <div class="col-lg-11 mt-5 mx-auto">
         <mat-card>
-            <mat-card-title>{{user.name}}</mat-card-title>
-            <mat-card-subtitle>{{user.type}}</mat-card-subtitle>
+            <mat-card-title>{{user.userac_name}}</mat-card-title>
+            <mat-card-subtitle>USER</mat-card-subtitle>
             <mat-card-content>
                 <div class="row">
                     <div class="col-md-10 col-lg-4 profile-image">
@@ -12,16 +12,16 @@
                       <table class="table w-75">
                         <thead>
                             <th>Patient Name: </th>
-                            <th class="text-success" > {{user.name}}</th>
+                            <th class="text-success" > {{user.userac_name}}</th>
                         </thead>
                         <tbody>
                           <tr>
                             <td>Age:</td>
-                            <td>{{user.age}}</td>
+                            <td>{{user.userac_dob}}</td>
                           </tr>
                           <tr>
                             <td>Mobile:</td>
-                            <td>{{user.mobile}}</td>
+                            <td>{{user.userac_mobile}}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -48,8 +48,8 @@
                 <div mat-subheader>Recent</div>
                 <mat-list-item *ngFor="let folder of folders">
                   <mat-icon mat-list-icon>assignment</mat-icon>
-                  <div mat-line>{{folder.physician.name}}</div>
-                  <div mat-line> {{folder.date | date}}</div>
+                  <div mat-line>{{folder.physician.physician_name}}</div>
+                  <div mat-line> {{folder.createdAt | date}}</div>
                   <a mat-flat-button color="accent">Open</a>
                 </mat-list-item>
                 <mat-divider></mat-divider>

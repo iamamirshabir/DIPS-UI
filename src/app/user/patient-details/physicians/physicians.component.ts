@@ -28,7 +28,7 @@ export class PhysiciansComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.physicians.forEach(obj => {if(!this.specs.includes(obj.spec)) {this.specs.push(obj.spec)}});
+    this.physicians.forEach(obj => {if(!this.specs.includes(obj.physician_spec)) {this.specs.push(obj.physician_spec)}});
   }
 
   openDialog( drName:string): void {

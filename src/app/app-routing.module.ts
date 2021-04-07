@@ -17,7 +17,8 @@ const routes: Routes = [
     { path: 'patientdetails', component: PatientDetailsComponent },
     { path: 'physicians', component: PhysiciansComponent },
     { path: 'profile', component: ProfileComponent }
-  ]},
+  ]
+},
   { path: 'physician', component: PhysicianComponent ,
   children: [
     { path: 'appointments', component: AppointmentsComponent },

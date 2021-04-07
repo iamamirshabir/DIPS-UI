@@ -49,7 +49,6 @@ export class PatientDetailsComponent implements OnInit {
   
   constructor(private _formBuilder: FormBuilder, private symptomService: SymptomsService) 
   {
-    this.symptoms = symptomService.symptoms; 
     this.tokens = new Array(this.symptoms.length);
     this.tokens.fill(0,0,this.symptoms.length);
   }
@@ -83,8 +82,8 @@ export class PatientDetailsComponent implements OnInit {
     let temp: string;
     let index: number; 
     temp = this.myControl.value;
-    symptom = this.symptoms.filter(s => s.text == temp)[0];
-    index = this.symptoms.findIndex(s => s.text == temp);
+    symptom = this.symptoms.filter(s => s.symptom_text == temp)[0];
+    index = this.symptoms.findIndex(s => s.symptom_text == temp);
     if(index >= 0){
       symptom = this.symptoms[index];
       this.symptoms.splice(index,1);
@@ -98,7 +97,7 @@ export class PatientDetailsComponent implements OnInit {
 
   private _filter(value: string): Symptom[] {
     const filterValue = value.toLowerCase();
-    return this.symptoms.filter(symptom=> symptom.text.toLowerCase().includes(filterValue));
+    return this.symptoms.filter(symptom=> symptom.symptom_text.toLowerCase().includes(filterValue));
   }
 
   remove(symptom: Symptom): void {

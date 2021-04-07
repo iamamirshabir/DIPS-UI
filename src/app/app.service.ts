@@ -3,9 +3,7 @@ import { Cookie } from 'ng2-cookies';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-export class Symptom {
-  constructor(public text: string, public category_id: number) { }
-} 
+
 
 @Injectable({
   providedIn: 'root'

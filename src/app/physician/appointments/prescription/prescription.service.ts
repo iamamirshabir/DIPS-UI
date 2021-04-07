@@ -4,7 +4,12 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Alignment } from 'pdfmake/interfaces';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
-import { Physician, Prescription, Test, User, Medicine, Symptom } from 'src/app/shared/classes';
+import { catchError } from "rxjs/internal/operators";
+import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+
+import { Physician, Prescription,  User, Medicine, Symptom } from 'src/app/shared/classes';
 
 @Injectable({
   providedIn: 'root'
@@ -20,46 +25,54 @@ export class PrescriptionService {
     //QR code will refer to URL of Patient Profile 
     qrURL:string = "http://localhost:8089/patient/";
 
-  constructor() { 
-    this.prescriptions =[
-      {
-        id:101,
-        appointment_no: 101,
-        user: new User(),
-        physician: new Physician(),
-        symptoms: [new Symptom(),new Symptom()],
-        notes: "No notes at this moment",
-        diagnosis: "Not Diagnosed",
-        test: [new Test(),new Test()],
-        medicines : [new Medicine(),new Medicine()],
-        date: new Date()
-      },
-      {
-        id:102,
-        appointment_no: 102,
-        user: new User(),
-        physician: new Physician(),
-        symptoms: [new Symptom(),new Symptom()],
-        notes: "No notes at this moment",
-        diagnosis: "Not Diagnosed",
-        test: [new Test(),new Test()],
-        medicines : [new Medicine(),new Medicine()],
-        date: new Date()
-      },
-      {
-        id:103,
-        appointment_no: 103,
-        user: new User(),
-        physician: new Physician(),
-        symptoms: [new Symptom(),new Symptom()],
-        notes: "No notes at this moment",
-        diagnosis: "Not Diagnosed",
-        test: [new Test(),new Test()],
-        medicines : [new Medicine(),new Medicine()],
-        date: new Date()
+    endpoint = 'http://localhost:8081/resource-server/api/';
+
+    private extractData(res: Response): any{
+      const body = res;
+      return body || {};
+    }
+  
+    constructor(private http: HttpClient) { }
+    
+    getPrescriptionsByUser(uId: string): Observable<any>{
+      return this.http.get(this.endpoint + 'prescriptions/user/'+ uId ).pipe
+        (map(this.extractData),
+        catchError(this.handleError)); 
+    }
+    
+    getPrescription(pId: string ): Observable<any>{
+      return this.http.get(this.endpoint + 'prescriptions/' + pId).pipe
+        (map(this.extractData),
+        catchError(this.handleError)); 
+    } 
+
+    AddPrescription(p: Prescription, aId: string): Observable<any>{
+      return this.http.post(this.endpoint + 'prescriptions/appointment/' + aId, p).pipe
+      (catchError(this.handleError)); 
+    }
+
+    AddSymptomToPrescription(pId : string, symptoms: number[]): Observable<any>{
+      return this.http.put<Prescription>(this.endpoint + 'prescriptions/'+ pId+ '/symptoms/', symptoms).pipe
+      (catchError(this.handleError))
+    }
+
+  
+    private handleError(error : HttpErrorResponse): any {
+      if(error.error instanceof ErrorEvent){
+        console.error('An error occurred', error.error.message)
       }
-    ]
-  }
+      else{
+        console.error(
+          'Backend returned code ${error.status}, ' +
+          'body was: ${error.error}'
+        );
+      }
+      return throwError(
+        ('Something bad happened; please try again later!')
+      )
+    }
+  
+
   generatePdf(prescription: Prescription){
     const documentDefinition = this.getDocDefinition(prescription);
     pdfMake.createPdf(documentDefinition).open();
@@ -81,25 +94,25 @@ export class PrescriptionService {
            columns :[
              [
               {
-                text: "ID:  "  + prescription.id,
+                text: "ID:  "  + prescription.prescription_id,
                 style: 'name'
           },
           {
-            text: 'By:  ' + prescription.physician.name,
+            text: 'By:  ' + prescription.physician.physician_name,
             color: 'blue'
           },
           {
-                text:  prescription.physician.description,
+                text:  prescription.physician.physician_spec,
           },
           {
-                text: 'Patient:  ' + prescription.user.name,
+                text: 'Patient:  ' + prescription.user.userac_name,
                 color: 'green'
           },
           {
-                text: 'Age:  ' + prescription.user.age
+                text: 'Date of Birth:  ' + prescription.user.userac_dob
           },
           {
-                text: 'Contact Number:  ' + prescription.user.mobile          
+                text: 'Mobile:  ' + prescription.user.userac_mobile          
               
           }
         ]
@@ -119,17 +132,17 @@ export class PrescriptionService {
             columns : [
               {
                 ul : [
-                  ...prescription.symptoms.filter((text, index) => index % 3 === 0).map(s => s.text)
+                  ...prescription.symptom.filter((text, index) => index % 3 === 0).map(s => s.symptom_text)
                 ]
               },
               {
                 ul : [
-                  ...prescription.symptoms.filter((text, index) => index % 3 === 1).map(s => s.text)
+                  ...prescription.symptom.filter((text, index) => index % 3 === 1).map(s => s.symptom_text)
                 ]
               },
               {
                 ul : [
-                  ...prescription.symptoms.filter((text, index) => index % 3 === 2).map(s => s.text)
+                  ...prescription.symptom.filter((text, index) => index % 3 === 2).map(s => s.symptom_text)
                 ]
               }
             ]
@@ -139,20 +152,20 @@ export class PrescriptionService {
             style: 'header'
           },
           {
-            text: prescription.diagnosis
+            text: prescription.prescription_diagnosis
           },
           {
             text: 'Notes',
             style: 'header'
           },
           {
-            text: prescription.notes
+            text: prescription.prescription_notes
           },
           {
             text: 'Medicines',
             style: 'header'
           },          
-            this.getMedicineObject(prescription.medicines),
+            this.getMedicineObject(prescription.medicine),
             {
               qr: this.qrURL
             }      
@@ -182,15 +195,15 @@ export class PrescriptionService {
         widths: ['*', '*', '*', '*'],
         body: [
           [{
-            text: 'Title',
-            style: 'tableHeader'
-          },
-          {
             text: 'Brand',
             style: 'tableHeader'
           },
           {
-            text: 'Weight',
+            text: 'Composition',
+            style: 'tableHeader'
+          },
+          {
+            text: 'Dosage',
             style: 'tableHeader'
           },
           {
@@ -200,7 +213,7 @@ export class PrescriptionService {
           ]
           ,
           ...medicines.map(md => {
-            return [md.title, md.brand, md.weight, md.frequency];
+            return [md.medicine_brand, md.medicine_composition, md.medicine_dosage, md.medicine_frequency];
           })
         ]
       },

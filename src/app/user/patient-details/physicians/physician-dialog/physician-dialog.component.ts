@@ -29,4 +29,8 @@ export class PhysicianDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  //method to make an appointment
+  makeAppointment(){
+
+  }
 }

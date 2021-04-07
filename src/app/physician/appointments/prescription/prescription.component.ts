@@ -7,13 +7,13 @@ import { MatTable } from "@angular/material/table";
 
 import { Medicine, Physician, Prescription, Symptom } from 'src/app/shared/classes';
 
-import { SymptomsService } from 'src/app/symptoms.service';
 import { PrescriptionService } from './prescription.service';
+import { SymptomsService } from 'src/app/symptoms.service';
 
 
 @Component({
   selector: 'app-prescription',
-  providers: [PrescriptionService, SymptomsService],
+  providers: [ PrescriptionService, SymptomsService],
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.css']
 })
@@ -29,7 +29,7 @@ export class PrescriptionComponent implements OnInit {
   symptoms: Symptom[];
 
   //Table descripiton of Medicine Data display
-  displayedColumns: string[] = ['title', 'brand', 'weight', 'frequency'];
+  displayedColumns: string[] = ['medicine_brand', 'medicine_composition', 'medicine_dosage', 'medicine_frequency'];
   dataSource = this.ELEMENT_DATA;  
   frequencies: number[]=[6,12,24]
 
@@ -48,37 +48,81 @@ export class PrescriptionComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+
+  //temp
+  i: number[];
   
   constructor(private prescriptionService: PrescriptionService,
     private symptomService: SymptomsService) {
-    
-    //Initializations
-    this.prescription = prescriptionService.prescriptions[0];
-    this.prescription.symptoms = [];
-    this.prescription.medicines = [];
-
-    //Symptoms fetched using service
-    this.symptoms = symptomService.symptoms;
+      //this.prescription = new Prescription();
+      this.getPrescription('4');
+     //Symptoms fetched using service
+     this.getAllSymptoms();
+        
+        
   }
-  
+
+  ngOnInit(){
+     
+     //For value change in auto-complete
+      this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+      //this.addPrescription(this.prescription, '4');
+      //this.AddPrescription(this.prescription,'1','2','3');
+      //this.AddSymptomToPrescription('10');
+  }
+
+  addPrescription(p: Prescription, aId: string): void {
+    this.prescriptionService.AddPrescription(p, aId).subscribe((resp: any) =>{
+      this.prescription = resp;
+    })
+  }
+
+  getAllSymptoms(): Symptom[]{
+    this.symptomService.getSymptoms().subscribe((resp: any) =>{
+      this.symptoms = resp._embedded.symptomList;
+      console.log(this.symptoms);
+    })  
+    return this.symptoms;  
+  }
+
   //Makes call to PDF service
   generatePdf(){
     this.prescriptionService.generatePdf(this.prescription);  
   }
 
-  ngOnInit(){
-    //For value change in auto-complete
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
+
+  AddSymptomToPrescription(pId : string):void{
+    this.prescriptionService.AddSymptomToPrescription(pId, this.generateIndexes(this.prescription.symptom))
+    .subscribe((resp: any )=> {
+      console.log(resp);
+    });
   }
 
+  getPrescription(pId: string):void{
+    this.prescriptionService.getPrescription(pId).subscribe((resp: any) =>{
+      this.prescription = resp;
+      console.log(this.prescription);
+    }
+
+    )
+  }
+  uploadSymptoms( ){
+    this.AddSymptomToPrescription('4');
+  }
+
+  generateIndexes(s: Symptom[]) : number[] {
+    var indexes = new Array();
+    s.forEach(s => indexes.push(s.symptom_id));
+    return  indexes;
+  }
 
   //Medicine Added to Page and Prescription Object
   addMedicine(){
-    let medicine: Medicine = {title: '',brand:'',weight:0,frequency:0};
+    let medicine: Medicine = {medicine_id:0,medicine_brand: '',medicine_composition:'',medicine_dosage:0,medicine_frequency:0,createdAt: '', updatedAt:''};
     let name,formula,frequency: string;
     let weight: number;
     name = this.medNameControl.value;
@@ -86,12 +130,12 @@ export class PrescriptionComponent implements OnInit {
     weight = this.medWeightControl.value;
     frequency = document.getElementById('fr')?.innerText.trim()!;
         if(name!= null && weight != null && frequency != null ){
-      medicine.brand = formula;
-      medicine.title = name;
-      medicine.frequency = +frequency;
-      medicine.weight = weight;
+      medicine.medicine_brand = name;
+      medicine.medicine_composition = formula;
+      medicine.medicine_frequency = +frequency;
+      medicine.medicine_dosage = weight;
       this.ELEMENT_DATA.push(medicine);
-      this.prescription.medicines.push(medicine);
+      this.prescription.medicine.push(medicine);
       this.medNameControl.reset();
       this.medWeightControl.reset();
       document.getElementById('medName')?.focus();
@@ -105,30 +149,31 @@ export class PrescriptionComponent implements OnInit {
     let temp: string;
     let index: number; 
     temp = this.myControl.value;
-    symptom = this.symptoms.filter(s => s.text == temp)[0];
-    index = this.symptoms.findIndex(s => s.text == temp);
+    symptom = this.symptoms.filter(s => s.symptom_text == temp)[0];
+    index = this.symptoms.findIndex(s => s.symptom_text == temp);
     if(index >= 0){
       symptom = this.symptoms[index];
       this.symptoms.splice(index,1);
-      this.prescription.symptoms.push(symptom);
-      this.myControl.reset();
-      this.ngOnInit();
+      this.prescription.symptom.push(symptom);
+      document.getElementById('symptomSelector')?.focus();
+      this.myControl.setValue('');
+      //this.ngOnInit();
     }
     }
 
   //Function used by AutoComplete  
   private _filter(value: string): Symptom[] {
     const filterValue = value.toLowerCase();
-    return this.symptoms.filter(symptom=> symptom.text.toLowerCase().includes(filterValue));
+    return this.symptoms.filter(symptom=> symptom.symptom_text.toLowerCase().includes(filterValue));
   }
 
   //If removed from chips
   remove(symptom: Symptom): void {
-    const index = this.prescription.symptoms.indexOf(symptom);
+    const index = this.prescription.symptom.indexOf(symptom);
 
     if (index >= 0) {
       this.symptoms.push(symptom);
-      this.prescription.symptoms.splice(index, 1);
+      this.prescription.symptom.splice(index, 1);
     }
   }
 

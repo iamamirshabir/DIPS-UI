@@ -1,64 +1,70 @@
 
 export class Prescription{
-    id: number;
-    appointment_no: number;
-    user: User;
+    createdAt: string;
+    updatedAt: string;
+    prescription_id: number;
+    prescription_notes: string;
+    prescription_diagnosis: string;
+    tests: string;
+    symptom: Symptom[];
+    medicine: Medicine[];
     physician: Physician;
-    symptoms: Symptom[];
-    notes: string;
-    diagnosis: string;
-    test: Test[];
-    medicines : Medicine[];
-    date: Date;
+    user: User;         
 }
 
-export class Test {
-    id: number;
-    title: string;
-}
 
 export class Medicine {
-    title: string;
-    brand: string;
-    weight: number;
-    frequency: number;
+    createdAt: string;
+    updatedAt: string;
+    medicine_id: number;
+    medicine_brand: string;
+    medicine_composition: string;
+    medicine_frequency: number;
+    medicine_dosage: number; 
 }
   
-export interface Appointment{
-    id: number;
-    added_on: Date;
-    user: User;
+export class Appointment{
+    createdAt: string;
+    updatedAt: string;
+    appointment_id: number;
+    appointment_on: string;
     physician: Physician;
+    user: User; 
   }
   
 
 export class User{
-    id: number;
-    keycloak_id: string;
-    keycloak_user: string;
-    name:string;
-    type: string;
-    age: number;
-    mobile: number;  
+    userac_id: number;
+    userac_keycloak_id: string;
+    userac_keycloak_username: string;
+    userac_name:string;
+    userac_dob: number;
+    userac_mobile: number;  
+    userac_email: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export class Symptom{
-    id: number;
-    text: string;
-    code: string;    
+    createdAt: string;
+    updatedAt: string;
+    symptom_id: number;
+    symptom_text: string;
 }
   
 export class Physician
 {
-    name: string;
-    spec: string;
-    address: string;
-    visit_days: string[];
-    start_time: number;
-    end_time: number;
-    description: string;
-    keycloak_id: string;
-    keycloak_username: string;
+    createdAt: string;
+    updatedAt: string;
+    physician_id: number;
+    physician_name: string;
+    physician_spec: string;
+    physician_address: string;
+    physician_visit_days: string;
+    physician_time_start: number;
+    physician_time_end: number;
+    physician_keycloak_id: string;
+    physician_keycloak_username: string;    
 }
 
 export class Diagnosis{

@@ -10,7 +10,7 @@
         <a mat-button href="#" ><span></span>patientInfo</a>
         <a mat-button href="#"><span></span>Dashboard</a>
         <a mat-button href="#"><span></span>about-us</a>
-        <a mat-raised-button color="accent" href="#"><span></span>Login/Sign</a>
+        <button mat-raised-button (click)="login()" color="accent" >Login/Sign</button>
         <input title="Enter search terms" required="" aria-label="Enter search terms" autocomplete="off" id="global-nav-search" class="typeahead-search js-bound" type="text" name="query" placeholder="Search">
         </ul>
      </div>
