@@ -63,6 +63,7 @@ import { PhysiciansComponent } from './user/patient-details/physicians/physician
 import { PrescriptionComponent } from './physician/appointments/prescription/prescription.component';
 import { UserProfileComponent } from './physician/user-profile/user-profile.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,7 @@ import { ProfileComponent } from './user/profile/profile.component';
     MatTableModule,
     LayoutModule
   ],
-  providers: [],
+  providers: [KeycloakService],
   bootstrap: [AppComponent],
   entryComponents: [PhysicianDialogComponent]
 })

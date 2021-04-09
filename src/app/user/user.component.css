@@ -123,3 +123,7 @@ opacity: 0.8;  }
 .profile-card{
   background-color: inherit;
 }
+
+.mat-form-field {
+  min-width: 330px;
+}

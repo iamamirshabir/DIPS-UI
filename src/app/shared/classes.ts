@@ -39,6 +39,7 @@ export class User{
     userac_keycloak_username: string;
     userac_name:string;
     userac_dob: number;
+    userac_reg: boolean;
     userac_mobile: number;  
     userac_email: string;
     createdAt: string;

@@ -19,22 +19,21 @@
               <p>1. Nothing can replace medical diagnosis at medical complex</p>
             </mat-card-content>
             <mat-card-actions>
-                      </mat-card-actions>
+            </mat-card-actions>
             <mat-card-footer >
-              <mat-checkbox class="example-margin " >I undertand and agree!</mat-checkbox>
+              <mat-checkbox formControlName="firstCtrl" class="example-margin ">I undertand and agree!</mat-checkbox>
               
             </mat-card-footer>
           </mat-card>
           <br>    
           <button mat-stroked-button color="primary" matStepperNext>Next</button>
-
         </form>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup" label="Add Personal Info">
         <form [formGroup]="secondFormGroup">
             <mat-form-field appearance="fill">
               <mat-label>Gender</mat-label>
-                <mat-select >
+                <mat-select formControlName="secondCtrl" >
                 <mat-option value="male">Male</mat-option>
                 <mat-option value="female" >Female</mat-option>
                 <mat-option value="na">Prefer not to say</mat-option>
@@ -49,23 +48,25 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup" label="Select Medical Conditions">
-        <form [formGroup]="secondFormGroup">
-          <h2 class="my-card-title">Select Your Symptoms & Conditions</h2>
-                
-          <mat-slide-toggle >Recently Injured</mat-slide-toggle><hr/>
-          <mat-slide-toggle>Diabetic</mat-slide-toggle><hr/>
-          <mat-slide-toggle>Hypertensive</mat-slide-toggle><hr/>    
+        <form (ngSubmit)="onFormSubmit()">
+          <h3 class="my-card-title text-primary">Select Your Symptoms & Conditions</h3>
+          <mat-slide-toggle [(ngModel)]="s1Checked" name="s1">Hypertention</mat-slide-toggle><hr/>
+          <mat-slide-toggle [(ngModel)]="s2Checked" name="s2">Fever</mat-slide-toggle><hr/>
+          <mat-slide-toggle [(ngModel)]="s3Checked" name="s3">Cough</mat-slide-toggle><hr/>
+          <mat-slide-toggle [(ngModel)]="s4Checked" name="s4">Depression</mat-slide-toggle><hr/>
+          <mat-slide-toggle [(ngModel)]="s5Checked" name="s5">Fatigue</mat-slide-toggle><hr/>             
           <div>
             <button mat-button color="warn"  matStepperPrevious>Back</button>
-            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+            <button mat-stroked-button type="submit" color="primary" matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup" label="Add Symptoms">
-        <form [formGroup]="secondFormGroup"><h2 class="my-card-title">Enter Your Symptoms</h2>
+      <mat-step  label="Add Symptoms">
+        <form><h2 class="my-card-title">Enter Your Symptoms</h2>
           <mat-form-field class="example-full-width">
             <input type="text"
-                   placeholder="Pick one"
+                    id="symptomSelector"
+                   placeholder="Select Your Symptoms & Signs...(min. 3)"
                    aria-label="Number"
                    matInput
                    [formControl]="myControl"
@@ -90,13 +91,13 @@
           <br>
           <div>
             <button mat-button color="warn"  matStepperPrevious>Back</button>
-            <button mat-stroked-button (click)="generateToken()" color="primary" matStepperNext>Next</button>
+            <button mat-stroked-button (click)="generateToken()" color="primary"  *ngIf="(tokenEnabled==true)"  matStepperNext>Next</button>
           </div>
         </form>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Result</ng-template>
-        <mat-card class="col-lg-6 mx-auto">
+        <mat-card class="col-lg-6 mx-auto" *ngIf="!(diagnosisResult==null)">
           <mat-card-title [style.color]="accentColor">
             Result
           </mat-card-title>
@@ -108,16 +109,14 @@
               </mat-chip>
             </mat-chip-list>
             <hr>
-            <h2 [style.color]="primaryColor">Rabies</h2>
-            <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+            <h2 [style.color]="primaryColor">{{diagnosisResult.potentialDiseases[0]}}</h2>
+            <mat-progress-bar mode="determinate" [value]="diagnosisResult.diseaseProb[0]*100"></mat-progress-bar>
             <br>
-            <mat-card-subtitle>Probability</mat-card-subtitle>
+            <mat-card-subtitle>Probability <span style="margin-right: 0px;">{{diagnosisResult.diseaseProb[0]*100}}</span></mat-card-subtitle>
             <p>
               Rabies is a fatal but preventable viral disease. It can spread to people and pets if they are bitten or scratched by a rabid animal. In the United States, rabies is mostly found in wild animals like bats, raccoons, skunks, and foxes. However, in many other countries dogs still carry rabies, and most rabies deaths in people around the world are caused by dog bites.
             </p>
-            <h3>
-              {{tokenString}}
-            </h3>
+            
           </mat-card-content>
           <mat-card-actions>
             <a mat-raised-button color="accent" routerLink="../physicians">See Physicians</a>
@@ -132,7 +131,6 @@
         </div>
       </mat-step>
     </mat-vertical-stepper>
-     
   </div>
   </div>
 </div>

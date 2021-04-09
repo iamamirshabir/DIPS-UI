@@ -1,4 +1,5 @@
 <div class="row mx-0">
+  <mat-spinner *ngIf="(prescription == null)" color="warn" class="mx-auto mt-5"></mat-spinner>
   <div *ngIf="!(prescription == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
     <p mat-line>ID: {{prescription.prescription_id}}</p>

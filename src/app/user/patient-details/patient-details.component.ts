@@ -8,6 +8,7 @@ import {findIndex, map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
 import { Diagnosis, Symptom, User } from 'src/app/shared/classes';
 import { SymptomsService } from 'src/app/symptoms.service';
+import { PatientdetailsService } from './patientdetails.service';
 
 
 
@@ -38,17 +39,28 @@ export class PatientDetailsComponent implements OnInit {
   symptoms: Symptom[]; 
   selectedSymptoms: Symptom[]=[];
   diagnosis: Diagnosis;
-  
-  isLinear = false;
+  diagnosisResult;
+
+  isLinear = true;
   //token String declarations
   tokens: number[];
   tokenString: string;
+  tokenEnabled= false;
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
   
-  
-  constructor(private _formBuilder: FormBuilder, private symptomService: SymptomsService) 
+  s1Checked: false;
+  s2Checked: false;
+  s3Checked: false;
+  s4Checked: false;
+  s5Checked: false;
+
+  constructor(private _formBuilder: FormBuilder, private symptomService: SymptomsService,
+    private patientdetailService: PatientdetailsService) 
   {
+    this.symptoms = symptomService.addedSymptoms;
     this.tokens = new Array(this.symptoms.length);
     this.tokens.fill(0,0,this.symptoms.length);
   }
@@ -65,15 +77,49 @@ export class PatientDetailsComponent implements OnInit {
       this.secondFormGroup = this._formBuilder.group({
         secondCtrl: ['', Validators.required]
       });
+      
+
+    }
+
+  getDiagnosisResult(token: string):void{
+    this.patientdetailService.getDiagnosisResult(token).subscribe((resp: any) =>{
+      this.diagnosisResult = resp;
+      console.log(this.diagnosisResult);
+    });
+  }
+
+  onFormSubmit() {
+    if(this.s1Checked){
+      this.myControl.setValue('high blood pressure');
+      this.onAddition();
+    }
+    if(this.s2Checked){
+      this.myControl.setValue('fever');
+      this.onAddition();
+    }
+    if(this.s3Checked){
+      this.myControl.setValue('coughing');
+      this.onAddition();
+    }
+    if(this.s4Checked){
+      this.myControl.setValue('depression');
+      this.onAddition();
+    }
+    if(this.s5Checked){
+      this.myControl.setValue('fatigue');
+      this.onAddition();
+    }
+    this.myControl.setValue('');
   }
 
   //Binary Array of selected symptoms
    generateToken(){
+     this.tokenString = this.tokens.toString();
+     this.getDiagnosisResult(this.tokenString);
      this.diagnosis = new Diagnosis();
      this.diagnosis.id = 101;
      this.diagnosis.symptoms = this.selectedSymptoms;
      this.diagnosis.patient = new User();
-     this.tokenString = this.tokens.toString();
   }
 
   //Mat-autocomplete addition function
@@ -82,18 +128,24 @@ export class PatientDetailsComponent implements OnInit {
     let temp: string;
     let index: number; 
     temp = this.myControl.value;
-    symptom = this.symptoms.filter(s => s.symptom_text == temp)[0];
+    //symptom = this.symptoms.filter(s => s.symptom_text == temp)[0];
     index = this.symptoms.findIndex(s => s.symptom_text == temp);
     if(index >= 0){
       symptom = this.symptoms[index];
       this.symptoms.splice(index,1);
       this.selectedSymptoms.push(symptom);
-      this.tokens[index]=1;
-      this.myControl.setValue("");
+      document.getElementById('symptomSelector')?.focus();
+      this.tokens[symptom.symptom_id]=1;
+      this.myControl.setValue('');
+      if(this.selectedSymptoms.length>2){
+        this.tokenEnabled = true;
+      }
       //this.ngOnInit();
     }
-    
+   
 }
+
+
 
   private _filter(value: string): Symptom[] {
     const filterValue = value.toLowerCase();
@@ -106,7 +158,7 @@ export class PatientDetailsComponent implements OnInit {
     if (index >= 0) {
       this.symptoms.push(symptom);
       this.selectedSymptoms.splice(index, 1);
-      this.tokens[index]=0;
+      this.tokens[symptom.symptom_id]=0;
     }
   }
   
