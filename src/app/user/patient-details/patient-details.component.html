@@ -62,7 +62,7 @@
         </form>
       </mat-step>
       <mat-step  label="Add Symptoms">
-        <form><h2 class="my-card-title">Enter Your Symptoms</h2>
+        <form><h2 class="my-card-title text-primary">Enter Your Symptoms</h2>
           <mat-form-field class="example-full-width">
             <input type="text"
                     id="symptomSelector"
@@ -97,7 +97,7 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Result</ng-template>
-        <mat-card class="col-lg-6 mx-auto" *ngIf="!(diagnosisResult==null)">
+        <mat-card class="col-lg-6 mx-auto" *ngIf="resultLoaded | async">
           <mat-card-title [style.color]="accentColor">
             Result
           </mat-card-title>
@@ -113,13 +113,13 @@
             <mat-progress-bar mode="determinate" [value]="diagnosisResult.diseaseProb[0]*100"></mat-progress-bar>
             <br>
             <mat-card-subtitle>Probability <span style="margin-right: 0px;">{{diagnosisResult.diseaseProb[0]*100}}</span></mat-card-subtitle>
-            <p>
-              Rabies is a fatal but preventable viral disease. It can spread to people and pets if they are bitten or scratched by a rabid animal. In the United States, rabies is mostly found in wild animals like bats, raccoons, skunks, and foxes. However, in many other countries dogs still carry rabies, and most rabies deaths in people around the world are caused by dog bites.
+            <p *ngIf="diseaseLoaded | async">
+              {{disease.disease_details}}
             </p>
             
           </mat-card-content>
           <mat-card-actions>
-            <a mat-raised-button color="accent" routerLink="../physicians">See Physicians</a>
+            <a mat-raised-button *ngIf="diseaseLoaded | async" color="accent" routerLink="../physicians" [queryParams]="{spec: disease.diseasecategory.diseasecategory_title }">See Physicians</a>
           </mat-card-actions>
           <mat-card-footer>
 

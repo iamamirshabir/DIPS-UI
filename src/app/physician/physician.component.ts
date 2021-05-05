@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Cookie } from 'ng2-cookies';
 
+
 @Component({
   selector: 'app-physician',
   templateUrl: './physician.component.html',

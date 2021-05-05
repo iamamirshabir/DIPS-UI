@@ -1,5 +1,6 @@
 <div class="row mx-0">
-    <div class="col-lg-11 mt-5 mx-auto">
+  <mat-spinner *ngIf="(physicians == null)" color="accent" class="mx-auto mt-5"></mat-spinner>
+    <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
       <h1 class="h1 #3f51b5">Doctors Available</h1>
       <div class="my-card">
         <div class="my-card-header my-card-header-primary">
@@ -9,7 +10,7 @@
           <mat-label>Select Type</mat-label>
           <mat-select [formControl]="specControl" >
             <mat-option *ngFor="let spec of specs " [value]="spec" >
-             <span >{{spec}}</span> 
+             {{spec}} 
             </mat-option>
            </mat-select>
         </mat-form-field>
@@ -25,7 +26,7 @@
                 Here optionally presented physician's bio.
             </mat-card-content>
             <mat-card-actions>
-                <button mat-flat-button color="primary"  (click)="openDialog(physician.physician_name)">Book Appointment</button>
+                <button mat-flat-button color="primary"  (click)="openDialog(physician.physician_name,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book Appointment</button>
                 <button mat-stroked-button color="accent">View Contact Info</button>
             </mat-card-actions>
             <mat-divider [inset]="true" *ngIf="!last"></mat-divider>

@@ -4,26 +4,25 @@ import { catchError } from "rxjs/internal/operators";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { endpoint } from 'src/app/shared/classes';
+import { Physician, endpoint } from 'src/app/shared/classes';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PhysiciansService {
+export class PhysicianRegistrationService {
 
     private extractData(res: Response): any{
       const body = res;
       return body || {};
     }
-
   
-  constructor(private http: HttpClient) {
-  }
 
-  getPhysicians(): Observable<any>{
-    return this.http.get(endpoint + 'physicians/').pipe
-      (map(this.extractData),
-      catchError(this.handleError)); 
+  constructor(private http : HttpClient) { }
+
+  AddPhysician(p: Physician): Observable<any>{
+    return this.http.post(endpoint + 'physicians/', p).pipe
+    (map(this.extractData),
+    catchError(this.handleError)); 
   }
 
   private handleError(error : HttpErrorResponse): any {

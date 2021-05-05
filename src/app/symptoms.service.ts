@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Symptom } from './shared/classes';
+import { Symptom, endpoint } from './shared/classes';
 import { catchError } from "rxjs/internal/operators";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { map } from 'rxjs/operators';
@@ -499,8 +499,6 @@ export class SymptomsService {
 { symptom_id:486,symptom_text:'yellowish coloration skin white eye', createdAt:'0', updatedAt: '0' },
 { symptom_id:487,symptom_text:'yellowish skin', createdAt:'0', updatedAt: '0' },
 { symptom_id:488,symptom_text:'yellowish skin crust', createdAt:'0', updatedAt: '0' }];
-  
-  endpoint = 'http://localhost:8081/resource-server/api/';
 
     private extractData(res: Response): any{
       const body = res;
@@ -512,7 +510,7 @@ export class SymptomsService {
     
     
      getSymptoms(): Observable<any>{
-      return this.http.get(this.endpoint + 'symptoms/').pipe
+      return this.http.get(endpoint + 'symptoms/').pipe
         (map(this.extractData),
         catchError(this.handleError)); 
     }

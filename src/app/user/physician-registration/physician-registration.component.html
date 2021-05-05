@@ -1,0 +1,82 @@
+<div class="row m-0 w-100 h-100"  >
+    <div class="col-md-10 col-lg-10 mx-auto mt-5">
+      <mat-card>
+        <mat-card-title class="text-primary">Register as Physician with us and Serve the Community!</mat-card-title>
+        <mat-card-subtitle>Complete Your Profile</mat-card-subtitle>
+          <div class="px-3"  >
+            <div class="row">
+              <div class="col-lg-6">
+                <mat-form-field appearance="standard">
+                  <mat-label>Enter Your Name</mat-label>
+                  <input matInput placeholder="Full Name" [formControl]="name" >
+                  <mat-hint>Excluding special characters</mat-hint>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="standard">
+                    <mat-label>Enter Your Email</mat-label>
+                    <input matInput placeholder="someone@example.com" [formControl]="email" required >
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="standard">
+                    <mat-label>Your Specialization</mat-label>
+                    <input matInput placeholder="Specialization" [formControl]="spec" >
+                    <mat-hint>Category most suitable to your qualification e.g. Cardiologist</mat-hint>
+                  </mat-form-field>
+                <br>
+                <mat-form-field appearance="standard">
+                  <mat-label>Your Registration Number</mat-label>
+                  <input matInput placeholder="Reg. Number" [formControl]="regno" >
+                  <mat-hint>Required for verification process</mat-hint>
+                </mat-form-field>
+                <br>
+                <mat-form-field appearance="standard">
+                    <mat-label>Your Complete Office Address</mat-label>
+                    <input matInput placeholder="Address" [formControl]="address"  >
+                    <mat-hint>Should be complete</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-6">
+                <br>
+              <mat-form-field appearance="standard">
+                <mat-label>Visit Hours Start At</mat-label>
+                <mat-select required="true" [formControl]="visitstart">
+                  <mat-option *ngFor="let hour of hours" [value]="hour">
+                    {{hour}} : 00
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="standard">
+                <mat-label>Visit Hours Ends At</mat-label>
+                <mat-select required="true" [formControl]="visitend">
+                  <mat-option *ngFor="let hour of hours" [value]="hour">
+                    {{hour}} : 00
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <hr>
+              <br>
+              <mat-label>Select Days of Your Availability</mat-label>
+              <ul>
+                <li *ngFor="let visitday of visitdays">
+                  <mat-checkbox [(ngModel)]="visitday.available" >
+                    {{visitday.name}}
+                  </mat-checkbox>
+                </li>
+              </ul>
+            <br>
+              </div>
+
+            </div>
+
+              
+          <mat-card-actions>
+            <button mat-stroked-button color="accent" type="submit" (click) ="registerPhysician()" >Submit</button>
+            <h2>{{availability}}</h2>
+          </mat-card-actions>
+          </div>
+      </mat-card>
+    </div>
+  </div>

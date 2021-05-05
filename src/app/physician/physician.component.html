@@ -10,7 +10,7 @@
         <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span> Appointments</a> 
         <a mat-list-item routerLink="prescription"><span><mat-icon aria-hidden="false" aria-label="No">pages</mat-icon></span>Write Prescription</a>
         <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
-        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
+        <a mat-list-item routerLink="../login"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -30,7 +30,6 @@
         </button>
       </mat-toolbar>
       <router-outlet></router-outlet>
-      <app-footer></app-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
   

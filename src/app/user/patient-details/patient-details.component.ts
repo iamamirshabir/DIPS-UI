@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {findIndex, map, startWith} from 'rxjs/operators';
 import {MatChipInputEvent} from '@angular/material/chips';
-import { Diagnosis, Symptom, User } from 'src/app/shared/classes';
+import { Diagnosis, Disease, Symptom, User } from 'src/app/shared/classes';
 import { SymptomsService } from 'src/app/symptoms.service';
 import { PatientdetailsService } from './patientdetails.service';
 
@@ -41,6 +41,10 @@ export class PatientDetailsComponent implements OnInit {
   diagnosis: Diagnosis;
   diagnosisResult;
 
+  resultLoaded: Promise<boolean>;
+  diseaseLoaded: Promise<boolean>;
+  disease : Disease;
+
   isLinear = true;
   //token String declarations
   tokens: number[];
@@ -50,6 +54,7 @@ export class PatientDetailsComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+
   
   s1Checked: false;
   s2Checked: false;
@@ -63,6 +68,7 @@ export class PatientDetailsComponent implements OnInit {
     this.symptoms = symptomService.addedSymptoms;
     this.tokens = new Array(this.symptoms.length);
     this.tokens.fill(0,0,this.symptoms.length);
+    this.disease = new Disease();
   }
 
   ngOnInit(){
@@ -84,6 +90,13 @@ export class PatientDetailsComponent implements OnInit {
   getDiagnosisResult(token: string):void{
     this.patientdetailService.getDiagnosisResult(token).subscribe((resp: any) =>{
       this.diagnosisResult = resp;
+      this.resultLoaded = Promise.resolve(true);
+      this.patientdetailService.getDiseaseDetails(resp.potentialDiseases[0]).subscribe(
+        (res: any)=>{
+          this.disease = res;
+          console.log(this.disease);
+          this.diseaseLoaded = Promise.resolve(true);
+        });
       console.log(this.diagnosisResult);
     });
   }
@@ -120,6 +133,7 @@ export class PatientDetailsComponent implements OnInit {
      this.diagnosis.id = 101;
      this.diagnosis.symptoms = this.selectedSymptoms;
      this.diagnosis.patient = new User();
+     
   }
 
   //Mat-autocomplete addition function

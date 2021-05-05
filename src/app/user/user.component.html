@@ -7,10 +7,10 @@
         <img class="mx-auto dp-image " src="/assets/images/user.png">
     <div >
       <mat-nav-list class="mat-nav-list"  >
-        <a mat-list-item routerLink="patientdetails"><span><mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon></span>Symptoms Diagnosis</a>
+        <a mat-list-item routerLink="diagnosis"><span><mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon></span>Symptoms Diagnosis</a>
         <a mat-list-item routerLink="physicians"><span><mat-icon aria-hidden="false" aria-label="No">person_pin</mat-icon></span>Physicians</a>
         <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
-        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
+        <a mat-list-item routerLink="../login"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
       </mat-nav-list>
     </div>
          
@@ -28,7 +28,7 @@
         <span>Diagnosis Intuition & Prescription</span>        
         <div>
           <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
-            <mat-label>{{userAc.userac_name}}  </mat-label>
+            <mat-label *ngIf="!(this.userService.userAc==null)">{{this.userService.userAc.userac_name}}  </mat-label>
             <mat-icon>account_circle</mat-icon>
           </button>
     
@@ -36,55 +36,66 @@
     
         
       </mat-toolbar>
-      <router-outlet></router-outlet>
-      <!-- Part for Profile Complete-->
-      <div class="row m-0 w-100 h-100" *ngIf="(userAc.userac_reg==false)" >
-        <div class="col-md-10 col-lg-5 mx-auto mt-5">
-          <section> 
-            <mat-progress-bar
-                color="primary"
-                mode="determinate"
-                [value]="progValue">
-            </mat-progress-bar>
-          </section>
-          <mat-card>
-            <mat-card-title class="text-primary">A little more to go!</mat-card-title>
-            <mat-card-subtitle>Complete Your Profile</mat-card-subtitle>
-              <div class="px-3"  >
-                <mat-form-field appearance="standard">
-                  <mat-label>Enter Your Name</mat-label>
-                  <input matInput placeholder="Full Name" [formControl]="name" (input) ="progFunction()">
-                  <mat-hint>Excluding special characters</mat-hint>
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="standard">
-                    <mat-label>Enter Your Email</mat-label>
-                    <input matInput placeholder="someone@example.com" [formControl]="email" required (input) ="progFunction()">
-                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      <router-outlet></router-outlet>   
+     
+      <!-- Part for Profile Complete 
+      ||this.userService.userAc.userac_reg==false
+      *ngIf = "userLoaded | async"
+      -->
+      
+ 
+       <div > 
+        <div class="row m-0 w-100 h-100" *ngIf="(this.userService.userAc==null)" >
+          <div class="col-md-10 col-lg-5 mx-auto mt-5">
+            <section> 
+              <mat-progress-bar
+                  color="primary"
+                  mode="determinate"
+                  [value]="progValue">
+              </mat-progress-bar>
+            </section>
+            <mat-card>
+              <mat-card-title class="text-primary">A little more to go!</mat-card-title>
+              <mat-card-subtitle>Complete Your Profile</mat-card-subtitle>
+                <div class="px-3"  >
+                  <mat-form-field appearance="standard">
+                    <mat-label>Enter Your Name</mat-label>
+                    <input matInput placeholder="Full Name" [formControl]="name" (input) ="progFunction()">
+                    <mat-hint>Excluding special characters</mat-hint>
                   </mat-form-field>
                   <br>
-                <mat-form-field appearance="standard">
-                  <mat-label>Phone number</mat-label>
-                  <input matInput placeholder="3001234567" [formControl]="phone" required (input) ="progFunction()">                
-                  <mat-icon matSuffix>phone</mat-icon>
-                  <mat-hint>Area code note required e.g +92</mat-hint>
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="standard">
-                  <mat-label>Choose Date of Birth</mat-label>
-                  <input matInput [formControl]="date" (focus) ="progFunction()"  [min]="minDate" [max]="maxDate" [matDatepicker]="picker" >
-                  <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                  <mat-hint>Enter a valid date</mat-hint>                
-                </mat-form-field>                
-              <mat-card-actions>
-                <button mat-stroked-button color="accent" type="submit" (click)="registerUser()">Submit</button>
-              </mat-card-actions>
-              </div>
-          </mat-card>
+                  <mat-form-field appearance="standard">
+                      <mat-label>Enter Your Email</mat-label>
+                      <input matInput placeholder="someone@example.com" [formControl]="email" required (input) ="progFunction()">
+                      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                    </mat-form-field>
+                    <br>
+                  <mat-form-field appearance="standard">
+                    <mat-label>Phone number</mat-label>
+                    <input matInput placeholder="03001234567" [formControl]="phone" required (input) ="progFunction()">                
+                    <mat-icon matSuffix>phone</mat-icon>
+                    <mat-hint>Area code note required e.g +92</mat-hint>
+                  </mat-form-field>
+                  <br>
+                  <mat-form-field appearance="standard">
+                    <mat-label>Choose Date of Birth</mat-label>
+                    <input matInput [formControl]="date" (focus) ="progFunction()"  [min]="minDate" [max]="maxDate" [matDatepicker]="picker" >
+                    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-hint>Enter a valid date</mat-hint>                
+                  </mat-form-field>
+                  <br>
+                <mat-card-actions>
+                  <button mat-stroked-button color="accent" type="submit" (click)="registerUser()">Submit</button>
+                </mat-card-actions>
+                </div>
+            </mat-card>
+          </div>
         </div>
+  
       </div>
-      <app-footer></app-footer>
+     
+      
     </mat-sidenav-content>
   </mat-sidenav-container>
   

@@ -30,18 +30,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    window.location.href = 
-      this._service.AuthUri +'/auth/realms/dips/protocol/openid-connect/auth?response_type=code&scope=openid%20write%20read&client_id=' + 
-         this._service.clientId + '&redirect_uri='+ this._service.redirectUri;
     }
  
 
   ngOnInit(): void {
-    this.isLoggedIn = this._service.checkCredentials();    
-    let i = window.location.href.indexOf('code');
-    if(!this.isLoggedIn && i != -1) {
-      this._service.retrieveToken(window.location.href.substring(i + 5));
   }
 }
 
-}

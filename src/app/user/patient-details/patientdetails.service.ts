@@ -3,13 +3,12 @@ import { catchError } from "rxjs/internal/operators";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { endpoint } from 'src/app/shared/classes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientdetailsService {
-
-  endpoint = 'http://localhost:8081/resource-server/api/';
 
   private extractData(res: Response): any{
     const body = res;
@@ -25,10 +24,17 @@ constructor(
 
 
 getDiagnosisResult(token: string): Observable<any>{
-  return this.http.post(this.endpoint + 'diagnosis/',token).pipe
+  return this.http.post(endpoint + 'diagnosis/',token).pipe
     (map(this.extractData),
     catchError(this.handleError)); 
 }
+
+getDiseaseDetails(name: string): Observable<any>{
+  return this.http.get(endpoint + 'diseases/filterByName/?name='+name).pipe
+    (map(this.extractData),
+    catchError(this.handleError)); 
+}
+
 
 private handleError(error : HttpErrorResponse): any {
   if(error.error instanceof ErrorEvent){

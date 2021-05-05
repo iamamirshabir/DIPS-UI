@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PrescriptionService } from 'src/app/physician/appointments/prescription/prescription.service';
 import { Prescription, User } from 'src/app/shared/classes';
+import { UserService } from '../user.service';
 import { ProfileService } from './profile.service';
 
 @Component({
@@ -14,22 +15,23 @@ export class ProfileComponent implements OnInit {
   folders: Prescription[] ;
   user : User;
   
-  constructor(private prescriptionService: PrescriptionService, private profileService: ProfileService ) {
+  constructor(private prescriptionService: PrescriptionService, private profileService: ProfileService,
+    private userService: UserService ) {
     }
 
   ngOnInit(): void {
-    this.getUser('1');
-    this.getPrescriptionsByUser('1');
+    this.user = this.userService.userAc;
+    this.getPrescriptionsByUser(this.user.userac_id);
   }
 
-  getUser(id: string ): void {
+  getUser(id: number ): void {
     this.profileService.getUser(id).subscribe((resp: any) =>{
       this.user = resp;
       console.log(this.user);
     })
   }
 
-  getPrescriptionsByUser(uid: string): void {
+  getPrescriptionsByUser(uid: number): void {
     this.prescriptionService.getPrescriptionsByUser(uid).subscribe((resp: any) =>{
       this.folders = resp._embedded.prescriptionList;
       console.log(this.folders);

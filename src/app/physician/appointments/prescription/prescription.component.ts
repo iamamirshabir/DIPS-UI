@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { MatTable } from "@angular/material/table";
-
-import { Medicine, Physician, Prescription, Symptom } from 'src/app/shared/classes';
+import { Appointment, Medicine, Prescription, Symptom } from 'src/app/shared/classes';
 
 import { PrescriptionService } from './prescription.service';
 import { SymptomsService } from 'src/app/symptoms.service';
+import { PhysicianService } from '../../physician.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class PrescriptionComponent implements OnInit {
 
   //Object of prescription for saving data
   prescription: Prescription;
+  appointment: Appointment;
+  a: number;
   symptoms: Symptom[];
 
   //Table descripiton of Medicine Data display
@@ -53,13 +56,20 @@ export class PrescriptionComponent implements OnInit {
   i: number[];
   
   constructor(private prescriptionService: PrescriptionService,
-    private symptomService: SymptomsService) {
-      //this.prescription = new Prescription();
-      this.getPrescription('4');
-     //Symptoms fetched using service
-     this.getAllSymptoms();
-        
-        
+    private symptomService: SymptomsService,
+    private readonly physicianService: PhysicianService,
+    private _snackBar: MatSnackBar) {
+    this.physicianService.selectedAppointment.subscribe(appointment =>(this.appointment = appointment)); 
+    this.prescription = new Prescription();
+    this.prescription.symptom = new Array();
+    this.prescription.medicine = new Array();
+    this.prescription.physician = this.appointment.physician;
+    this.prescription.user = this.appointment.user;
+    //this.getPrescription('4');
+    //Symptoms fetched using service
+    this.symptoms = this.symptomService.addedSymptoms;
+     //this.getAllSymptoms();
+       
   }
 
   ngOnInit(){
@@ -75,9 +85,11 @@ export class PrescriptionComponent implements OnInit {
       //this.AddSymptomToPrescription('10');
   }
 
-  addPrescription(p: Prescription, aId: string): void {
-    this.prescriptionService.AddPrescription(p, aId).subscribe((resp: any) =>{
+  addPrescription(): void {
+    this.prescriptionService.AddPrescription(this.prescription, this.appointment.appointment_id).subscribe((resp: any) =>{
       this.prescription = resp;
+      this._snackBar.open("This Prescription is Succesfully Saved", "Okay")
+      console.log(this.prescription);
     })
   }
 

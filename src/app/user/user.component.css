@@ -127,3 +127,7 @@ opacity: 0.8;  }
 .mat-form-field {
   min-width: 330px;
 }
+.checkbox {
+  max-width: 90%;
+  margin: 0 10px;  
+}

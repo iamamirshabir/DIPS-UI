@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 
-import { KeycloakService } from 'keycloak-angular';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Cookie } from 'ng2-cookies';
-import { User } from '../shared/classes';
 import { UserService } from './user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../shared/classes';
 
 @Component({
   selector: 'app-user',
@@ -17,29 +16,26 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-
   email = new FormControl('', [Validators.required, Validators.email]);
 
   name = new FormControl('', [Validators.required]);
 
   date = new FormControl('', [Validators.required]);
 
-  phone = new FormControl('', [Validators.required, Validators.email]);
+  phone = new FormControl('', [Validators.required, Validators.pattern('[0-9 ]{11}')]);
 
   minDate: Date;
   maxDate: Date;
 
   dateNow:Date; 
-
-  route: ActivatedRoute;
-  user;
-  userAc: User;
-
   progValue=20;
 
+  isPhysician: false;
+
+  userLoaded: Promise<boolean>;
+
   constructor(private breakpointObserver: BreakpointObserver,
-    protected keycloak: KeycloakService,
-    private userService: UserService,
+    public userService: UserService,
     private router: Router) {
       setInterval(() => {
         this.dateNow = new Date()
@@ -50,31 +46,35 @@ export class UserComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    //this.user = this.getProfile();
-    //if(!(this.user.email == null)){
-    //  this.UserAc = new User();
-    //  this.getUserAccount(this.user.email);
-    //}
-    //if(this.userAc.userac_reg == true)
-     if(this.userAc == null){
-      this.userAc = new User();
-      this.userAc.userac_reg = false;
+    this.userService.user = this.userService.getProfile();
+    if(!(this.userService.user.email == null)){
+      this.userService.getUserAccount(this.userService.user.email);
     }
-    
+    if(this.userService.userAc == null){
+      //this.userService.userAc.userac_reg = false;
+    }
+  }
+
+  logout(){
+    this.userService.logout();
   }
 
   registerUser(){
     if(this.date.status == 'VALID' && this.phone.status == 'VALID' && this.email.status == 'VALID' && this.name.status == 'VALID'){
-    this.userAc.userac_name = this.name.value;
-    this.userAc.userac_email = this.email.value;
-    this.userAc.userac_mobile = this.phone.value;
-    this.userAc.userac_keycloak_username = "temp";
-    this.userAc.userac_dob = this.date.value;
-    if(this.userAc.userac_reg == false){
-      this.userService.AddUser(this.userAc).subscribe((resp: Response)=>
-      {if(resp.status ==201){
-        this.userAc.userac_reg = true;        
-        }
+    this.userService.userAc = new User();
+    this.userService.userAc.userac_name = this.name.value;
+    this.userService.userAc.userac_email = this.email.value;
+    this.userService.userAc.userac_mobile = this.phone.value;
+    this.userService.userAc.userac_keycloak_username = this.userService.user.username;
+    this.userService.userAc.userac_keycloak_id = this.userService.user.id;
+    this.userService.userAc.userac_dob = this.date.value;
+    this.userService.userAc.userac_reg = false;
+    if(this.userService.userAc.userac_reg == false){
+      this.userService.AddUser(this.userService.userAc).subscribe((resp: any)=>
+      { 
+        this.userService.userAc.userac_reg = true;  
+        this.userService.userAc = resp;
+        this.userLoaded = Promise.resolve(true);  
       });
     }
     }else{
@@ -82,12 +82,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  getUserAccount(email: string):void{
-    this.userService.getUserByEmail(email).subscribe((resp: any) =>{
-      this.userAc = resp;
-      console.log(this.userAc);
-    });
-  }
+  
 
   progFunction():void{
     if(this.name.status == 'VALID'){
@@ -119,20 +114,5 @@ export class UserComponent implements OnInit {
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-  getProfile(){
-    try{
-      let userDetails = this.keycloak.getKeycloakInstance().idTokenParsed;
-      return userDetails;
-  } catch(e) {
-    console.log("Could not get:", e)
-    return undefined;
-  }
-}
-
-logout(){
- this.keycloak.logout(); 
-}
-
-
-
+  
 }

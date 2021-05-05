@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
-import { Physician, Prescription,  User, Medicine, Symptom } from 'src/app/shared/classes';
+import { Physician, Prescription,  User, Medicine, Symptom, endpoint } from 'src/app/shared/classes';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +25,6 @@ export class PrescriptionService {
     //QR code will refer to URL of Patient Profile 
     qrURL:string = "http://localhost:8089/patient/";
 
-    endpoint = 'http://localhost:8081/resource-server/api/';
-
     private extractData(res: Response): any{
       const body = res;
       return body || {};
@@ -34,25 +32,26 @@ export class PrescriptionService {
   
     constructor(private http: HttpClient) { }
     
-    getPrescriptionsByUser(uId: string): Observable<any>{
-      return this.http.get(this.endpoint + 'prescriptions/user/'+ uId ).pipe
+    getPrescriptionsByUser(uId: number): Observable<any>{
+      return this.http.get(endpoint + 'prescriptions/user/'+ uId ).pipe
         (map(this.extractData),
         catchError(this.handleError)); 
     }
     
     getPrescription(pId: string ): Observable<any>{
-      return this.http.get(this.endpoint + 'prescriptions/' + pId).pipe
+      return this.http.get(endpoint + 'prescriptions/' + pId).pipe
         (map(this.extractData),
         catchError(this.handleError)); 
     } 
 
-    AddPrescription(p: Prescription, aId: string): Observable<any>{
-      return this.http.post(this.endpoint + 'prescriptions/appointment/' + aId, p).pipe
-      (catchError(this.handleError)); 
+    AddPrescription(p: Prescription, aId: number): Observable<any>{
+      return this.http.post(endpoint + 'prescriptions/appointment/' + aId, p).pipe
+      (map(this.extractData),
+      (catchError(this.handleError))); 
     }
 
     AddSymptomToPrescription(pId : string, symptoms: number[]): Observable<any>{
-      return this.http.put<Prescription>(this.endpoint + 'prescriptions/'+ pId+ '/symptoms/', symptoms).pipe
+      return this.http.put<Prescription>(endpoint + 'prescriptions/'+ pId+ '/symptoms/', symptoms).pipe
       (catchError(this.handleError))
     }
 
@@ -63,8 +62,8 @@ export class PrescriptionService {
       }
       else{
         console.error(
-          'Backend returned code ${error.status}, ' +
-          'body was: ${error.error}'
+          'Backend returned code: '+error.status +
+          'body was: '+ error.error
         );
       }
       return throwError(

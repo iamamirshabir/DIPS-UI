@@ -1,25 +1,24 @@
 <div class="row mx-0">
   <mat-spinner *ngIf="(prescription == null)" color="warn" class="mx-auto mt-5"></mat-spinner>
-  <div *ngIf="!(prescription == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
+  <div *ngIf="!(appointment == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
-    <p mat-line>ID: {{prescription.prescription_id}}</p>
-    <h3>Physician: {{prescription.physician.physician_name}}</h3>
-    <p>{{prescription.physician.physician_spec}}</p>
-    <button mat-button (click)="generatePdf()">Generate PDF</button>
+    <p mat-line>ID: {{appointment.appointment_id}}</p>
+    <h3>Physician: {{appointment.physician.physician_name}}</h3>
+    <p>{{appointment.physician.physician_spec}}</p>
       <div class=" p-3">                 
           <table class="table w-25">
             <thead>
                 <th>Patient Name: </th>
-                <th class="text-success" > {{prescription.user.userac_name}}</th>
+                <th class="text-success" > {{appointment.user.userac_name}}</th>
             </thead>
             <tbody>
               <tr>
                 <td>Age:</td>
-                <td>{{prescription.user.userac_dob}}</td>
+                <td>{{appointment.user.userac_dob}}</td>
               </tr>
               <tr>
                 <td>Mobile:</td>
-                <td>{{prescription.user.userac_mobile}}</td>
+                <td>{{appointment.user.userac_mobile}}</td>
               </tr>
             </tbody>
           </table>
@@ -69,11 +68,16 @@
           <div class="col-lg-6 p-3 mt-3 mx-auto row">
               <div class="my-card col-lg-12">
                 <div class="my-card-header my-card-header-info">
-                  <h2 class="my-card-title">Notes or Directions</h2>
+                  <h2 class="my-card-title">Disgnosis & Notes</h2>
                 </div>
                 <mat-form-field class="example-full-width w-100">
-                  <mat-label>Enter Notes or Directions</mat-label>
-                  <textarea matInput [(ngModel)]="prescription.prescription_notes" [ngModelOptions]="{standalone: true}" placeholder="Notes/Directions" ></textarea>
+                  <mat-label>Diagnosis</mat-label>
+                  <textarea matInput [(ngModel)]="prescription.prescription_diagnosis" [ngModelOptions]="{standalone: true}" placeholder="Diagnosis" ></textarea>
+                </mat-form-field>
+                <br>
+                <mat-form-field class="example-full-width w-100">
+                  <mat-label>Enter Notes or Prognosis</mat-label>
+                  <textarea matInput [(ngModel)]="prescription.prescription_notes" [ngModelOptions]="{standalone: true}" placeholder="Notes/Prognosis" ></textarea>
                 </mat-form-field>
               </div>  
           </div>
@@ -135,15 +139,11 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </table>
-                  
-      
-      
-                </div>
-
+               </div>
             </div>
-          
-              
-            </div>
+            <button mat-button color="primary" class="ml-3" (click)="addPrescription()">Save Prescription</button>
+            <button mat-button class="ml-3" (click)="generatePdf()">Generate PDF</button>          
+          </div>
       </div>      
   </div>
 </div>

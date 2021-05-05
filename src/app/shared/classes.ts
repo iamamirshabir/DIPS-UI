@@ -1,3 +1,5 @@
+export const endpoint = 'http://localhost:8081/resource-server/api/';
+
 
 export class Prescription{
     createdAt: string;
@@ -10,6 +12,23 @@ export class Prescription{
     medicine: Medicine[];
     physician: Physician;
     user: User;         
+}
+
+export class Disease{
+    createdAt: string;
+    updatedAt: string;
+    disease_id: number;
+    disease_name: string;
+    disease_code: string;
+    disease_details: string;
+    diseasecategory: DiseaseCategory;
+}
+
+export class DiseaseCategory{
+    createdAt: string;
+    updatedAt: string;
+    diseasecategory_id: number;
+    diseasecategory_title: string;
 }
 
 
@@ -28,6 +47,7 @@ export class Appointment{
     updatedAt: string;
     appointment_id: number;
     appointment_on: string;
+    prescription: Prescription;
     physician: Physician;
     user: User; 
   }
@@ -62,10 +82,14 @@ export class Physician
     physician_spec: string;
     physician_address: string;
     physician_visit_days: string;
+    physician_max_daily: number;
+    physician_reg_status:boolean;
+    physician_availability: string;
     physician_time_start: number;
     physician_time_end: number;
     physician_keycloak_id: string;
     physician_keycloak_username: string;    
+  physician_email: any;
 }
 
 export class Diagnosis{
