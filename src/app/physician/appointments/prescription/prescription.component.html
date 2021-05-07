@@ -1,6 +1,6 @@
 <div class="row mx-0">
-  <mat-spinner *ngIf="(prescription == null)" color="warn" class="mx-auto mt-5"></mat-spinner>
-  <div *ngIf="!(appointment == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
+  <mat-spinner *ngIf="(appointment.physician == null)" color="warn" class="mx-auto mt-5"></mat-spinner>
+  <div *ngIf="!(appointment.physician == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
     <p mat-line>ID: {{appointment.appointment_id}}</p>
     <h3>Physician: {{appointment.physician.physician_name}}</h3>
@@ -22,7 +22,7 @@
               </tr>
             </tbody>
           </table>
-          <a mat-button routerLink="../user-profile" >View profile </a>
+          <a mat-button routerLink="../user-profile" (click)="changeSelected(appointment.user)">View profile </a>
       </div>
       <div class="row">
           <div class="col-lg-6 mx-auto p-3 mt-3 row">

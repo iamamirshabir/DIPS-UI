@@ -15,7 +15,8 @@ import { Symptom, User, endpoint } from '../shared/classes';
 export class UserService {
    
   user;
-  userAc: User;
+  userAc: User ;
+  userReg = false; 
 
     private extractData(res: Response): any{
       const body = res;
@@ -29,12 +30,13 @@ export class UserService {
   ){
   }
 
-  getUserAccount(email: string):void{
-    this.getUserByEmail(email).subscribe((resp: any) =>{
+  getUserAccount(id: string):void{
+    this.getUserByKeycloak(id).subscribe((resp: any) =>{
       this.userAc = resp;
       console.log(this.userAc);
     });
   }
+  
 
   getProfile(){
     try{
@@ -57,16 +59,37 @@ setUserProfile(u: User){
     
   }
 
-  getUserByEmail(email: string): Observable<any>{
-    return this.http.get(endpoint + 'users/filterByEmail/?email='+email).pipe
+  registerUser(u: User): Observable<any>{
+    return this.http.put(endpoint + 'users/', u).pipe
+    (map(this.extractData),
+    catchError(this.handleError)); 
+  }
+
+  getUserByKeycloak(id: string): Observable<any>{
+    return this.http.get(endpoint + 'users/keycloak/?keycloak='+id).pipe
       (map(this.extractData),
-      catchError(this.handleError)); 
+      catchError(this.handleProfileError)); 
   }
 
   AddUser(u: User): Observable<any>{
     return this.http.post(endpoint + 'users/', u).pipe
     (map(this.extractData),
     catchError(this.handleError)); 
+  }
+
+  private handleProfileError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    this.userReg = false;
+    // Return an observable with a user-facing error message.
+    return throwError(
+      'Something bad happened; please try again later.');
   }
 
 

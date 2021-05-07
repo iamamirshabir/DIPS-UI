@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "sipra-66a12"
+  },
+  "targets": {
+    "sipra-66a12": {
+      "hosting": {
+        "DIPS": [
+          "sipra-66a12"
+        ]
+      }
+    }
   }
 }

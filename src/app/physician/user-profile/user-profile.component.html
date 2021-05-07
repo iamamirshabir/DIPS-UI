@@ -44,7 +44,7 @@
                 <div class="my-card-header my-card-header-rose">
                 <h2 class="my-card-title">Prescriptions</h2>
               </div>
-              <mat-list>
+              <mat-list *ngIf="prescriptionLoaded | async">
                 <div mat-subheader>Recent</div>
                 <mat-list-item *ngFor="let folder of folders">
                   <mat-icon mat-list-icon>assignment</mat-icon>

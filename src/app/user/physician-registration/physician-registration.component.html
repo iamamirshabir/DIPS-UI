@@ -38,6 +38,12 @@
               </div>
               <div class="col-lg-6">
                 <br>
+                <mat-form-field appearance="standard">
+                  <mat-label>Number of Max. Daily Visits</mat-label>
+                  <input matInput type="number" min="1" max="50" placeholder="e.g. 10" [formControl]="visits"  >
+                  <mat-hint>Should be Numeric</mat-hint>
+              </mat-form-field>
+              <br>
               <mat-form-field appearance="standard">
                 <mat-label>Visit Hours Start At</mat-label>
                 <mat-select required="true" [formControl]="visitstart">
@@ -45,6 +51,7 @@
                     {{hour}} : 00
                   </mat-option>
                 </mat-select>
+                
               </mat-form-field>
               <br>
               <mat-form-field appearance="standard">
@@ -74,7 +81,6 @@
               
           <mat-card-actions>
             <button mat-stroked-button color="accent" type="submit" (click) ="registerPhysician()" >Submit</button>
-            <h2>{{availability}}</h2>
           </mat-card-actions>
           </div>
       </mat-card>

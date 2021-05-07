@@ -7,9 +7,10 @@
       <img class="mx-auto dp-image " src="/assets/images/doc.jpeg">
 
       <mat-nav-list class="mat-nav-list"  >
-        <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span> Appointments</a> 
+        <a mat-list-item routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">dashboard</mat-icon></span>Dashboard</a>         
+        <a mat-list-item routerLink="appointments"><span><mat-icon aria-hidden="false" aria-label="No">format_list_numbered</mat-icon></span>Appointments</a> 
         <a mat-list-item routerLink="prescription"><span><mat-icon aria-hidden="false" aria-label="No">pages</mat-icon></span>Write Prescription</a>
-        <a mat-list-item href="#"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
+        <a mat-list-item routerLink="contactus"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
         <a mat-list-item routerLink="../login"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
       </mat-nav-list>
     </mat-sidenav>
@@ -23,12 +24,14 @@
           *ngIf="isHandset$ | async">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
-        <span>Diagnosis Intuition & Prescription</span>        
+        <span class="animate__animated animate__zoomInDown logo">Diagnosis Intuition & Prescription</span>        
+        <span class="animate__animated animate__zoomInDown shortlogo">D I P S</span>
         <button mat-stroked-button [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
-          <mat-label>Moeez Faheem</mat-label>
+          <mat-label>{{this.physicianService.physicianAc.physician_name}}</mat-label>
           <mat-icon>account_circle</mat-icon>
         </button>
       </mat-toolbar>
+      <h2>{{this.physicianService.physician.sub}}</h2>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

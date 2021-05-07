@@ -7,7 +7,7 @@ import { Alignment } from 'pdfmake/interfaces';
 import { catchError } from "rxjs/internal/operators";
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { map } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 
 import { Physician, Prescription,  User, Medicine, Symptom, endpoint } from 'src/app/shared/classes';
 
@@ -17,6 +17,10 @@ import { Physician, Prescription,  User, Medicine, Symptom, endpoint } from 'src
 export class PrescriptionService {
 
   prescriptions: Prescription[];
+
+  private  userObject = new BehaviorSubject<User>(new User());
+   
+  selectedUser = this.userObject.asObservable();
 
     //PDFMake properties that require typecast from javascript
     pageMargins: [number,number,number, number] = [50, 50, 50, 50];
@@ -32,6 +36,11 @@ export class PrescriptionService {
   
     constructor(private http: HttpClient) { }
     
+
+    changeUser(user: User) {
+      this.userObject.next(user);
+    }
+
     getPrescriptionsByUser(uId: number): Observable<any>{
       return this.http.get(endpoint + 'prescriptions/user/'+ uId ).pipe
         (map(this.extractData),

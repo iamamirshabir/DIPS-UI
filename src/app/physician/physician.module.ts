@@ -52,6 +52,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 
 
@@ -60,7 +62,9 @@ import { HttpClientModule } from '@angular/common/http';
   PhysicianComponent,
   AppointmentsComponent,
   PrescriptionComponent,
-  UserProfileComponent
+  UserProfileComponent,
+  DashboardComponent,
+  ContactusComponent
   ],
   imports: [
     CommonModule,

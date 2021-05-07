@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import {FormControl, Validators} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Physician } from 'src/app/shared/classes';
+import { UserService } from '../user.service';
 import { PhysicianRegistrationService } from './physician-registration.service';
 
 export class VisitDay{
@@ -25,6 +27,8 @@ export class PhysicianRegistrationComponent implements OnInit {
 
   name = new FormControl('', [Validators.required]);
 
+  visits = new FormControl('', [Validators.required]);
+
   spec = new FormControl('', [Validators.required]);
 
   regno = new FormControl('', [Validators.required]);
@@ -44,7 +48,9 @@ export class PhysicianRegistrationComponent implements OnInit {
   {name: 'Thursday',available: false},
   {name: 'Friday',available: false},
   {name: 'Saturday',available: false},]
-  constructor(private physicianRegistrationservice: PhysicianRegistrationService) { }
+  constructor(private physicianRegistrationservice: PhysicianRegistrationService,
+    private userService: UserService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -65,11 +71,17 @@ export class PhysicianRegistrationComponent implements OnInit {
       this.generateAvailability();
       this.physician.physician_availability = this.availability;
       this.physician.physician_address = this.address.value;
+      this.physician.physician_reg_status = true;
+      this.physician.physician_keycloak_id =  this.userService.userAc.userac_keycloak_id;
+      this.physician.physician_keycloak_username = this.userService.userAc.userac_keycloak_username;
+      this.physician.physician_max_daily = this.visits.value;
+      this.physician.physician_visit_days = this.availability;
       this.physician.physician_time_start = this.visitstart.value;
       this.physician.physician_time_end = this.visitend.value;
       this.physicianRegistrationservice.AddPhysician(this.physician).subscribe((resp: any)=>
       { 
         this.physician = resp;
+        this._snackBar.open("Your Request has been submitted for verification","Done");
         console.log(this.physician);
     }
       )

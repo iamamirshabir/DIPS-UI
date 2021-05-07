@@ -20,7 +20,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://dips-as.herokuapp.com/auth',
+        url: 'https://dips-as.herokuapp.com/auth',
         realm: 'aamir',
         clientId: 'angular-app',
       },

@@ -13,13 +13,22 @@ export class UserProfileComponent implements OnInit {
 
   folders: Prescription[] ;
   user : User;
+  prescriptionLoaded: Promise<boolean>;
 
   constructor(private prescriptionService: PrescriptionService) { 
+    this.prescriptionService.selectedUser.subscribe(user =>(this.user = user));   
     this.folders = prescriptionService.prescriptions;
-    this.user = new User()
   }
 
   ngOnInit(): void {
+  }
+
+  getPrescriptions(uId){
+    this.prescriptionService.getPrescriptionsByUser(uId).subscribe((resp: any) =>{
+      this.folders = resp._embedded.prescriptionList;
+      this.prescriptionLoaded = Promise.resolve(true);
+      console.log(this.folders);
+    });
   }
 
 }

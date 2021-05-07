@@ -55,6 +55,8 @@ import { PhysiciansComponent } from './patient-details/physicians/physicians.com
 import { HttpClientModule } from '@angular/common/http';
 import { PhysicianDialogComponent } from './patient-details/physicians/physician-dialog/physician-dialog.component';
 import { UserService } from './user.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { UserService } from './user.service';
   PhysicianRegistrationComponent,
   ProfileComponent,
   PhysiciansComponent,
-  PhysicianDialogComponent
+  PhysicianDialogComponent,
+  DashboardComponent,
+  ContactusComponent
 ],
   imports: [
     CommonModule,

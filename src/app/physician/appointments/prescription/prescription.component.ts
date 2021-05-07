@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { MatTable } from "@angular/material/table";
-import { Appointment, Medicine, Prescription, Symptom } from 'src/app/shared/classes';
+import { Appointment, Medicine, Prescription, Symptom, User } from 'src/app/shared/classes';
 
 import { PrescriptionService } from './prescription.service';
 import { SymptomsService } from 'src/app/symptoms.service';
@@ -27,6 +27,7 @@ export class PrescriptionComponent implements OnInit {
 
   //Object of prescription for saving data
   prescription: Prescription;
+  appointmentLoaded: Promise<boolean>;
   appointment: Appointment;
   a: number;
   symptoms: Symptom[];
@@ -60,6 +61,7 @@ export class PrescriptionComponent implements OnInit {
     private readonly physicianService: PhysicianService,
     private _snackBar: MatSnackBar) {
     this.physicianService.selectedAppointment.subscribe(appointment =>(this.appointment = appointment)); 
+    
     this.prescription = new Prescription();
     this.prescription.symptom = new Array();
     this.prescription.medicine = new Array();
@@ -80,9 +82,16 @@ export class PrescriptionComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+      if(this.appointment.physician == null){
+        this.appointmentLoaded = Promise.resolve(false);
+      }
       //this.addPrescription(this.prescription, '4');
       //this.AddPrescription(this.prescription,'1','2','3');
       //this.AddSymptomToPrescription('10');
+  }
+
+  changeSelected(user: User){
+    this.prescriptionService.changeUser(user);
   }
 
   addPrescription(): void {

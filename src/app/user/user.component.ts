@@ -47,13 +47,28 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.user = this.userService.getProfile();
-    if(!(this.userService.user.email == null)){
-      this.userService.getUserAccount(this.userService.user.email);
+    this.userService.userAc = {
+      updatedAt:"",
+      createdAt:"",
+      userac_name:"",
+      userac_dob:null,
+      userac_reg: false,
+      userac_email:"",
+      userac_keycloak_id:"",
+      userac_id: -1,
+      userac_keycloak_username:"",
+      userac_mobile:0
     }
-    if(this.userService.userAc == null){
-      //this.userService.userAc.userac_reg = false;
+    if(!(this.userService.user.sub == null)){
+      this.userService.getUserAccount(this.userService.user.sub);
+      this.name.setValue(this.userService.user.given_name+" " +this.userService.user.family_name);
+      this.email.setValue(this.userService.user.email);
+      if(this.userService.userAc.userac_reg==true){
+        this.router.navigate(['user/dashboard']);
+      }
     }
   }
+  
 
   logout(){
     this.userService.logout();
@@ -66,13 +81,13 @@ export class UserComponent implements OnInit {
     this.userService.userAc.userac_email = this.email.value;
     this.userService.userAc.userac_mobile = this.phone.value;
     this.userService.userAc.userac_keycloak_username = this.userService.user.username;
-    this.userService.userAc.userac_keycloak_id = this.userService.user.id;
+    this.userService.userAc.userac_keycloak_id = this.userService.user.sub;
     this.userService.userAc.userac_dob = this.date.value;
-    this.userService.userAc.userac_reg = false;
-    if(this.userService.userAc.userac_reg == false){
+    this.userService.userAc.userac_reg = true;
+    if(this.userService.userReg == false){
       this.userService.AddUser(this.userService.userAc).subscribe((resp: any)=>
       { 
-        this.userService.userAc.userac_reg = true;  
+        this.userService.userReg = true;  
         this.userService.userAc = resp;
         this.userLoaded = Promise.resolve(true);  
       });
