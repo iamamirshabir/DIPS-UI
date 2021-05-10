@@ -63,9 +63,6 @@ export class UserComponent implements OnInit {
       this.userService.getUserAccount(this.userService.user.sub);
       this.name.setValue(this.userService.user.given_name+" " +this.userService.user.family_name);
       this.email.setValue(this.userService.user.email);
-      if(this.userService.userAc.userac_reg==true){
-        this.router.navigate(['user/dashboard']);
-      }
     }
   }
   
@@ -87,7 +84,8 @@ export class UserComponent implements OnInit {
     if(this.userService.userReg == false){
       this.userService.AddUser(this.userService.userAc).subscribe((resp: any)=>
       { 
-        this.userService.userReg = true;  
+        this.userService.userReg = true;
+        this.router.navigate(['user/dashboard']);  
         this.userService.userAc = resp;
         this.userLoaded = Promise.resolve(true);  
       });

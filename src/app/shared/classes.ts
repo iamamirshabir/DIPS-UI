@@ -1,4 +1,4 @@
-export const endpoint = 'http://localhost:8081/resource-server/api/';
+export const endpoint = 'https://dips-rs.herokuapp.com/resource-server/api/';
 
 
 export class Prescription{

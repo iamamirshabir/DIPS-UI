@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -23,7 +24,7 @@ export class PhysicianService {
   selectedAppointment = this.appointmentObject.asObservable();
 
   constructor(private http: HttpClient,
-    protected keycloak: KeycloakService) { }
+    protected keycloak: KeycloakService, private router: Router) { }
 
   changeAppointment(appointment: Appointment) {
     this.appointmentObject.next(appointment);
@@ -32,6 +33,7 @@ export class PhysicianService {
   getPhysicianAccount(id: string):void{
     this.getPhysicianByKeycloak(id).subscribe((resp: any) =>{
       this.physicianAc = resp;
+      this.router.navigate(['physician/dashboard']);
       console.log(this.physicianAc);
     });
   }

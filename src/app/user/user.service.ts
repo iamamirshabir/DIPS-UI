@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Symptom, User, endpoint } from '../shared/classes';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -26,13 +27,15 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    protected keycloak: KeycloakService
+    protected keycloak: KeycloakService,
+    private router: Router
   ){
   }
 
   getUserAccount(id: string):void{
     this.getUserByKeycloak(id).subscribe((resp: any) =>{
       this.userAc = resp;
+      this.router.navigate(['user/dashboard']);
       console.log(this.userAc);
     });
   }

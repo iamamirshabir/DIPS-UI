@@ -19,7 +19,7 @@ export class PhysicianDialogService {
 
   //User Id is temporary
   setAppointment(a: Appointment, uId:number, pId: number): Observable<any>{
-    return this.http.post(endpoint + 'appointments/user/'+ 4 +'/physician/'+pId,a).pipe
+    return this.http.post(endpoint + 'appointments/user/'+ uId +'/physician/'+pId,a).pipe
       (map(this.extractData),
       catchError(this.handleError)); 
   }

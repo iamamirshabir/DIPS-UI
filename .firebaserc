@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "sipra-66a12"
+    "default": "dips-p"
   },
   "targets": {
-    "sipra-66a12": {
+    "dips-p": {
       "hosting": {
         "DIPS": [
-          "sipra-66a12"
+          "dips-p"
         ]
       }
     }
