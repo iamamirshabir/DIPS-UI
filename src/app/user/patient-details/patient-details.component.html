@@ -1,6 +1,6 @@
 <div class="row mx-0">
   <div class="col-lg-11 mt-5 mx-auto">
-    <h1 class="h1 my-title animate__animated animate__lightSpeedInLeft" >Your Details</h1>
+    <h1 class="h1 text-primary my-title animate__animated animate__lightSpeedInLeft" >Your Details</h1>
     <div class="my-card animate__animated animate__zoomInUp">
       <div class="my-card-header my-card-header-success">
         <h1 class="my-card-title">Symptom Checker</h1>
@@ -97,6 +97,7 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Result</ng-template>
+        <mat-progress-bar *ngIf="diagnosisResult==null" mode="indeterminate"></mat-progress-bar>
         <mat-card class="col-lg-6 mx-auto" *ngIf="resultLoaded | async">
           <mat-card-title [style.color]="accentColor">
             Result

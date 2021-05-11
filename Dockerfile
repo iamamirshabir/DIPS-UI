@@ -1,23 +1,10 @@
-
-# Stage 1
-
-FROM node:10-alpine as build-step
-
-RUN mkdir -p /app
-
-WORKDIR /app
-
-COPY package.json /app
-
+FROM node:14.7.0-alpine As builder
+WORKDIR /usr/src/app
+COPY package.json package-lock.json ./
 RUN npm install
-
-COPY . /app
-
+COPY .   .
 RUN npm run build --prod
-
-# Stage 2
-
-FROM nginx:1.17.1-alpine
-
-COPY --from=build-step /app/dist/DIPS /usr/share/nginx/html
-
+FROM nginx:1.19-alpine
+COPY nginx.config /etc/nginx/conf.d/default.conf
+COPY --from=builder /usr/src/app/dist/DIPS/ /usr/share/nginx/html
+EXPOSE 80
