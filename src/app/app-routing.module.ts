@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule),
     canActivate: [AuthGuard],data: { roles: ["user"] }},
   { path: 'physician', loadChildren: () => import('./physician/physician.module').then(m => m.PhysicianModule),
-    canActivate: [AuthGuard],data: { roles: ["physician"] } }
+    canActivate: [AuthGuard],data: { roles: ["physician"] } },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
 ];
 
 @NgModule({

@@ -59,6 +59,10 @@ export class PrescriptionService {
       (catchError(this.handleError))); 
     }
 
+    deleteAppointment(aId: number){
+      this.http.delete(endpoint + 'appointments/' + aId);
+    }
+
     AddSymptomToPrescription(pId : string, symptoms: number[]): Observable<any>{
       return this.http.put<Prescription>(endpoint + 'prescriptions/'+ pId+ '/symptoms/', symptoms).pipe
       (catchError(this.handleError))

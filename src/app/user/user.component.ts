@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
-
+import { FormControl, Validators } from '@angular/forms';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -13,7 +12,7 @@ import { User } from '../shared/classes';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -22,103 +21,124 @@ export class UserComponent implements OnInit {
 
   date = new FormControl('', [Validators.required]);
 
-  phone = new FormControl('', [Validators.required, Validators.pattern('[0-9 ]{11}')]);
+  phone = new FormControl('', [
+    Validators.required,
+    Validators.pattern('[0-9 ]{11}'),
+  ]);
 
   minDate: Date;
   maxDate: Date;
 
-  dateNow:Date; 
-  progValue=20;
+  dateNow: Date;
+  progValue = 20;
 
   isPhysician: false;
 
   userLoaded: Promise<boolean>;
 
-  constructor(private breakpointObserver: BreakpointObserver,
+  constructor(
+    private breakpointObserver: BreakpointObserver,
     public userService: UserService,
-    private router: Router) {
-      setInterval(() => {
-        this.dateNow = new Date()
-      }, 1000)
+    private router: Router
+  ) {
+    setInterval(() => {
+      this.dateNow = new Date();
+    }, 1000);
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 90, 0, 1);
     this.maxDate = new Date();
-   }
+  }
 
   ngOnInit(): void {
     this.userService.user = this.userService.getProfile();
     this.userService.userAc = {
-      updatedAt:"",
-      createdAt:"",
-      userac_name:"",
-      userac_dob:null,
+      updatedAt: '',
+      createdAt: '',
+      userac_name: '',
+      userac_dob: null,
       userac_reg: false,
-      userac_email:"",
-      userac_keycloak_id:"",
+      userac_email: '',
+      userac_keycloak_id: '',
       userac_id: -1,
-      userac_keycloak_username:"",
-      userac_mobile:0
-    }
-    if(!(this.userService.user.sub == null)){
+      userac_keycloak_username: '',
+      userac_mobile: 0,
+    };
+    if (!(this.userService.user.sub == null)) {
       this.userService.getUserAccount(this.userService.user.sub);
-      this.name.setValue(this.userService.user.given_name+" " +this.userService.user.family_name);
+      this.name.setValue(
+        this.userService.user.given_name +
+          ' ' +
+          this.userService.user.family_name
+      );
       this.email.setValue(this.userService.user.email);
     }
   }
-  
 
-  logout(){
+  logout() {
     this.userService.logout();
   }
 
-  registerUser(){
-    if(this.date.status == 'VALID' && this.phone.status == 'VALID' && this.email.status == 'VALID' && this.name.status == 'VALID'){
-    this.userService.userAc = new User();
-    this.userService.userAc.userac_name = this.name.value;
-    this.userService.userAc.userac_email = this.email.value;
-    this.userService.userAc.userac_mobile = this.phone.value;
-    this.userService.userAc.userac_keycloak_username = this.userService.user.username;
-    this.userService.userAc.userac_keycloak_id = this.userService.user.sub;
-    this.userService.userAc.userac_dob = this.date.value;
-    this.userService.userAc.userac_reg = true;
-    if(this.userService.userReg == false){
-      this.userService.AddUser(this.userService.userAc).subscribe((resp: any)=>
-      { 
-        this.userService.userReg = true;
-        this.router.navigate(['user/dashboard']);  
-        this.userService.userAc = resp;
-        this.userLoaded = Promise.resolve(true);  
-      });
-    }
-    }else{
-      alert("Fill your details first!")
-    }
-  }
-
-  
-
-  progFunction():void{
-    if(this.name.status == 'VALID'){
-      this.progValue = 40;
-     }
-     if(this.email.status == 'VALID' && this.name.status == 'VALID'){
-      this.progValue = 60;
-     }
-     if(this.phone.status == 'VALID' && this.email.status == 'VALID' && this.name.status == 'VALID'){
-      this.progValue = 80;
-     } 
-      if(this.date.status == 'VALID' && this.phone.status == 'VALID' && this.email.status == 'VALID' && this.name.status == 'VALID'){
-        this.progValue = 95;
-       
+  registerUser() {
+    if (
+      this.date.status == 'VALID' &&
+      this.phone.status == 'VALID' &&
+      this.email.status == 'VALID' &&
+      this.name.status == 'VALID'
+    ) {
+      this.userService.userAc = new User();
+      this.userService.userAc.userac_name = this.name.value;
+      this.userService.userAc.userac_email = this.email.value;
+      this.userService.userAc.userac_mobile = this.phone.value;
+      this.userService.userAc.userac_keycloak_username =
+        this.userService.user.username;
+      this.userService.userAc.userac_keycloak_id = this.userService.user.sub;
+      this.userService.userAc.userac_dob = this.date.value;
+      this.userService.userAc.userac_reg = true;
+      if (this.userService.userReg == false) {
+        this.userService
+          .AddUser(this.userService.userAc)
+          .subscribe((resp: any) => {
+            this.userService.userReg = true;
+            this.router.navigate(['user/dashboard']);
+            this.userService.userAc = resp;
+            this.userLoaded = Promise.resolve(true);
+          });
       }
+    } else {
+      alert('Fill your details first!');
+    }
   }
 
+  progFunction(): void {
+    if (this.name.status == 'VALID') {
+      this.progValue = 40;
+    }
+    if (this.email.status == 'VALID' && this.name.status == 'VALID') {
+      this.progValue = 60;
+    }
+    if (
+      this.phone.status == 'VALID' &&
+      this.email.status == 'VALID' &&
+      this.name.status == 'VALID'
+    ) {
+      this.progValue = 80;
+    }
+    if (
+      this.date.status == 'VALID' &&
+      this.phone.status == 'VALID' &&
+      this.email.status == 'VALID' &&
+      this.name.status == 'VALID'
+    ) {
+      this.progValue = 95;
+    }
+  }
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -127,5 +147,4 @@ export class UserComponent implements OnInit {
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-  
 }

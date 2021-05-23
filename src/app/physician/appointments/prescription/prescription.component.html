@@ -3,10 +3,10 @@
   <div *ngIf="!(appointment.physician == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
     <p mat-line>ID: {{appointment.appointment_id}}</p>
-    <h3>Physician: {{appointment.physician.physician_name}}</h3>
+    <h3>By {{appointment.physician.physician_name}}</h3>
     <p>{{appointment.physician.physician_spec}}</p>
       <div class=" p-3">                 
-          <table class="table w-25">
+          <table class="table w-50">
             <thead>
                 <th>Patient Name: </th>
                 <th class="text-success" > {{appointment.user.userac_name}}</th>
@@ -14,7 +14,7 @@
             <tbody>
               <tr>
                 <td>Age:</td>
-                <td>{{appointment.user.userac_dob}}</td>
+                <td>{{appointment.user.userac_dob  | date: 'fullDate'}}</td>
               </tr>
               <tr>
                 <td>Mobile:</td>

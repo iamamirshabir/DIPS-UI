@@ -1,108 +1,114 @@
 <mat-sidenav-container class="sidenav-container ">
-    <mat-sidenav #drawer class="sidenav my-sidenav " fixedInViewport 
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="(isHandset$ | async) === false">
-      <mat-toolbar class="innerToolbar ">D. I. P. S.</mat-toolbar>
-        <img class="mx-auto dp-image " src="/assets/images/user.png">
-    <div >
-      <mat-nav-list class="mat-nav-list"  >
-        <a mat-list-item routerLink="dashboard"><span><mat-icon aria-hidden="false" aria-label="No">dashboard</mat-icon></span>Dashboard</a>
-        <a mat-list-item routerLink="diagnosis"><span><mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon></span>Pre-Diagnosis</a>
-        <a mat-list-item routerLink="physicians"><span><mat-icon aria-hidden="false" aria-label="No">person_pin</mat-icon></span>Physicians</a>
-        <a mat-list-item routerLink="physicianregistration"><span><mat-icon aria-hidden="false" aria-label="No">assignment_ind</mat-icon></span>Join-Us</a>
-        <a mat-list-item routerLink="contactus"><span><mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon></span>Contact Us</a>
-        <a mat-list-item routerLink="../login"><span><mat-icon aria-hidden="false" aria-label="No">subject</mat-icon></span>About</a>
+  <mat-sidenav #drawer class="sidenav my-sidenav " fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-toolbar class="innerToolbar ">D. I. P. S.</mat-toolbar>
+    <img class="mx-auto dp-image " src="/assets/images/user.png">
+    <div>
+      <mat-nav-list class="mat-nav-list">
+        <a mat-list-item routerLink="dashboard"><span>
+            <mat-icon aria-hidden="false" aria-label="No">dashboard</mat-icon>
+          </span>Dashboard</a>
+        <a mat-list-item routerLink="diagnosis"><span>
+            <mat-icon aria-hidden="false" aria-label="No">assistant</mat-icon>
+          </span>Pre-Diagnosis</a>
+        <a mat-list-item routerLink="physicians"><span>
+            <mat-icon aria-hidden="false" aria-label="No">person_pin</mat-icon>
+          </span>Physicians</a>
+        <a mat-list-item routerLink="physicianregistration"><span>
+            <mat-icon aria-hidden="false" aria-label="No">assignment_ind</mat-icon>
+          </span>Join-Us</a>
+        <a mat-list-item routerLink="contactus"><span>
+            <mat-icon aria-hidden="false" aria-label="No">contacts</mat-icon>
+          </span>Contact Us</a>
+        <a mat-list-item routerLink="../login"><span>
+            <mat-icon aria-hidden="false" aria-label="No">subject</mat-icon>
+          </span>About</a>
       </mat-nav-list>
     </div>
-         
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <mat-toolbar color="primary" class="d-flex justify-content-between outer-toolbar">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar class="d-flex justify-content-between outer-toolbar">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="animate__animated animate__zoomInDown logo">Diagnosis Intuition & Prescription</span>
+      <span class="animate__animated animate__zoomInDown shortlogo">D I P S</span>
+      <div>
+        <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
+          <mat-label *ngIf="!(this.userService.userAc==null)">{{this.userService.userAc.userac_name}} </mat-label>
+          <mat-icon>account_circle</mat-icon>
         </button>
-        <span class="animate__animated animate__zoomInDown logo">Diagnosis Intuition & Prescription</span>        
-        <span class="animate__animated animate__zoomInDown shortlogo">D I P S</span>
-        <div>
-          <button mat-raised-button color="primary" [matMenuTriggerFor]="menu" aria-label="Profile" class="toolbar-icon">
-            <mat-label *ngIf="!(this.userService.userAc==null)">{{this.userService.userAc.userac_name}}  </mat-label>
-            <mat-icon>account_circle</mat-icon>
-          </button>
-    
-        </div>
-    
-        
-      </mat-toolbar>
-      <router-outlet *ngIf="(this.userService.userAc.userac_reg==true)" ></router-outlet>   
-     
-      <!-- Part for Profile Complete 
-      ||this.userService.userAc.userac_reg==false
-      *ngIf = "userLoaded | async"
-      -->
-      
- 
-       <div *ngIf="!(this.userService.userAc==null)" > 
-        <div class="row m-0 w-100 h-100" *ngIf="(this.userService.userAc.userac_reg==false)" >
-          <div class="col-md-10 col-lg-5 mx-auto mt-5">
-            <section> 
-              <mat-progress-bar
-                  color="primary"
-                  mode="determinate"
-                  [value]="progValue">
-              </mat-progress-bar>
-            </section>
-            <mat-card>
-              <mat-card-title class="text-primary">A little more to go!</mat-card-title>
-              <mat-card-subtitle>Complete Your Profile</mat-card-subtitle>
-                <div class="px-3"  >
-                  <mat-form-field appearance="standard">
-                    <mat-label>Enter Your Name</mat-label>
-                    <input matInput placeholder="Full Name" [formControl]="name" (input) ="progFunction()">
-                    <mat-hint>Excluding special characters</mat-hint>
-                  </mat-form-field>
-                  <br>
-                  <mat-form-field appearance="standard">
-                      <mat-label>Enter Your Email</mat-label>
-                      <input matInput placeholder="someone@example.com" [formControl]="email" required (input) ="progFunction()">
-                      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-                    </mat-form-field>
-                    <br>
-                  <mat-form-field appearance="standard">
-                    <mat-label>Phone number</mat-label>
-                    <input matInput placeholder="03001234567" [formControl]="phone" required (input) ="progFunction()">                
-                    <mat-icon matSuffix>phone</mat-icon>
-                    <mat-hint>Area code note required e.g +92</mat-hint>
-                  </mat-form-field>
-                  <br>
-                  <mat-form-field appearance="standard">
-                    <mat-label>Choose Date of Birth</mat-label>
-                    <input matInput [formControl]="date" (focus) ="progFunction()"  [min]="minDate" [max]="maxDate" [matDatepicker]="picker" >
-                    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-hint>Enter a valid date</mat-hint>                
-                  </mat-form-field>
-                  <br>
-                <mat-card-actions>
-                  <button mat-stroked-button color="accent" type="submit" (click)="registerUser()">Submit</button>
-                </mat-card-actions>
-                </div>
-            </mat-card>
-          </div>
-        </div>
-  
+
       </div>
-     
-      
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-  
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="profile"><mat-icon>account_box</mat-icon>View Profile</button>
-    <button mat-menu-item (click)="logout()"><mat-icon>logout</mat-icon>Log Out</button>
-  </mat-menu>
+
+
+    </mat-toolbar>
+    <router-outlet *ngIf="(this.userService.userAc.userac_reg==true)"></router-outlet>
+
+    <!-- Part for Profile Complete  -->
+
+
+    <div *ngIf="!(this.userService.userAc==null)">
+      <div class="row m-0 w-100 h-100" *ngIf="(this.userService.userAc.userac_reg==false)">
+        <div class="col-md-10 col-lg-5 mx-auto mt-5">
+          <section>
+            <mat-progress-bar color="primary" mode="determinate" [value]="progValue">
+            </mat-progress-bar>
+          </section>
+          <mat-card>
+            <mat-card-title class="text-primary">A little more to go!</mat-card-title>
+            <mat-card-subtitle>Complete Your Profile</mat-card-subtitle>
+            <div class="px-3">
+              <mat-form-field appearance="standard">
+                <mat-label>Enter Your Name</mat-label>
+                <input matInput placeholder="Full Name" [formControl]="name" (input)="progFunction()">
+                <mat-hint>Excluding special characters</mat-hint>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="standard">
+                <mat-label>Enter Your Email</mat-label>
+                <input matInput placeholder="someone@example.com" [formControl]="email" required
+                  (input)="progFunction()">
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="standard">
+                <mat-label>Phone number</mat-label>
+                <input matInput placeholder="03001234567" [formControl]="phone" required (input)="progFunction()">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-hint>Area code note required e.g +92</mat-hint>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="standard">
+                <mat-label>Choose Date of Birth</mat-label>
+                <input matInput [formControl]="date" (focus)="progFunction()" [min]="minDate" [max]="maxDate"
+                  [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-hint>Enter a valid date</mat-hint>
+              </mat-form-field>
+              <br>
+              <mat-card-actions>
+                <button mat-stroked-button color="accent" type="submit" (click)="registerUser()">Submit</button>
+              </mat-card-actions>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="profile">
+    <mat-icon>account_box</mat-icon>View Profile
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>Log Out
+  </button>
+</mat-menu>

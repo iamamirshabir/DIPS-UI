@@ -111,9 +111,8 @@ setUserProfile(u: User){
     )
   }
   logout(){
-    this.keycloak.logout(); 
-   }
+    this.keycloak.logout("http://localhost:8089/"); 
 
-  
+  }
 
 }

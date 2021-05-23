@@ -1,4 +1,4 @@
-export const endpoint = 'https://dips-rs.herokuapp.com/resource-server/api/';
+export const endpoint = 'http://localhost:8081/resource-server/api/';
 
 
 export class Prescription{
@@ -8,10 +8,12 @@ export class Prescription{
     prescription_notes: string;
     prescription_diagnosis: string;
     tests: string;
+    symptoms: string;
+    medicines: string;
     symptom: Symptom[];
     medicine: Medicine[];
     physician: Physician;
-    user: User;         
+    user: User;
 }
 
 export class Disease{
@@ -39,9 +41,9 @@ export class Medicine {
     medicine_brand: string;
     medicine_composition: string;
     medicine_frequency: number;
-    medicine_dosage: number; 
+    medicine_dosage: number;
 }
-  
+
 export class Appointment{
     createdAt: string;
     updatedAt: string;
@@ -49,9 +51,9 @@ export class Appointment{
     appointment_on: string;
     prescription: Prescription;
     physician: Physician;
-    user: User; 
+    user: User;
   }
-  
+
 
 export class User{
     userac_id: number;
@@ -60,7 +62,7 @@ export class User{
     userac_name:string;
     userac_dob: Date;
     userac_reg: boolean;
-    userac_mobile: number;  
+    userac_mobile: number;
     userac_email: string;
     createdAt: string;
     updatedAt: string;
@@ -72,7 +74,7 @@ export class Symptom{
     symptom_id: number;
     symptom_text: string;
 }
-  
+
 export class Physician
 {
     createdAt: string;
@@ -88,13 +90,13 @@ export class Physician
     physician_time_start: number;
     physician_time_end: number;
     physician_keycloak_id: string;
-    physician_keycloak_username: string;    
+    physician_keycloak_username: string;
   physician_email: any;
 }
 
 export class Diagnosis{
-id: number; 
+id: number;
 patient: User;
 symptoms: Symptom[];
-diagnosis: string;    
+diagnosis: string;
 }
