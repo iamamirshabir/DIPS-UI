@@ -30,7 +30,7 @@ getDiagnosisResult(token: string): Observable<any>{
 }
 
 getDiseaseDetails(name: string): Observable<any>{
-  return this.http.get(endpoint + 'diseases/filterByName/?name='+name).pipe
+  return this.http.post(endpoint + 'diseases/staticByName/',name).pipe
     (map(this.extractData),
     catchError(this.handleError)); 
 }

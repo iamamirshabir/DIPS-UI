@@ -26,7 +26,7 @@
                 Here optionally presented physician's bio.
             </mat-card-content>
             <mat-card-actions>
-                <button mat-flat-button color="primary"  (click)="openDialog(physician.physician_name,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book Appointment</button>
+                <button mat-flat-button color="primary"  (click)="openDialog(physician.physician_name,physician.physician_address,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book Appointment</button>
                 <button mat-stroked-button color="accent">View Contact Info</button>
             </mat-card-actions>
             <mat-divider [inset]="true" *ngIf="!last"></mat-divider>

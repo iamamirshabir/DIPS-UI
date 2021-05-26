@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Appointment, endpoint, Physician } from '../shared/classes';
+import { Appointment, endpoint, Physician, User } from '../shared/classes';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,10 @@ export class PhysicianService {
    
   selectedAppointment = this.appointmentObject.asObservable();
 
+  private  userObject = new BehaviorSubject<User>(new User());
+   
+  selectedUser = this.userObject.asObservable();
+
   constructor(private http: HttpClient,
     protected keycloak: KeycloakService, private router: Router) { }
 
@@ -30,6 +34,10 @@ export class PhysicianService {
     this.appointmentObject.next(appointment);
   }
 
+  changeUser(user: User) {
+    this.userObject.next(user);
+  }
+ 
   getPhysicianAccount(id: string):void{
     this.getPhysicianByKeycloak(id).subscribe((resp: any) =>{
       this.physicianAc = resp;

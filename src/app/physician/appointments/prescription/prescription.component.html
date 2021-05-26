@@ -3,7 +3,7 @@
   <div *ngIf="!(appointment.physician == null || symptoms == null)" class="col-lg-11 mt-5 mx-auto ">
     <h1 class="h1  my-title">Prescription</h1>
     <p mat-line>ID: {{appointment.appointment_id}}</p>
-    <h3>By {{appointment.physician.physician_name}}</h3>
+    <h5>By '<span style="color: brown;">{{appointment.physician.physician_name}}</span>'</h5>
     <p>{{appointment.physician.physician_spec}}</p>
       <div class=" p-3">                 
           <table class="table w-50">
@@ -13,7 +13,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>Age:</td>
+                <td>Date of Birth:</td>
                 <td>{{appointment.user.userac_dob  | date: 'fullDate'}}</td>
               </tr>
               <tr>
@@ -22,12 +22,12 @@
               </tr>
             </tbody>
           </table>
-          <a mat-button routerLink="../user-profile" (click)="changeSelected(appointment.user)">View profile </a>
+          <a mat-stroked-button routerLink="../userprofile" (click)="changeSelected(appointment.user)">View profile </a>
       </div>
       <div class="row">
           <div class="col-lg-6 mx-auto p-3 mt-3 row">
               <div class="col-lg-12 my-card">
-                <div class="my-card-header my-card-header-primary">
+                <div class="my-card-header my-card-header-danger">
                 <h2 class="my-card-title">Observed Symptoms</h2>
               </div>
               <mat-form-field class="example-full-width">
@@ -45,7 +45,7 @@
                   </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
-              <button mat-fab color="accent" aria-label="Add the Selected Symptom" (click)="onAddition()" >
+              <button mat-fab color="warn" aria-label="Add the Selected Symptom" (click)="onAddition()" >
                 <mat-icon>add</mat-icon>
               </button>
               <mat-chip-list #chipList aria-label="Symptoms selection">
@@ -55,24 +55,25 @@
                   <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                 </mat-chip>
               </mat-chip-list>
+              <br>
+              <button mat-stroked-button color="accent" *ngIf="(tokenEnabled==true)"  (click)="getDiagnosisResult()">Get Result</button>                
             <hr>
               <form class="example-form">                
                 <mat-form-field class="example-full-width w-75">
-                  <input matInput   placeholder="Enter additional symptoms..." type="text">
+                  <mat-label>Pathology Test</mat-label>
+                  <input matInput   placeholder="Enter Test Required ..." type="text">
                 </mat-form-field>
-                <h3>{{i}}</h3>
-                <button mat-button  (click)="uploadSymptoms()">Push</button>
               </form>
               </div>
          </div>
           <div class="col-lg-6 p-3 mt-3 mx-auto row">
               <div class="my-card col-lg-12">
-                <div class="my-card-header my-card-header-info">
+                <div class="my-card-header my-card-header-warning">
                   <h2 class="my-card-title">Disgnosis & Notes</h2>
                 </div>
                 <mat-form-field class="example-full-width w-100">
                   <mat-label>Diagnosis</mat-label>
-                  <textarea matInput [(ngModel)]="prescription.prescription_diagnosis" [ngModelOptions]="{standalone: true}" placeholder="Diagnosis" ></textarea>
+                  <textarea matInput [(ngModel)]="prescription.prescription_diagnosis" [ngModelOptions]="{standalone: true}" placeholder="Diagnosis" rows="5"></textarea>
                 </mat-form-field>
                 <br>
                 <mat-form-field class="example-full-width w-100">
@@ -86,7 +87,7 @@
               <div class="row">
                 <div class="col-lg-4 mx-auto mt-3">
                   <div class="my-card" >
-                    <div class="my-card-header my-card-header-success">
+                    <div class="my-card-header my-card-header-rose">
                       <h2 class="my-card-title">Dosage</h2>
                     </div>
                       <mat-form-field class="example-full-width ">

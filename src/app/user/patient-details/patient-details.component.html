@@ -124,7 +124,7 @@
               <h6>- {{diagnosisResult.potentialDiseases[2]}}</h6>
           </mat-card-content>
           <mat-card-actions>
-            <a mat-raised-button *ngIf="diseaseLoaded | async" color="accent" routerLink="../physicians" [queryParams]="{spec: disease.diseasecategory.diseasecategory_title }">See Physicians</a>
+            <a mat-raised-button *ngIf="diseaseLoaded | async" color="accent" routerLink="../physicians" [queryParams]="{spec: 'Primary Care' }">See Physicians</a>
           </mat-card-actions>
           <mat-card-footer>
 

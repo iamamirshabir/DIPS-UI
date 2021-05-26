@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Prescription, User } from 'src/app/shared/classes';
 import { PrescriptionService } from '../appointments/prescription/prescription.service';
+import { PhysicianService } from '../physician.service';
 
 
 @Component({
@@ -15,20 +16,20 @@ export class UserProfileComponent implements OnInit {
   user : User;
   prescriptionLoaded: Promise<boolean>;
 
-  constructor(private prescriptionService: PrescriptionService) { 
-    this.prescriptionService.selectedUser.subscribe(user =>(this.user = user));   
-    this.folders = prescriptionService.prescriptions;
+  constructor(private physicianService: PhysicianService,
+    private prescriptionService: PrescriptionService) { 
+    this.physicianService.selectedUser.subscribe(user =>(this.user = user));   
+    this.getPrescriptionsByUser(this.user.userac_id);
   }
 
   ngOnInit(): void {
   }
 
-  getPrescriptions(uId){
-    this.prescriptionService.getPrescriptionsByUser(uId).subscribe((resp: any) =>{
+  getPrescriptionsByUser(uid: number): void {
+    this.prescriptionService.getPrescriptionsByUser(uid).subscribe((resp: any) =>{
       this.folders = resp._embedded.prescriptionList;
-      this.prescriptionLoaded = Promise.resolve(true);
       console.log(this.folders);
-    });
+      })
   }
 
 }

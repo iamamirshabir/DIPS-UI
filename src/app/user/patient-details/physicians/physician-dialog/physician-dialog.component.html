@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Okay</h1>
   <div mat-dialog-content>
     <p>Book an appointment with '<span style="color: indigo ;font-weight: bold;">{{data.name}}</span>'?</p>
-    <p>{{maxDate}}</p>  
     <p>Available on: <span class="text-danger">{{availability}}</span></p>
-      <p>Time(24-hour format): <span class="text-danger">{{data.time_start}}:00 -to- {{data.time_end}}:00</span></p>
+    <p>Time(24-hour format): <span class="text-danger">{{data.time_start}}:00 -to- {{data.time_end}}:00</span></p>
+    <p>Address: <span style="color:brown  ;font-weight: bold;">{{data.address}}</span></p>
       <mat-form-field  appearance="fill">
         <mat-label>Choose a date</mat-label>
         <input matInput [min]="minDate" [max]="maxDate" [matDatepickerFilter]="myDateFilter" [matDatepicker]="picker">

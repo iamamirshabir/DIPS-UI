@@ -6,6 +6,8 @@ import { map, startWith } from 'rxjs/operators';
 import { MatTable } from '@angular/material/table';
 import {
   Appointment,
+  Diagnosis,
+  Disease,
   Medicine,
   Prescription,
   Symptom,
@@ -16,6 +18,8 @@ import { PrescriptionService } from './prescription.service';
 import { SymptomsService } from 'src/app/symptoms.service';
 import { PhysicianService } from '../../physician.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatientDetailsComponent } from 'src/app/user/patient-details/patient-details.component';
+import { PatientdetailsService } from 'src/app/user/patient-details/patientdetails.service';
 
 @Component({
   selector: 'app-prescription',
@@ -34,6 +38,15 @@ export class PrescriptionComponent implements OnInit {
   appointment: Appointment;
   a: number;
   symptoms: Symptom[];
+  selectedSymptoms: Symptom[]=[];
+  diagnosis: Diagnosis;
+  diagnosisResult;
+
+  tokens: number[];
+  tokenString: string;
+  tokenEnabled= false;
+  disease: Disease;
+
 
   //Table descripiton of Medicine Data display
   displayedColumns: string[] = [
@@ -63,10 +76,13 @@ export class PrescriptionComponent implements OnInit {
   //temp
   i: number[];
 
+  resultLoaded: Promise<boolean>;
+
   constructor(
     private prescriptionService: PrescriptionService,
     private symptomService: SymptomsService,
     private readonly physicianService: PhysicianService,
+    private readonly patientdetailService: PatientdetailsService,
     private _snackBar: MatSnackBar
   ) {
     this.physicianService.selectedAppointment.subscribe(
@@ -81,6 +97,9 @@ export class PrescriptionComponent implements OnInit {
     //this.getPrescription('4');
     //Symptoms fetched using service
     this.symptoms = this.symptomService.addedSymptoms;
+    this.tokens = new Array(this.symptoms.length);
+    this.tokens.fill(0,0,this.symptoms.length);
+    this.disease = new Disease();
     //this.getAllSymptoms();
   }
 
@@ -99,8 +118,29 @@ export class PrescriptionComponent implements OnInit {
   }
 
   changeSelected(user: User) {
-    this.prescriptionService.changeUser(user);
+    this.physicianService.changeUser(user);
   }
+
+    //Binary Array of selected symptoms
+    generateToken(){
+      this.tokenString = this.tokens.toString();
+      this.diagnosis = new Diagnosis();
+      this.diagnosis.id = 101;
+      this.diagnosis.symptoms = this.selectedSymptoms;
+      this.diagnosis.patient = new User();
+      
+   }
+   getDiagnosisResult():void{
+    this.generateToken();
+    this.patientdetailService.getDiagnosisResult(this.tokenString).subscribe((resp: any) =>{
+      this.diagnosisResult = resp;
+      this.resultLoaded = Promise.resolve(true);
+      this.prescription.prescription_diagnosis = "Preliminary Diagnosis:\n"+ this.diagnosisResult.potentialDiseases[0] +"  (" + this.diagnosisResult.diseaseProb[0]*100+ ")\n"+ "__________________________";
+      console.log(this.diagnosisResult);
+    });
+  }
+ 
+  
 
   addPrescription(): void {
     let temp1="", temp2="";
@@ -203,8 +243,12 @@ export class PrescriptionComponent implements OnInit {
       this.symptoms.splice(index, 1);
       this.prescription.symptom.push(symptom);
       document.getElementById('symptomSelector')?.focus();
+      this.tokens[symptom.symptom_id]=1;
       this.myControl.setValue('');
       //this.ngOnInit();
+      if(this.prescription.symptom.length>2){
+        this.tokenEnabled = true;
+      }
     }
   }
 

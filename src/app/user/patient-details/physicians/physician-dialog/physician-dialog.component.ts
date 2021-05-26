@@ -8,6 +8,7 @@ import { PhysicianDialogService } from './physician-dialog.service';
 export interface DialogData {
   available: string;
   name: string;
+  address: string;
   id: number;
   time_start:number;
   time_end:number;
@@ -91,7 +92,7 @@ export class PhysicianDialogComponent implements OnInit {
       {  
         if(resp!= null){
           this.appointment = resp;
-       alert("Done! Your Appointment is fixed with "+this.data.name+" on "+ resp.appointment_on );
+       this.physicianDialogService.generatePdf(this.appointment);
         }
        
       });

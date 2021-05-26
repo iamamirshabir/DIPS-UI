@@ -47,10 +47,10 @@ export class PhysiciansComponent implements OnInit {
     });
   }
 
-  openDialog( pName:string, pid: number, pavailability: string, ptime_start: number, ptime_end: number): void {
+  openDialog( pName:string,pAddress: string, pid: number, pavailability: string, ptime_start: number, ptime_end: number): void {
     const dialogRef = this.dialog.open(PhysicianDialogComponent, {
       width: '450px',
-      data: {name: pName, id: pid, available: pavailability, time_start: ptime_start, time_end: ptime_end}
+      data: {name: pName,address: pAddress, id: pid, available: pavailability, time_start: ptime_start, time_end: ptime_end}
     });
 
     dialogRef.afterClosed().subscribe(result => {
