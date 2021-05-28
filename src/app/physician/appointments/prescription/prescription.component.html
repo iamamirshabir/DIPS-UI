@@ -5,146 +5,145 @@
     <p mat-line>ID: {{appointment.appointment_id}}</p>
     <h5>By '<span style="color: brown;">{{appointment.physician.physician_name}}</span>'</h5>
     <p>{{appointment.physician.physician_spec}}</p>
-      <div class=" p-3">                 
-          <table class="table w-50">
-            <thead>
-                <th>Patient Name: </th>
-                <th class="text-success" > {{appointment.user.userac_name}}</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Date of Birth:</td>
-                <td>{{appointment.user.userac_dob  | date: 'fullDate'}}</td>
-              </tr>
-              <tr>
-                <td>Mobile:</td>
-                <td>{{appointment.user.userac_mobile}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <a mat-stroked-button routerLink="../userprofile" (click)="changeSelected(appointment.user)">View profile </a>
-      </div>
-      <div class="row">
-          <div class="col-lg-6 mx-auto p-3 mt-3 row">
-              <div class="col-lg-12 my-card">
-                <div class="my-card-header my-card-header-danger">
-                <h2 class="my-card-title">Observed Symptoms</h2>
-              </div>
-              <mat-form-field class="example-full-width">
-                <mat-label>Symptoms</mat-label>
-                <input type="text"
-                       placeholder="Pick some of these..."
-                       aria-label="Symptoms"
-                       id="symptomSelector"
-                       matInput
-                       [formControl]="myControl"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.symptom_text">
-                    {{option.symptom_text}}
-                  </mat-option>
-                </mat-autocomplete>
+    <div class=" p-3">
+      <table class="table w-50">
+        <thead>
+          <th>Patient Name: </th>
+          <th class="text-success"> {{appointment.user.userac_name}}</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Date of Birth:</td>
+            <td>{{appointment.user.userac_dob  | date: 'fullDate'}}</td>
+          </tr>
+          <tr>
+            <td>Mobile:</td>
+            <td>{{appointment.user.userac_mobile}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <a mat-stroked-button routerLink="../userprofile" (click)="changeSelected(appointment.user)">View profile </a>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 mx-auto p-3 mt-3 row">
+        <div class="col-lg-12 my-card">
+          <div class="my-card-header my-card-header-danger">
+            <h2 class="my-card-title">Observed Symptoms</h2>
+          </div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Symptoms</mat-label>
+            <input type="text" placeholder="Pick some of these..." aria-label="Symptoms" id="symptomSelector" matInput
+              [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async"
+                [value]="option.symptom_text">
+                {{option.symptom_text}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button mat-fab color="warn" aria-label="Add the Selected Symptom" (click)="onAddition()">
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-chip-list #chipList aria-label="Symptoms selection">
+            <mat-chip *ngFor="let symptom of prescription.symptom" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(symptom)">
+              {{symptom.symptom_text}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <br>
+          <button mat-stroked-button color="accent" *ngIf="(tokenEnabled==true)" (click)="getDiagnosisResult()">Get
+            Result</button>
+          <hr>
+          <form class="example-form">
+            <mat-form-field class="example-full-width w-75">
+              <mat-label>Pathology Test</mat-label>
+              <input matInput placeholder="Enter Test Required ..." type="text">
             </mat-form-field>
-              <button mat-fab color="warn" aria-label="Add the Selected Symptom" (click)="onAddition()" >
-                <mat-icon>add</mat-icon>
-              </button>
-              <mat-chip-list #chipList aria-label="Symptoms selection">
-                <mat-chip *ngFor="let symptom of prescription.symptom" [selectable]="selectable"
-                         [removable]="removable" (removed)="remove(symptom)">
-                  {{symptom.symptom_text}}
-                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-              </mat-chip-list>
-              <br>
-              <button mat-stroked-button color="accent" *ngIf="(tokenEnabled==true)"  (click)="getDiagnosisResult()">Get Result</button>                
-            <hr>
-              <form class="example-form">                
-                <mat-form-field class="example-full-width w-75">
-                  <mat-label>Pathology Test</mat-label>
-                  <input matInput   placeholder="Enter Test Required ..." type="text">
-                </mat-form-field>
-              </form>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-6 p-3 mt-3 mx-auto row">
+        <div class="my-card col-lg-12">
+          <div class="my-card-header my-card-header-warning">
+            <h2 class="my-card-title">Disgnosis & Notes</h2>
+          </div>
+          <mat-form-field class="example-full-width w-100">
+            <mat-label>Diagnosis</mat-label>
+            <textarea matInput [(ngModel)]="prescription.prescription_diagnosis" [ngModelOptions]="{standalone: true}"
+              placeholder="Diagnosis" rows="5"></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="example-full-width w-100">
+            <mat-label>Enter Notes or Prognosis</mat-label>
+            <textarea matInput [(ngModel)]="prescription.prescription_notes" [ngModelOptions]="{standalone: true}"
+              placeholder="Notes/Prognosis"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <hr>
+        <div class="row">
+          <div class="col-lg-4 mx-auto mt-3">
+            <div class="my-card">
+              <div class="my-card-header my-card-header-rose">
+                <h2 class="my-card-title">Dosage</h2>
               </div>
-         </div>
-          <div class="col-lg-6 p-3 mt-3 mx-auto row">
-              <div class="my-card col-lg-12">
-                <div class="my-card-header my-card-header-warning">
-                  <h2 class="my-card-title">Disgnosis & Notes</h2>
-                </div>
-                <mat-form-field class="example-full-width w-100">
-                  <mat-label>Diagnosis</mat-label>
-                  <textarea matInput [(ngModel)]="prescription.prescription_diagnosis" [ngModelOptions]="{standalone: true}" placeholder="Diagnosis" rows="5"></textarea>
-                </mat-form-field>
-                <br>
-                <mat-form-field class="example-full-width w-100">
-                  <mat-label>Enter Notes or Prognosis</mat-label>
-                  <textarea matInput [(ngModel)]="prescription.prescription_notes" [ngModelOptions]="{standalone: true}" placeholder="Notes/Prognosis" ></textarea>
-                </mat-form-field>
-              </div>  
-          </div>
-            <div class="col-lg-12">
+              <mat-form-field class="example-full-width ">
+                <input matInput id="medName" [formControl]="medNameControl" placeholder="Enter Medicine name">
+              </mat-form-field>
               <hr>
-              <div class="row">
-                <div class="col-lg-4 mx-auto mt-3">
-                  <div class="my-card" >
-                    <div class="my-card-header my-card-header-rose">
-                      <h2 class="my-card-title">Dosage</h2>
-                    </div>
-                      <mat-form-field class="example-full-width ">
-                        <input matInput id="medName" [formControl]="medNameControl"  placeholder="Enter Medicine name">
-                      </mat-form-field>
-                        <hr>                  
-                      <mat-form-field class="example-full-width ">
-                          <mat-label>Dose (in miligrams)</mat-label>
-                          <input matInput [formControl]="medWeightControl" type="number" min="1" max="100000" >
-                      </mat-form-field>
-                      <hr>
-                      <mat-form-field class="example-full-width">
-                          <mat-label>Frequency</mat-label>
-                        <mat-select id="fr"  >
-                          <mat-option *ngFor="let frequency of frequencies" [value]="frequency" >
-                            {{frequency}}
-                          </mat-option>
-                        </mat-select>
-                        </mat-form-field>
-                        <br>
-                        <button mat-stroked-button color="accent" (click)="addMedicine()" >Add Medicine</button>
-                 </div>
-                </div>
-                <div class="col-lg-8">
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-3 table" >
-                  
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="medicine_brand">
-                      <th mat-header-cell *matHeaderCellDef> Brand </th>
-                      <td mat-cell *matCellDef="let element"> {{element.medicine_brand}} </td>
-                    </ng-container>
-                  
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="medicine_composition">
-                      <th mat-header-cell *matHeaderCellDef> Composition </th>
-                      <td mat-cell *matCellDef="let element"> {{element.medicine_composition}} </td>
-                    </ng-container>
-                  
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="medicine_dosage">
-                      <th mat-header-cell *matHeaderCellDef> Weight (mg/ml) </th>
-                      <td mat-cell *matCellDef="let element"> {{element.medicine_dosage}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="medicine_frequency">
-                      <th mat-header-cell *matHeaderCellDef> Frequency </th>
-                      <td mat-cell *matCellDef="let element"> {{element.medicine_frequency}} </td>
-                    </ng-container>
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>
-               </div>
+              <mat-form-field class="example-full-width ">
+                <mat-label>Dose (in miligrams)</mat-label>
+                <input matInput [formControl]="medWeightControl" type="number" min="1" max="100000">
+              </mat-form-field>
+              <hr>
+              <mat-form-field class="example-full-width">
+                <mat-label>Frequency</mat-label>
+                <mat-select id="fr">
+                  <mat-option *ngFor="let frequency of frequencies" [value]="frequency">
+                    {{frequency}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <button mat-stroked-button color="accent" (click)="addMedicine()">Add Medicine</button>
             </div>
-            <button mat-button color="primary" class="ml-3" (click)="addPrescription()">Save Prescription</button>
-            <button mat-button class="ml-3" (click)="generatePdf()">Generate PDF</button>          
           </div>
-      </div>      
+          <div class="col-lg-8">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-3 table">
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="medicine_brand">
+                <th mat-header-cell *matHeaderCellDef> Brand </th>
+                <td mat-cell *matCellDef="let element"> {{element.medicine_brand}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="medicine_composition">
+                <th mat-header-cell *matHeaderCellDef> Composition </th>
+                <td mat-cell *matCellDef="let element"> {{element.medicine_composition}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="medicine_dosage">
+                <th mat-header-cell *matHeaderCellDef> Weight (mg/ml) </th>
+                <td mat-cell *matCellDef="let element"> {{element.medicine_dosage}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="medicine_frequency">
+                <th mat-header-cell *matHeaderCellDef> Frequency </th>
+                <td mat-cell *matCellDef="let element"> {{element.medicine_frequency}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+        <button mat-button color="primary" class="ml-3" (click)="addPrescription()">Save Prescription</button>
+        <button mat-button class="ml-3" (click)="generatePdf()">Generate PDF</button>
+      </div>
+    </div>
   </div>
 </div>

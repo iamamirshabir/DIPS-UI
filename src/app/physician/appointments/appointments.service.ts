@@ -31,8 +31,10 @@ export class AppointmentsService {
       )
       .pipe(map(this.extractData), catchError(this.handleError));
   }
-  deleteAppointment(aId): Observable<any>{
-    return this.http.delete(endpoint + 'appointment/' +aId).pipe(map(this.extractData), catchError(this.handleError));
+  deleteAppointment(aId): Observable<any> {
+    return this.http
+      .delete(endpoint + 'appointment/' + aId)
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): any {

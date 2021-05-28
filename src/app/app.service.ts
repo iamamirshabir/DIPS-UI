@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Cookie } from 'ng2-cookies';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+
 
 
 @Injectable({
@@ -10,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class AppService {
 
-  
+
   constructor(private _http: HttpClient) { }
 
 }

@@ -89,8 +89,7 @@ export class UserComponent implements OnInit {
       this.userService.userAc.userac_name = this.name.value;
       this.userService.userAc.userac_email = this.email.value;
       this.userService.userAc.userac_mobile = this.phone.value;
-      this.userService.userAc.userac_keycloak_username =
-        this.userService.user.username;
+      this.userService.userAc.userac_keycloak_username = this.userService.user.username;
       this.userService.userAc.userac_keycloak_id = this.userService.user.sub;
       this.userService.userAc.userac_dob = this.date.value;
       this.userService.userAc.userac_reg = true;

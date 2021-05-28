@@ -1,57 +1,57 @@
 <div class="row mx-0">
-  <mat-spinner *ngIf="(appointmentsLoaded == null) " color="warn" class="mx-auto mt-5"></mat-spinner>    
+  <mat-spinner *ngIf="(appointmentsLoaded == null) " color="warn" class="mx-auto mt-5"></mat-spinner>
   <div *ngIf="appointmentsLoaded | async" class="col-lg-11 mt-5 mx-auto">
-      <h1 class="h1 my-title">Appointments </h1>
-      <div class="my-card">
-        <div class="my-card-header my-card-header-warning">
-          <h1 class="my-card-title">Appointments</h1>
-          <h2></h2>
-        </div> 
-  <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Ali" #input>
-    </mat-form-field>
-    
-    <div *ngIf="appointmentsLoaded | async" class="mat-elevation-z4">
-      <table mat-table [dataSource]="dataSource" matSort>
-    
-        <!-- ID Column -->
-        <ng-container matColumnDef="appointment_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td mat-cell *matCellDef="let row" > {{row.appointment_id}} </td>
-        </ng-container>
-    
-        <!-- Name Column -->
-        <ng-container matColumnDef="user.userac_name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let row"> {{row.user.userac_name}}
-          </td>
-        </ng-container>
-    
-        <!-- Age Column -->
-        <ng-container matColumnDef="user.userac_dob">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
-          <td mat-cell *matCellDef="let row"> {{row.user.userac_dob  | date: 'fullDate'}} </td>
-        </ng-container>
-    
-        <!-- Link Column -->
-        <ng-container matColumnDef="user.userac_id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Link </th>
-          <td mat-cell *matCellDef="let row" > 
-            <a mat-button routerLink="../prescription"  (click)="changeSelected(row)">Write Prescription</a>
-          </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-        </tr>
-      </table>    
+    <h1 class="h1 my-title">Appointments </h1>
+    <div class="my-card">
+      <div class="my-card-header my-card-header-warning">
+        <h1 class="my-card-title">Appointments</h1>
+        <h2></h2>
+      </div>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Ali" #input>
+      </mat-form-field>
+
+      <div *ngIf="appointmentsLoaded | async" class="mat-elevation-z4">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="appointment_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.appointment_id}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="user.userac_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.user.userac_name}}
+            </td>
+          </ng-container>
+
+          <!-- Age Column -->
+          <ng-container matColumnDef="user.userac_dob">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Age </th>
+            <td mat-cell *matCellDef="let row"> {{row.user.userac_dob  | date: 'fullDate'}} </td>
+          </ng-container>
+
+          <!-- Link Column -->
+          <ng-container matColumnDef="user.userac_id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Link </th>
+            <td mat-cell *matCellDef="let row">
+              <a mat-button routerLink="../prescription" (click)="changeSelected(row)">Write Prescription</a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>
     </div>
-   </div>
   </div>
+</div>

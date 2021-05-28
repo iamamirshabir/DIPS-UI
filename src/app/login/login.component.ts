@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from "@angular/forms";
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 
@@ -7,19 +7,18 @@ import { AppService } from '../app.service';
   selector: 'app-login',
   providers: [AppService],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   public isLoggedIn = false;
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
-  credentials = {username: '', password: ''};
+  credentials = { username: '', password: '' };
 
   hide = true;
 
-  constructor(private router: Router, private _service: AppService) { }
+  constructor(private router: Router, private _service: AppService) {}
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -29,11 +28,7 @@ export class LoginComponent implements OnInit {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  login() {
-    }
- 
+  login() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
-

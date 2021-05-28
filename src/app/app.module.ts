@@ -15,6 +15,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
+import { PhysicianService } from './physician/physician.service';
+
+//Method that will be initialized before application loads, its for keycloak-angular 
+//Injected as provider  below
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -25,6 +29,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: 'angular-app',
       },
       initOptions: {
+        //this secretly calls to authentication server
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
           window.location.origin + '/assets/silent-check-sso.html',
@@ -50,9 +55,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatButtonModule,
     MatIconModule,
     HttpClientModule
-    ],
-  providers: [KeycloakService,{
-     provide: APP_INITIALIZER,
+  ],
+  providers: [
+    KeycloakService, {
+      provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       deps: [KeycloakService],
       multi: true

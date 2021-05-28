@@ -45,10 +45,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { LayoutModule } from '@angular/cdk/layout';
 
-
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
-import { PatientDetailsComponent } from "./patient-details/patient-details.component";
+import { PatientDetailsComponent } from './patient-details/patient-details.component';
 import { PhysicianRegistrationComponent } from './physician-registration/physician-registration.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PhysiciansComponent } from './patient-details/physicians/physicians.component';
@@ -60,15 +59,15 @@ import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   declarations: [
-  UserComponent,
-  PatientDetailsComponent,
-  PhysicianRegistrationComponent,
-  ProfileComponent,
-  PhysiciansComponent,
-  PhysicianDialogComponent,
-  DashboardComponent,
-  ContactusComponent
-],
+    UserComponent,
+    PatientDetailsComponent,
+    PhysicianRegistrationComponent,
+    ProfileComponent,
+    PhysiciansComponent,
+    PhysicianDialogComponent,
+    DashboardComponent,
+    ContactusComponent,
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -111,9 +110,9 @@ import { ContactusComponent } from './contactus/contactus.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    LayoutModule
-  ] ,
+    LayoutModule,
+  ],
   providers: [UserService],
-  entryComponents: [PhysicianDialogComponent] 
+  entryComponents: [PhysicianDialogComponent],
 })
-export class UserModule { }
+export class UserModule {}

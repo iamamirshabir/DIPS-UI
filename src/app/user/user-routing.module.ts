@@ -9,18 +9,26 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { UserComponent } from './user.component';
 
-const routes: Routes = [{ path: '', component: UserComponent,
- children: [
-  { path: 'diagnosis', component: PatientDetailsComponent },
-  { path: 'physicians', component: PhysiciansComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'contactus', component: ContactusComponent },
-  { path: 'physicianregistration', component: PhysicianRegistrationComponent }]}
+const routes: Routes = [
+  {
+    path: '',
+    component: UserComponent,
+    children: [
+      { path: 'diagnosis', component: PatientDetailsComponent },
+      { path: 'physicians', component: PhysiciansComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'contactus', component: ContactusComponent },
+      {
+        path: 'physicianregistration',
+        component: PhysicianRegistrationComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}

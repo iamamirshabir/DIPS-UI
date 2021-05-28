@@ -1,1 +1,28 @@
-<p>admin works!</p>
+<div class="row mx-0">
+  <mat-spinner *ngIf="(physicians == null)" color="accent" class="mx-auto mt-5"></mat-spinner>
+  <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
+    <h1 class="h1 text-primary animate__animated animate__lightSpeedInLeft">Physicians Applied for Registration</h1>
+    <div class="my-card animate__animated animate__zoomInUp">
+      <div class="my-card-header my-card-header-primary">
+        <h1 class="my-card-title">Unverified Physicians</h1>
+      </div>
+      <div *ngFor="let physician of physicians; last as last">
+        <mat-card matRipple>
+          <mat-card-header>
+            <img mat-card-avatar src="/assets/images/doc.jpeg" alt="Avatar" />
+            <mat-card-title>{{physician.physician_name}}</mat-card-title>
+            <mat-card-subtitle>{{physician.physician_spec}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h2 class="text-danger">{{physician.physician_reg_no}}</h2>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-stroked-button (click)="updateRegistered(physician.physician_id,physician)"
+              color="accent">Register</button>
+          </mat-card-actions>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,15 +38,14 @@ export class PrescriptionComponent implements OnInit {
   appointment: Appointment;
   a: number;
   symptoms: Symptom[];
-  selectedSymptoms: Symptom[]=[];
+  selectedSymptoms: Symptom[] = [];
   diagnosis: Diagnosis;
   diagnosisResult;
 
   tokens: number[];
   tokenString: string;
-  tokenEnabled= false;
+  tokenEnabled = false;
   disease: Disease;
-
 
   //Table descripiton of Medicine Data display
   displayedColumns: string[] = [
@@ -98,7 +97,7 @@ export class PrescriptionComponent implements OnInit {
     //Symptoms fetched using service
     this.symptoms = this.symptomService.addedSymptoms;
     this.tokens = new Array(this.symptoms.length);
-    this.tokens.fill(0,0,this.symptoms.length);
+    this.tokens.fill(0, 0, this.symptoms.length);
     this.disease = new Disease();
     //this.getAllSymptoms();
   }
@@ -121,38 +120,44 @@ export class PrescriptionComponent implements OnInit {
     this.physicianService.changeUser(user);
   }
 
-    //Binary Array of selected symptoms
-    generateToken(){
-      this.tokenString = this.tokens.toString();
-      this.diagnosis = new Diagnosis();
-      this.diagnosis.id = 101;
-      this.diagnosis.symptoms = this.selectedSymptoms;
-      this.diagnosis.patient = new User();
-      
-   }
-   getDiagnosisResult():void{
-    this.generateToken();
-    this.patientdetailService.getDiagnosisResult(this.tokenString).subscribe((resp: any) =>{
-      this.diagnosisResult = resp;
-      this.resultLoaded = Promise.resolve(true);
-      this.prescription.prescription_diagnosis = "Preliminary Diagnosis:\n"+ this.diagnosisResult.potentialDiseases[0] +"  (" + this.diagnosisResult.diseaseProb[0]*100+ ")\n"+ "__________________________";
-      console.log(this.diagnosisResult);
-    });
+  //Binary Array of selected symptoms
+  generateToken() {
+    this.tokenString = this.tokens.toString();
+    this.diagnosis = new Diagnosis();
+    this.diagnosis.id = 101;
+    this.diagnosis.symptoms = this.selectedSymptoms;
+    this.diagnosis.patient = new User();
   }
- 
-  
+  getDiagnosisResult(): void {
+    this.generateToken();
+    this.patientdetailService
+      .getDiagnosisResult(this.tokenString)
+      .subscribe((resp: any) => {
+        this.diagnosisResult = resp;
+        this.resultLoaded = Promise.resolve(true);
+        this.prescription.prescription_diagnosis =
+          'Preliminary Diagnosis:\n' +
+          this.diagnosisResult.potentialDiseases[0] +
+          '  (' +
+          this.diagnosisResult.diseaseProb[0] * 100 +
+          ')\n' +
+          '__________________________';
+        console.log(this.diagnosisResult);
+      });
+  }
 
   addPrescription(): void {
-    let temp1="", temp2="";
-    this.prescription.symptom.forEach(s => temp1 + s.symptom_text);
-    this.prescription.medicine.forEach(m => temp2 + m.medicine_brand);
+    let temp1 = '',
+      temp2 = '';
+    this.prescription.symptom.forEach((s) => temp1 + s.symptom_text);
+    this.prescription.medicine.forEach((m) => temp2 + m.medicine_brand);
     //this.prescription.medicine=[];
     //this.prescription.symptom=[];
-    this.prescription.symptom.forEach(s => s.symptom_id =null);
-    this.prescription.medicine.forEach(m => m.medicine_id = null);
+    this.prescription.symptom.forEach((s) => (s.symptom_id = null));
+    this.prescription.medicine.forEach((m) => (m.medicine_id = null));
     this.prescriptionService
       .AddPrescription(this.prescription, this.appointment.appointment_id)
-.subscribe((resp: any) => {
+      .subscribe((resp: any) => {
         this.prescription = resp;
         this._snackBar.open('This Prescription is Succesfully Saved', 'Okay');
         console.log(this.prescription);
@@ -243,10 +248,10 @@ export class PrescriptionComponent implements OnInit {
       this.symptoms.splice(index, 1);
       this.prescription.symptom.push(symptom);
       document.getElementById('symptomSelector')?.focus();
-      this.tokens[symptom.symptom_id]=1;
+      this.tokens[symptom.symptom_id] = 1;
       this.myControl.setValue('');
       //this.ngOnInit();
-      if(this.prescription.symptom.length>2){
+      if (this.prescription.symptom.length > 2) {
         this.tokenEnabled = true;
       }
     }

@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
+
 import { catchError } from 'rxjs/internal/operators';
 import {
   HttpClient,
-  HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { endpoint } from 'src/app/shared/classes';
+import { endpoint, Physician } from 'src/app/shared/classes';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProfileService {
+export class AdminService {
   private extractData(res: Response): any {
     const body = res;
     return body || {};
@@ -20,9 +20,15 @@ export class ProfileService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(id: number): Observable<any> {
+  getUnregisteredPhysicians(): Observable<any> {
     return this.http
-      .get(endpoint + 'users/' + id)
+      .get(endpoint + 'physicians/unregistered/')
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
+  updateRegStatus(pId: number, p: Physician): Observable<any> {
+    return this.http
+      .put(endpoint + 'physicians/' + pId, p)
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 

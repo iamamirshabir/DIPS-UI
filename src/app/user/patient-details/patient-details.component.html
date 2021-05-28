@@ -1,141 +1,146 @@
 <div class="row mx-0">
   <div class="col-lg-11 mt-5 mx-auto">
-    <h1 class="h1 text-primary my-title animate__animated animate__lightSpeedInLeft" >Your Details</h1>
+    <h1 class="h1 text-primary my-title animate__animated animate__lightSpeedInLeft">Your Details</h1>
     <div class="my-card animate__animated animate__zoomInUp">
       <div class="my-card-header my-card-header-success">
         <h1 class="my-card-title">Symptom Checker</h1>
       </div>
-    <mat-vertical-stepper [linear]="isLinear" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
-        <ng-template >
-          
-        </ng-template>
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel >Declaration</ng-template>
-          <mat-card class="col-lg-8 mx-auto">
-            <mat-card-title [style.color]="primaryColor">Hey there!</mat-card-title>
-            <mat-card-subtitle>Declaration</mat-card-subtitle>
-            <mat-card-content>
-              <p>1. Nothing can replace medical diagnosis at medical complex</p>
-            </mat-card-content>
-            <mat-card-actions>
-            </mat-card-actions>
-            <mat-card-footer >
-              <mat-checkbox formControlName="firstCtrl" class="example-margin ">I undertand and agree!</mat-checkbox>
-              
-            </mat-card-footer>
-          </mat-card>
-          <br>    
-          <button mat-stroked-button color="primary" matStepperNext>Next</button>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="secondFormGroup" label="Add Personal Info">
-        <form [formGroup]="secondFormGroup">
+      <mat-vertical-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <ng-template>
+
+          </ng-template>
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Declaration</ng-template>
+            <mat-card class="col-lg-8 mx-auto">
+              <mat-card-title [style.color]="primaryColor">Hey there!</mat-card-title>
+              <mat-card-subtitle>Declaration</mat-card-subtitle>
+              <mat-card-content>
+                <p>1. Nothing can replace medical diagnosis at medical complex</p>
+              </mat-card-content>
+              <mat-card-actions>
+              </mat-card-actions>
+              <mat-card-footer>
+                <mat-checkbox formControlName="firstCtrl" class="example-margin ">I undertand and agree!</mat-checkbox>
+
+              </mat-card-footer>
+            </mat-card>
+            <br>
+            <button mat-stroked-button color="primary" matStepperNext>Next</button>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Add Personal Info">
+          <form [formGroup]="secondFormGroup">
             <mat-form-field appearance="fill">
               <mat-label>Gender</mat-label>
-                <mat-select formControlName="secondCtrl" >
+              <mat-select formControlName="secondCtrl">
                 <mat-option value="male">Male</mat-option>
-                <mat-option value="female" >Female</mat-option>
+                <mat-option value="female">Female</mat-option>
                 <mat-option value="na">Prefer not to say</mat-option>
-                </mat-select>
+              </mat-select>
             </mat-form-field>
-           <h4>Your Age</h4>
-          <mat-slider class="slider" thumbLabel min="10" max="120" step="1" value="55"></mat-slider>
-          <div>
-            <button mat-button color="warn"   matStepperPrevious>Back</button>
-            <button mat-stroked-button color="primary" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="secondFormGroup" label="Select Medical Conditions">
-        <form (ngSubmit)="onFormSubmit()">
-          <h3 class="my-card-title text-primary">Select Your Symptoms & Conditions</h3>
-          <mat-slide-toggle [(ngModel)]="s1Checked" name="s1">Hypertention</mat-slide-toggle><hr/>
-          <mat-slide-toggle [(ngModel)]="s2Checked" name="s2">Fever</mat-slide-toggle><hr/>
-          <mat-slide-toggle [(ngModel)]="s3Checked" name="s3">Cough</mat-slide-toggle><hr/>
-          <mat-slide-toggle [(ngModel)]="s4Checked" name="s4">Depression</mat-slide-toggle><hr/>
-          <mat-slide-toggle [(ngModel)]="s5Checked" name="s5">Fatigue</mat-slide-toggle><hr/>             
-          <div>
-            <button mat-button color="warn"  matStepperPrevious>Back</button>
-            <button mat-stroked-button type="submit" color="primary" matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step  label="Add Symptoms">
-        <form><h2 class="my-card-title text-primary">Enter Your Symptoms</h2>
-          <mat-form-field class="example-full-width">
-            <input type="text"
-                    id="symptomSelector"
-                   placeholder="Select Your Symptoms & Signs...(min. 3)"
-                   aria-label="Number"
-                   matInput
-                   [formControl]="myControl"
-                   [matAutocomplete]="auto">
-            <mat-autocomplete   #auto="matAutocomplete">
-              <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async" [value]="option.symptom_text">
-                {{option.symptom_text}}
-              </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-          <button mat-fab color="accent" aria-label="Add the Selected Symptom" (click)="onAddition()"  >
-            <mat-icon>add</mat-icon>
-          </button>
-          <mat-chip-list #chipList aria-label="Symptoms selection">
-            <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable"
-                     [removable]="removable" (removed)="remove(symptom)">
-              {{symptom.symptom_text}}
-              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-          </mat-chip-list>
-          <br>
-          <br>
-          <div>
-            <button mat-button color="warn"  matStepperPrevious>Back</button>
-            <button mat-stroked-button (click)="generateToken()" color="primary"  *ngIf="(tokenEnabled==true)"  matStepperNext>Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>Result</ng-template>
-        <mat-progress-bar *ngIf="diagnosisResult==null" mode="indeterminate"></mat-progress-bar>
-        <mat-card class="col-lg-6 mx-auto" *ngIf="resultLoaded | async">
-          <mat-card-title [style.color]="accentColor">
-            Result
-          </mat-card-title>
-          <mat-card-subtitle>Preliminary Diagnosis</mat-card-subtitle>
-          <mat-card-content>
-            <mat-chip-list #chipList  aria-label="Symptoms selection">
-              <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable" [style.color]="infoColor"  >
+            <h4>Your Age</h4>
+            <mat-slider class="slider" thumbLabel min="10" max="120" step="1" value="55"></mat-slider>
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Back</button>
+              <button mat-stroked-button color="primary" matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Select Medical Conditions">
+          <form (ngSubmit)="onFormSubmit()">
+            <h3 class="my-card-title text-primary">Select Your Symptoms & Conditions</h3>
+            <mat-slide-toggle [(ngModel)]="s1Checked" name="s1">Hypertention</mat-slide-toggle>
+            <hr />
+            <mat-slide-toggle [(ngModel)]="s2Checked" name="s2">Fever</mat-slide-toggle>
+            <hr />
+            <mat-slide-toggle [(ngModel)]="s3Checked" name="s3">Cough</mat-slide-toggle>
+            <hr />
+            <mat-slide-toggle [(ngModel)]="s4Checked" name="s4">Depression</mat-slide-toggle>
+            <hr />
+            <mat-slide-toggle [(ngModel)]="s5Checked" name="s5">Fatigue</mat-slide-toggle>
+            <hr />
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Back</button>
+              <button mat-stroked-button type="submit" color="primary" matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step label="Add Symptoms">
+          <form>
+            <h2 class="my-card-title text-primary">Enter Your Symptoms</h2>
+            <mat-form-field class="example-full-width">
+              <input type="text" id="symptomSelector" placeholder="Select Your Symptoms & Signs...(min. 3)"
+                aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option #InputSymptoms (click)="onAddition()" *ngFor="let option of filteredOptions | async"
+                  [value]="option.symptom_text">
+                  {{option.symptom_text}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <button mat-fab color="accent" aria-label="Add the Selected Symptom" (click)="onAddition()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <mat-chip-list #chipList aria-label="Symptoms selection">
+              <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(symptom)">
                 {{symptom.symptom_text}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
               </mat-chip>
             </mat-chip-list>
-            <hr>
-            <h2 [style.color]="primaryColor">{{diagnosisResult.potentialDiseases[0]}}</h2>
-            <mat-progress-bar mode="determinate" [value]="diagnosisResult.diseaseProb[0]*100"></mat-progress-bar>
             <br>
-            <mat-card-subtitle>Probability <span style="margin-right: 0px;">{{diagnosisResult.diseaseProb[0]*100}}</span></mat-card-subtitle>
-            <p *ngIf="diseaseLoaded | async">
-              {{disease.disease_details}}
-            </p>
-            <hr>
+            <br>
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Back</button>
+              <button mat-stroked-button (click)="generateToken()" color="primary" *ngIf="(tokenEnabled==true)"
+                matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Result</ng-template>
+          <mat-progress-bar *ngIf="diagnosisResult==null" mode="indeterminate"></mat-progress-bar>
+          <mat-card class="col-lg-6 mx-auto" *ngIf="resultLoaded | async">
+            <mat-card-title [style.color]="accentColor">
+              Result
+            </mat-card-title>
+            <mat-card-subtitle>Preliminary Diagnosis</mat-card-subtitle>
+            <mat-card-content>
+              <mat-chip-list #chipList aria-label="Symptoms selection">
+                <mat-chip *ngFor="let symptom of selectedSymptoms" [selectable]="selectable" [style.color]="infoColor">
+                  {{symptom.symptom_text}}
+                </mat-chip>
+              </mat-chip-list>
+              <hr>
+              <h2 [style.color]="primaryColor">{{diagnosisResult.potentialDiseases[0]}}</h2>
+              <mat-progress-bar mode="determinate" [value]="diagnosisResult.diseaseProb[0]*100"></mat-progress-bar>
+              <br>
+              <mat-card-subtitle>Probability <span
+                  style="margin-right: 0px;">{{diagnosisResult.diseaseProb[0]*100}}</span></mat-card-subtitle>
+              <p *ngIf="diseaseLoaded | async">
+                {{disease.disease_details}}
+              </p>
+              <hr>
 
-            <p class="text-primary">A minor relevancy to following is possible instead of given above</p>
+              <p class="text-primary">A minor relevancy to following is possible instead of given above</p>
               <h6>- {{diagnosisResult.potentialDiseases[1]}}</h6>
               <h6>- {{diagnosisResult.potentialDiseases[2]}}</h6>
-          </mat-card-content>
-          <mat-card-actions>
-            <a mat-raised-button *ngIf="diseaseLoaded | async" color="accent" routerLink="../physicians" [queryParams]="{spec: 'Primary Care' }">See Physicians</a>
-          </mat-card-actions>
-          <mat-card-footer>
+            </mat-card-content>
+            <mat-card-actions>
+              <a mat-raised-button *ngIf="diseaseLoaded | async" color="accent" routerLink="../physicians"
+                [queryParams]="{spec: 'Primary Care' }">See Physicians</a>
+            </mat-card-actions>
+            <mat-card-footer>
 
-          </mat-card-footer>
-        </mat-card>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
-      </mat-step>
-    </mat-vertical-stepper>
-  </div>
+            </mat-card-footer>
+          </mat-card>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
   </div>
 </div>

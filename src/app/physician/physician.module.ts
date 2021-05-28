@@ -55,16 +55,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContactusComponent } from './contactus/contactus.component';
 
-
-
 @NgModule({
   declarations: [
-  PhysicianComponent,
-  AppointmentsComponent,
-  PrescriptionComponent,
-  UserProfileComponent,
-  DashboardComponent,
-  ContactusComponent
+    PhysicianComponent,
+    AppointmentsComponent,
+    PrescriptionComponent,
+    UserProfileComponent,
+    DashboardComponent,
+    ContactusComponent,
   ],
   imports: [
     CommonModule,
@@ -108,7 +106,7 @@ import { ContactusComponent } from './contactus/contactus.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    LayoutModule
-  ]
+    LayoutModule,
+  ],
 })
-export class PhysicianModule { }
+export class PhysicianModule {}

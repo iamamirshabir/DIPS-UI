@@ -1,40 +1,39 @@
 <div class="row mx-0">
   <mat-spinner *ngIf="(physicians == null)" color="accent" class="mx-auto mt-5"></mat-spinner>
-    <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
-      <h1 class="h1 #3f51b5 text-primary animate__animated animate__lightSpeedInLeft">Doctors Available</h1>
-      <div class="my-card animate__animated animate__zoomInUp">
-        <div class="my-card-header my-card-header-primary">
-          <h1 class="my-card-title">Physicians</h1>
-        </div> 
-        <mat-form-field appearance="outline">
-          <mat-label>Select Type</mat-label>
-          <mat-select [formControl]="specControl" >
-            <mat-option *ngFor="let spec of specs " [value]="spec" >
-             {{spec}} 
-            </mat-option>
-           </mat-select>
-        </mat-form-field>
-        <button mat-button class="filter-button" (click)="filterPhysicians()" color="primary">Apply</button>
-        <div *ngFor="let physician of physicians; last as last" >
-          <mat-card matRipple *ngIf="(physician.physician_spec == selectedSpec)">
-            <mat-card-header>
-              <img mat-card-avatar src="/assets/images/doc.jpeg" alt="Avatar"/>
-              <mat-card-title>{{physician.physician_name}}</mat-card-title>
-              <mat-card-subtitle>{{physician.physician_spec}}</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                Here optionally presented physician's bio.
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-flat-button color="primary"  (click)="openDialog(physician.physician_name,physician.physician_address,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book Appointment</button>
-                <button mat-stroked-button color="accent">View Contact Info</button>
-            </mat-card-actions>
-            <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-        </mat-card>
-        </div>
-        
-
+  <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
+    <h1 class="h1 #3f51b5 text-primary animate__animated animate__lightSpeedInLeft">Doctors Available</h1>
+    <div class="my-card animate__animated animate__zoomInUp">
+      <div class="my-card-header my-card-header-primary">
+        <h1 class="my-card-title">Physicians</h1>
       </div>
-      
-    </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Type</mat-label>
+        <mat-select [formControl]="specControl">
+          <mat-option *ngFor="let spec of specs " [value]="spec">
+            {{spec}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button class="filter-button" (click)="filterPhysicians()" color="primary">Apply</button>
+      <div *ngFor="let physician of physicians; last as last">
+        <mat-card matRipple *ngIf="(physician.physician_spec == selectedSpec)">
+          <mat-card-header>
+            <img mat-card-avatar src="/assets/images/doc.jpeg" alt="Avatar" />
+            <mat-card-title>{{physician.physician_name}}</mat-card-title>
+            <mat-card-subtitle>{{physician.physician_spec}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            Here optionally presented physician's bio.
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="primary"
+              (click)="openDialog(physician.physician_name,physician.physician_address,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book
+              Appointment</button>
+            <button mat-stroked-button color="accent">View Contact Info</button>
+          </mat-card-actions>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-card>
+      </div>
+   </div>
+  </div>
 </div>
