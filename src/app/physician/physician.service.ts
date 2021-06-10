@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Appointment, endpoint, Physician, User } from '../shared/classes';
+import { Appointment, appUrl, endpoint, Physician, User } from '../shared/classes';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,8 @@ export class PhysicianService {
   getPhysicianAccount(id: string): void {
     this.getPhysicianByKeycloak(id).subscribe((resp: any) => {
       this.physicianAc = resp;
-      this.router.navigate(['physician/dashboard']);
+      this.router.initialNavigation();
+      //this.router.navigate(['physician/dashboard']);
       console.log(this.physicianAc);
     });
   }
@@ -92,6 +93,6 @@ export class PhysicianService {
   }
 
   logout() {
-    this.keycloak.logout('http://localhost:8089/');
+    this.keycloak.logout(appUrl);
   }
 }

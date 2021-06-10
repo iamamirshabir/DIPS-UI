@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'contactus', component: ContactusComponent },
       { path: 'userprofile', component: UserProfileComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
 ];

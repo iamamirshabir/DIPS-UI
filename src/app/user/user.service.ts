@@ -10,8 +10,8 @@ import {
 } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Symptom, User, endpoint } from '../shared/classes';
-import { Router } from '@angular/router';
+import { Symptom, User, endpoint, appUrl } from '../shared/classes';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class UserService {
   user;
   userAc: User;
-  userReg = false;
+  userReg= false;
 
   private extractData(res: Response): any {
     const body = res;
@@ -32,13 +32,7 @@ export class UserService {
     private router: Router
   ) {}
 
-  getUserAccount(id: string): void {
-    this.getUserByKeycloak(id).subscribe((resp: any) => {
-      this.userAc = resp;
-      this.router.navigate(['user/dashboard']);
-      console.log(this.userAc);
-    });
-  }
+  
 
   getProfile() {
     try {
@@ -77,7 +71,8 @@ export class UserService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-  private handleProfileError(error: HttpErrorResponse) {
+  public handleProfileError(error: HttpErrorResponse) {
+    
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -85,8 +80,9 @@ export class UserService {
       console.error(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
+      this.userReg = false;
     }
-    this.userReg = false;
+    
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');
   }
@@ -102,6 +98,6 @@ export class UserService {
     return throwError('Something bad happened; please try again later!');
   }
   logout() {
-    this.keycloak.logout('http://localhost:8089/');
+    this.keycloak.logout(appUrl);
   }
 }

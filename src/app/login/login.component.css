@@ -1,0 +1,100 @@
+@media only screen and (min-width: 600px) {
+    .carousel-caption h5{
+    font-size: 60px;
+
+    }
+    .carousel-caption p{
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .display-4 {
+        font-size: 24px;
+    }
+     .lead{
+         font-size: 14px;
+     }
+     .service h2 {
+         font-size: 16px;
+     }
+}
+
+
+    .navigation{
+        background-image: linear-gradient(to right, rgba(22, 5, 197, 0.50), rgba(17, 4, 153,0.70),rgba(22, 5, 197, 0.50));
+    }
+    .logo{
+        max-width: 225px;
+        max-height: 100px;
+    }
+    .logo p{
+        color: #99d8aa;
+    }
+    .logo span{
+        color: #f55648;
+    }
+    .slidecontainer{
+     margin: auto;
+     margin-top: 105px;
+     max-width: 90%;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+    .slideimg{
+    }
+    .subheading{
+      color: darkblue;
+    }
+    .subheading::before{
+        content:"/ ";
+    }
+    .fa-keyboard-o{
+        color: #99d8aa;
+        font-size: 100px;
+    }
+    .fa-database{
+        color:#ffb1b5;
+        font-size: 100px;
+    }
+    .fa-mobile{
+        color: #99d8aa;
+        font-size: 100px;
+    }
+    .fa-diamond{
+        color:#ffb1b5;
+        font-size: 100px;
+    }
+    .fa-html5{
+        color:chartreuse;
+    }
+    .fa-css3{
+        color:darkorange;
+    }
+    .fa-windows{
+        color:darkblue;
+    }
+    .fa-bitcoin{
+        color:darkviolet;
+    }
+    .shade{
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.85)
+    }
+    .competencesbox{
+        background-color: rgba(82, 255, 239, 0.20);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .blogpic{
+        object-fit:cover;
+    }
+    .card{
+        width: 250px;
+        background-color: rgba(12, 3, 110, 0.70);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .cfooter{
+        background-color:rgba(0, 0, 0, 0.60)
+    }
+    .service h2{
+        color: gray;
+    }

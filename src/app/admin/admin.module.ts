@@ -14,6 +14,7 @@ import {
 } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [AdminComponent],
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatButtonModule,
+    ClipboardModule,
   ],
 })
 export class AdminModule {}

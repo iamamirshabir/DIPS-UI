@@ -64,18 +64,32 @@ export class UserComponent implements OnInit {
       userac_mobile: 0,
     };
     if (!(this.userService.user.sub == null)) {
-      this.userService.getUserAccount(this.userService.user.sub);
+      this.getUserAccount(this.userService.user.sub);
       this.name.setValue(
         this.userService.user.given_name +
           ' ' +
           this.userService.user.family_name
       );
       this.email.setValue(this.userService.user.email);
+      
     }
   }
 
   logout() {
     this.userService.logout();
+  }
+
+  getUserAccount(id: string): boolean {
+    
+    this.userService.getUserByKeycloak(id).subscribe((resp: any) => {
+      this.userService.userAc = resp;      
+      this.router.initialNavigation();
+      this.userLoaded = Promise.resolve(true);
+      //this.router.navigate(['user/dashboard']);
+      console.log(this.userService.userAc);
+      return true;
+    });
+    return false;
   }
 
   registerUser() {

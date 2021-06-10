@@ -1,11 +1,19 @@
 <div class="row mx-0">
   <mat-spinner *ngIf="(physicians == null)" color="accent" class="mx-auto mt-5"></mat-spinner>
   <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
-    <h1 class="h1 #3f51b5 text-primary animate__animated animate__lightSpeedInLeft">Doctors Available</h1>
+    <h1 class="h1 #3f51b5 text-primary animate__animated animate__lightSpeedInLeft">Physicians </h1>
     <div class="my-card animate__animated animate__zoomInUp">
       <div class="my-card-header my-card-header-primary">
-        <h1 class="my-card-title">Physicians</h1>
+        <h1 class="my-card-title">Certified Physicians</h1>
       </div>
+      <p>Note: <br>
+        <span class="text-secondary ">1. User can reserve one appointment at a time</span>
+        <br>
+        <span class="text-secondary">2. Number of appointments will not exceed maximum daily reservations</span>
+        <br>
+        <span class="text-secondary">3. By making apppointment, you give consent of your information and medical records will be shared with selected physician </span> 
+      </p>
+        
       <mat-form-field appearance="outline">
         <mat-label>Select Type</mat-label>
         <mat-select [formControl]="specControl">
@@ -23,10 +31,11 @@
             <mat-card-subtitle>{{physician.physician_spec}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            Here optionally presented physician's bio.
+            <p>Address : <span style="color: purple;">{{physician.physician_address}}</span></p>
+            <p>From <span style="color: purple;">{{physician.physician_time_start}} : 00</span> to <span style="color: purple;">{{physician.physician_time_end}} : 00</span></p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-flat-button color="primary"
+            <button mat-stroked-button color="primary"
               (click)="openDialog(physician.physician_name,physician.physician_address,physician.physician_id,physician.physician_availability,physician.physician_time_start,physician.physician_time_end)">Book
               Appointment</button>
             <button mat-stroked-button color="accent">View Contact Info</button>

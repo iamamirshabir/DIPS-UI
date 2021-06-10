@@ -1,4 +1,6 @@
 export const endpoint = 'https://dips-rs.herokuapp.com/resource-server/api/';
+export const appUrl = 'https://dips-p.web.app/';
+
 
 export class Prescription {
   createdAt: string;

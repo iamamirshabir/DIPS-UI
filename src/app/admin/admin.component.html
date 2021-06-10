@@ -1,6 +1,12 @@
 <div class="row mx-0">
   <mat-spinner *ngIf="(physicians == null)" color="accent" class="mx-auto mt-5"></mat-spinner>
   <div *ngIf="physiciansLoaded | async" class="col-lg-11 mt-5 mx-auto">
+    <h5 class="text-primary">User and access management for Realm Owner</h5>
+    <a mat-raised-button color="primary" href="https://dips-as.herokuapp.com/auth" target="_blank">Keycloak Authentication Server</a>
+    <button mat-stroked-button color="accent" (click)="logout()">Log Out</button>
+    <br>
+    <hr>
+    <br>
     <h1 class="h1 text-primary animate__animated animate__lightSpeedInLeft">Physicians Applied for Registration</h1>
     <div class="my-card animate__animated animate__zoomInUp">
       <div class="my-card-header my-card-header-primary">
@@ -15,8 +21,10 @@
           </mat-card-header>
           <mat-card-content>
             <h2 class="text-danger">{{physician.physician_reg_no}}</h2>
+            <button mat-button [cdkCopyToClipboard]="physician.physician_reg_no"><mat-icon>file_copy</mat-icon>  Copy to clipboard</button>
           </mat-card-content>
           <mat-card-actions>
+            <a mat-stroked-button color="primary" href="https://www.pmc.gov.pk/Doctors/Search" target="_blank">Go to PMC Website</a>
             <button mat-stroked-button (click)="updateRegistered(physician.physician_id,physician)"
               color="accent">Register</button>
           </mat-card-actions>

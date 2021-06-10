@@ -23,8 +23,12 @@ const routes: Routes = [
         path: 'physicianregistration',
         component: PhysicianRegistrationComponent,
       },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
+    
   },
+  
+  
 ];
 
 @NgModule({

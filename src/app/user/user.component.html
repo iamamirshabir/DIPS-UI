@@ -51,8 +51,8 @@
     <!-- Part for Profile Complete  -->
 
 
-    <div *ngIf="!(this.userService.userAc==null)">
-      <div class="row m-0 w-100 h-100" *ngIf="(this.userService.userAc.userac_reg==false)">
+    <div *ngIf="(this.userService.userAc.userac_reg == false)">
+      <div class="row m-0 w-100 h-100" >
         <div class="col-md-10 col-lg-5 mx-auto mt-5">
           <section>
             <mat-progress-bar color="primary" mode="determinate" [value]="progValue">

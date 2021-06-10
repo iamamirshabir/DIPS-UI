@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
-import { Physician } from '../shared/classes';
+import { appUrl, Physician } from '../shared/classes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminService } from './admin.service';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-admin',
@@ -18,7 +19,8 @@ export class AdminComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private adminService: AdminService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private keycloak: KeycloakService
   ) {}
 
   ngOnInit(): void {
@@ -51,5 +53,7 @@ export class AdminComponent implements OnInit {
       shareReplay()
     );
 
-  logout() {}
+  logout() {
+  this.keycloak.logout(appUrl);
+  }
 }

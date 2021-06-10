@@ -16,12 +16,22 @@
               <mat-card-title [style.color]="primaryColor">Hey there!</mat-card-title>
               <mat-card-subtitle>Declaration</mat-card-subtitle>
               <mat-card-content>
-                <p>1. Nothing can replace medical diagnosis at medical complex</p>
+                <ol>
+                  <li>This is a self-diagnosis tool that shows possible condition(s), based on the information added.</li>
+                  <li>Sign and Symptoms are used as input to computerized algorithm, that provides maximum likelihood of disease.</li>
+                  
+                  <li>Moreover, most doctors agree that online symptom-checkers encourage to people to have medical advice for life-threatening conditions, potentially saving lives. These online tools decrease hospital visits, by avoiding unneccessory appointment or urgent help seeking when they don't need too.</li>
+                  
+                  <li class="text-danger">Note: This is a Preliminary diagnosis, you need to visit a certified practitioner for complete diagnosis with the help of pathology tests.  </li>
+                  
+                </ol>               
               </mat-card-content>
               <mat-card-actions>
+                <mat-label>I have read above instructions, undertand and will be solely responsilbe for my actions!</mat-label>
               </mat-card-actions>
               <mat-card-footer>
-                <mat-checkbox formControlName="firstCtrl" class="example-margin ">I undertand and agree!</mat-checkbox>
+                <br>
+                <mat-checkbox formControlName="firstCtrl" class="example-margin ">Agreed</mat-checkbox>
 
               </mat-card-footer>
             </mat-card>
@@ -31,6 +41,7 @@
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" label="Add Personal Info">
           <form [formGroup]="secondFormGroup">
+            <h4 class="text-primary">Gender</h4>
             <mat-form-field appearance="fill">
               <mat-label>Gender</mat-label>
               <mat-select formControlName="secondCtrl">
@@ -39,7 +50,7 @@
                 <mat-option value="na">Prefer not to say</mat-option>
               </mat-select>
             </mat-form-field>
-            <h4>Your Age</h4>
+            <h4 class="text-primary">Your Age</h4>
             <mat-slider class="slider" thumbLabel min="10" max="120" step="1" value="55"></mat-slider>
             <div>
               <button mat-button color="warn" matStepperPrevious>Back</button>
@@ -49,7 +60,8 @@
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" label="Select Medical Conditions">
           <form (ngSubmit)="onFormSubmit()">
-            <h3 class="my-card-title text-primary">Select Your Symptoms & Conditions</h3>
+            <h3 class="my-card-title text-primary">Looks like I'm feeling...</h3>
+            <hr>
             <mat-slide-toggle [(ngModel)]="s1Checked" name="s1">Hypertention</mat-slide-toggle>
             <hr />
             <mat-slide-toggle [(ngModel)]="s2Checked" name="s2">Fever</mat-slide-toggle>
@@ -68,7 +80,9 @@
         </mat-step>
         <mat-step label="Add Symptoms">
           <form>
-            <h2 class="my-card-title text-primary">Enter Your Symptoms</h2>
+            <h2 class="my-card-title text-primary">Enter the Symptoms and Conditions</h2>
+            <hr>
+            <p>Selecting more of these will get you better prediction</p>
             <mat-form-field class="example-full-width">
               <input type="text" id="symptomSelector" placeholder="Select Your Symptoms & Signs...(min. 3)"
                 aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
